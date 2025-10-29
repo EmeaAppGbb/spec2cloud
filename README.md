@@ -291,3 +291,11 @@ Contributions welcome! Extend with additional agents, prompts, or MCP servers.
 ---
 
 **From idea to production in minutes, not months.** 🚀
+
+#### AI Agent Marketplace Index And Router | [API Doc](https://www.deepnlp.org/doc/ai_agent_marketplace)
+[![AI Agent Marketplace and Router Badge](https://www.deepnlp.org/api/ai_agent_marketplace/svg?name=EmeaAppGbb/spec2cloud&badge_type=review)](https://www.deepnlp.org/store/ai-agent/ai-agent/pub-EmeaAppGbb/spec2cloud)
+
+```
+curl 'https://www.deepnlp.org/api/ai_agent_marketplace/v2?id=EmeaAppGbb/spec2cloud'
+```
+    
