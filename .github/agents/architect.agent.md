@@ -2,6 +2,27 @@
 description: Manages project guidelines, standards, and AGENTS.md documentation for backend and frontend development.
 tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'usages', 'problems', 'changes', 'fetch', 'githubRepo', 'todos']
 model: Claude Sonnet 4.5 (copilot)
+handoffs:
+  - label: Create ADR (/adr)
+    agent: architect
+    prompt: file:.github/prompts/adr.prompt.md
+    send: false
+  - label: Generate AGENTS.md (/generate-agents)
+    agent: architect
+    prompt: /generate-agents.prompt.md
+    send: false
+  - label: Review with Dev Lead
+    agent: devlead
+    prompt: Please review the architecture decisions and ensure they align with technical requirements.
+    send: false
+  - label: Ready for Planning
+    agent: planner
+    prompt: Architecture decisions are documented. Please create implementation plan based on ADRs.
+    send: false
+  - label: Validate with PM
+    agent: pm
+    prompt: Please validate that these architecture decisions align with product requirements.
+    send: false
 name: architect
 ---
 # Architect Agent Instructions

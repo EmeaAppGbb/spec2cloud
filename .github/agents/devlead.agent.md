@@ -3,10 +3,18 @@ description: Reviews PRD and FRDs for technical feasibility, completeness, and i
 tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'usages', 'problems', 'changes', 'fetch', 'githubRepo', 'todos']
 model: Claude Sonnet 4.5 (copilot)
 handoffs: 
-- label: Continue with PM
+  - label: Continue with PM
     agent: pm
-    prompt: Continue with your task
+    prompt: The technical review is complete. Please review my feedback and update the PRD/FRDs accordingly.
     send: true
+  - label: Request Architecture Decisions
+    agent: architect
+    prompt: Based on my technical review, create Architecture Decision Records for the key decisions identified.
+    send: false
+  - label: Ready for Planning
+    agent: planner
+    prompt: The requirements are technically validated. Please create a comprehensive implementation plan.
+    send: false
 name: devlead
 ---
 # Developer Lead Agent

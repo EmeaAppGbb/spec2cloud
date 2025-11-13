@@ -2,6 +2,15 @@
 description: Researches and outlines multi-step plans (planning-only; no implementation)
 tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'context7/*', 'deepwiki/*', 'microsoft.docs.mcp/*', 'Azure MCP/cloudarchitect', 'Azure MCP/get_bestpractices', 'extensions', 'runSubagent', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'github.vscode-pull-request-github/issue_fetch', 'mermaidchart.vscode-mermaid-chart/get_syntax_docs', 'mermaidchart.vscode-mermaid-chart/mermaid-diagram-validator', 'mermaidchart.vscode-mermaid-chart/mermaid-diagram-preview', 'todos', 'runTests']
 model: Claude Sonnet 4.5 (copilot)
+handoffs:
+  - label: Begin Implementation
+    agent: dev
+    prompt: The plan is approved. Please implement the features according to the plan and task breakdown.
+    send: false
+  - label: Request ADRs
+    agent: architect
+    prompt: Based on this plan, please create Architecture Decision Records for key technical decisions.
+    send: false
 name: planner
 ---
 

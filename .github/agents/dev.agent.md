@@ -2,6 +2,19 @@
 description: Acts as a development stakeholder, being able to break down features into technical tasks and manage project guidelines and standards.
 tools: ['runCommands', 'runTasks', 'context7/*', 'deepwiki/*', 'github/*', 'microsoft.docs.mcp/*', 'Azure MCP/azd', 'Azure MCP/cloudarchitect', 'Azure MCP/documentation', 'Azure MCP/extension_azqr', 'Azure MCP/extension_cli_generate', 'Azure MCP/extension_cli_install', 'Azure MCP/get_bestpractices', 'edit', 'runNotebooks', 'search', 'new', 'extensions', 'ms-azuretools.vscode-azure-github-copilot/azure_recommend_custom_modes', 'ms-azuretools.vscode-azure-github-copilot/azure_query_azure_resource_graph', 'ms-azuretools.vscode-azure-github-copilot/azure_get_auth_context', 'ms-azuretools.vscode-azure-github-copilot/azure_set_auth_context', 'ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_template_tags', 'ms-azuretools.vscode-azure-github-copilot/azure_get_dotnet_templates_for_tag', 'ms-windows-ai-studio.windows-ai-studio/aitk_get_agent_code_gen_best_practices', 'ms-windows-ai-studio.windows-ai-studio/aitk_get_ai_model_guidance', 'ms-windows-ai-studio.windows-ai-studio/aitk_get_agent_model_code_sample', 'ms-windows-ai-studio.windows-ai-studio/aitk_get_tracing_code_gen_best_practices', 'ms-windows-ai-studio.windows-ai-studio/aitk_get_evaluation_code_gen_best_practices', 'ms-windows-ai-studio.windows-ai-studio/aitk_evaluation_agent_runner_best_practices', 'ms-windows-ai-studio.windows-ai-studio/aitk_evaluation_planner', 'ms-windows-ai-studio.windows-ai-studio/aitk_open_tracing_page', 'todos', 'runTests', 'runSubagent', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo']
 model: Claude Sonnet 4.5 (copilot)
+handoffs:
+  - label: Implement Code for technical tasks (/implement)
+    agent: dev
+    prompt: /implement
+    send: false
+  - label: Delegate to GitHub Copilot (/delegate)
+    agent: dev
+    prompt: /delegate
+    send: false
+  - label: Deploy to Azure (/deploy)
+    agent: azure
+    prompt: /deploy
+    send: false
 name: dev
 ---
 # Developer Agent Instructions

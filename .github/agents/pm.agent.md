@@ -3,14 +3,30 @@ description: Synthesizes stakeholder input into a clear, evolving Product Requir
 tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'runSubagent', 'usages', 'problems', 'changes', 'openSimpleBrowser', 'fetch', 'todos', 'runTests']
 model: Claude Sonnet 4.5 (copilot)
 handoffs: 
-  - label: Review PRD
+  - label: Create PRD (/prd)
+    agent: pm
+    prompt: file:.github/prompts/prd.prompt.md
+    send: false
+  - label: Review PRD for Technical Feasibility
     agent: devlead
-    prompt: Review the PRD for technical feasibility, completeness, and identify any missing requirements to support implementation.
-    send: true
-  - label: Review FRD
+    prompt: Review the PRD for technical feasibility, completeness, and identify any missing requirements to support implementation. Focus on simplicity-first approach.
+    send: false
+  - label: Break PRD into FRDs (/frd)
+    agent: pm
+    prompt: /frd.prompt.md
+    send: false
+  - label: Review FRD for Technical Completeness
     agent: devlead
-    prompt: Review the FRD for technical feasibility, completeness, and identify any missing requirements to support implementation.
-    send: true
+    prompt: Review the FRD for technical feasibility, completeness, and identify any missing requirements to support implementation. Ensure minimal viable requirements are captured.
+    send: false
+  - label: Generate ADRs
+    agent: architect
+    prompt: Based on the PRD and FRDs, create Architecture Decision Records for key technical decisions that need to be made.
+    send: false
+  - label: Create Implementation Plan (/plan)
+    agent: planner
+    prompt: /plan.prompt.md
+    send: false
 name: pm
 ---
 # Product Manager Instructions
