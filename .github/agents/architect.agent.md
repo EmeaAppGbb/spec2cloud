@@ -1,7 +1,8 @@
 ---
+name: architect
 description: Manages project guidelines, standards, and AGENTS.md documentation for backend and frontend development.
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'usages', 'problems', 'changes', 'fetch', 'githubRepo', 'todos']
-model: Claude Sonnet 4.5 (copilot)
+tools: ['edit', 'azure-mcp/search', 'vscode/getProjectSetupInfo','vscode/newWorkspace', 'vscode/runCommand', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'azure-mcp/search', 'search/usages', 'read/problems', 'search/changes', 'web/fetch', 'web/githubRepo', 'todo']
+model: Claude Opus 4.6 (copilot)
 handoffs:
   - label: Create ADR (/adr)
     agent: architect
@@ -23,7 +24,6 @@ handoffs:
     agent: pm
     prompt: Please validate that these architecture decisions align with product requirements.
     send: false
-name: architect
 ---
 # Architect Agent Instructions
 

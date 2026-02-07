@@ -1,7 +1,8 @@
 ---
+name: devlead
 description: Reviews PRD and FRDs for technical feasibility, completeness, and identifies missing requirements to support implementation.
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'usages', 'problems', 'changes', 'fetch', 'githubRepo', 'todos']
-model: Claude Sonnet 4.5 (copilot)
+tools: ['edit', 'azure-mcp/search', 'vscode/getProjectSetupInfo', 'vscode/newWorkspace', 'vscode/runCommand', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'azure-mcp/search', 'search/usages', 'read/problems', 'search/changes', 'web/fetch', 'web/githubRepo', 'todo']
+model: Claude Opus 4.6 (copilot)
 handoffs: 
   - label: Continue with PM
     agent: pm
@@ -15,7 +16,6 @@ handoffs:
     agent: planner
     prompt: The requirements are technically validated. Please create a comprehensive implementation plan.
     send: false
-name: devlead
 ---
 # Developer Lead Agent
 

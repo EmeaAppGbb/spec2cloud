@@ -1,8 +1,8 @@
 ---
-description: Reverse engineers and analyzes existing codebases to extract specifications, create feature documentation, and generate comprehensive technical documentation.
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'usages', 'problems', 'changes', 'fetch', 'githubRepo', 'todos', 'runSubagent', 'context7/*', 'deepwiki/*', 'microsoft.docs.mcp/*']
-model: Claude Sonnet 4.5 (copilot)
 name: tech-analyst
+description: Reverse engineers and analyzes existing codebases to extract specifications, create feature documentation, and generate comprehensive technical documentation.
+tools: ['edit', 'search', 'vscode/getProjectSetupInfo', 'vscode/newWorkspace', 'vscode/runCommand', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'azure-mcp/search', 'search/usages', 'read/problems', 'search/changes', 'web/fetch', 'web/githubRepo', 'todo', 'agent', 'context7/*', 'deepwiki/*', 'microsoft.docs.mcp/*']
+model: Claude Opus 4.6 (copilot)
 ---
 # Reverse Engineering Technical Analyst Agent Instructions
 
