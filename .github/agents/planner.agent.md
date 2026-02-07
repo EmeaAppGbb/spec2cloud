@@ -4,9 +4,9 @@ description: Researches and outlines multi-step plans (planning-only; no impleme
 tools: ['edit', 'execute/runNotebookCell', 'read/getNotebookSummary', 'search', 'vscode/getProjectSetupInfo', 'vscode/newWorkspace', 'vscode/runCommand', 'execute/getTerminalOutput', 'execute/runInTerminal', 'read/terminalLastCommand', 'read/terminalSelection', 'execute/createAndRunTask', 'context7/*', 'deepwiki/*', 'microsoft.docs.mcp/*', 'azure-mcp/cloudarchitect', 'azure-mcp/get_bestpractices', 'vscode/extensions', 'agent', 'search/usages', 'vscode/vscodeAPI', 'read/problems', 'search/changes', 'execute/testFailure', 'vscode/openSimpleBrowser', 'web/fetch', 'web/githubRepo', github/search_repositories, 'mermaidchart.vscode-mermaid-chart/get_syntax_docs', 'mermaidchart.vscode-mermaid-chart/mermaid-diagram-validator', 'mermaidchart.vscode-mermaid-chart/mermaid-diagram-preview', 'todo', 'execute/runTests']
 model: Claude Opus 4.6 (copilot)
 handoffs:
-  - label: Begin Implementation
+  - label: Create technical tasks for implementation
     agent: dev
-    prompt: The plan is approved. Please implement the features according to the plan and task breakdown.
+    prompt: /plan.prompt.md
     send: false
   - label: Request ADRs
     agent: architect

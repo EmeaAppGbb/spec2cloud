@@ -58,7 +58,7 @@ cd spec2cloud
 ### Full Installation
 
 Includes everything:
-- ✅ 8 specialized AI agents
+- ✅ 7 specialized AI agents
 - ✅ 13 workflow prompts
 - ✅ MCP server configuration
 - ✅ Dev container setup
@@ -76,7 +76,7 @@ Includes everything:
 ### Minimal Installation
 
 Includes only:
-- ✅ 8 specialized AI agents
+- ✅ 7 specialized AI agents
 - ✅ 13 workflow prompts
 
 ```bash
@@ -106,13 +106,12 @@ After installation, your project will have:
 ```
 your-project/
 ├── .github/
-│   ├── agents/              # 8 specialized AI agents
+│   ├── agents/              # 7 specialized AI agents
 │   │   ├── architect.agent.md
 │   │   ├── azure.agent.md
 │   │   ├── dev-lead.agent.md
 │   │   ├── dev.agent.md
 │   │   ├── modernizer.agent.md
-│   │   ├── planner.agent.md
 │   │   ├── pm.agent.md
 │   │   └── rev-eng.agent.md
 │   └── prompts/             # 13 workflow prompts
@@ -361,7 +360,7 @@ ls .github/agents/*.agent.md
 # Check prompts
 ls .github/prompts/*.prompt.md
 
-# Should see 8 agents and 13 prompts
+# Should see 7 agents and 13 prompts
 ```
 
 ## 📊 Verification
@@ -373,7 +372,7 @@ After installation, verify everything is working:
 tree .github/
 
 # 2. Count installed components
-find .github/agents -name "*.agent.md" | wc -l   # Should be 8
+find .github/agents -name "*.agent.md" | wc -l   # Should be 7
 find .github/prompts -name "*.prompt.md" | wc -l  # Should be 13
 
 # 3. Open in VS Code
@@ -383,7 +382,7 @@ code .
 # Press Ctrl+Shift+I (Windows/Linux) or Cmd+Shift+I (Mac)
 
 # 5. Type @ and verify agents appear
-# Should see: @pm, @dev, @dev-lead, @azure, @rev-eng, @modernize, @planner, @architect
+# Should see: @pm, @dev, @dev-lead, @azure, @rev-eng, @modernize, @architect
 
 # 6. Type / and verify prompts appear
 # Should see: /prd, /frd, /plan, /implement, /deploy, /delegate, /rev-eng, /modernize, etc.

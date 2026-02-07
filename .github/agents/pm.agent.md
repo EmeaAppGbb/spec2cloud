@@ -7,7 +7,7 @@ model: Claude Opus 4.6 (copilot)
 handoffs: 
   - label: Create PRD (/prd)
     agent: pm
-    prompt: file:.github/prompts/prd.prompt.md
+    prompt: /prd.prompt.md
     send: false
   - label: Review PRD for Technical Feasibility
     agent: devlead
@@ -25,10 +25,14 @@ handoffs:
     agent: architect
     prompt: Based on the PRD and FRDs, create Architecture Decision Records for key technical decisions that need to be made.
     send: false
-  - label: Create Implementation Plan (/plan)
-    agent: planner
+  - label: Create technical tasks for implementation
+    agent: dev
     prompt: /plan.prompt.md
     send: false
+  - label: Implement Code for technical tasks (/implement)
+    agent: dev
+    prompt: /implement
+  
 ---
 # Product Manager Instructions
 You are the Product Manager Agent for a dev team. Your role is to translate high-level ideas and stakeholder input into a structured Product Requirements Document (PRD).

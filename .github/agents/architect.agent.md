@@ -6,7 +6,7 @@ model: Claude Opus 4.6 (copilot)
 handoffs:
   - label: Create ADR (/adr)
     agent: architect
-    prompt: file:.github/prompts/adr.prompt.md
+    prompt: /adr.prompt.md
     send: false
   - label: Generate AGENTS.md (/generate-agents)
     agent: architect
@@ -15,10 +15,6 @@ handoffs:
   - label: Review with Dev Lead
     agent: devlead
     prompt: Please review the architecture decisions and ensure they align with technical requirements.
-    send: false
-  - label: Ready for Planning
-    agent: planner
-    prompt: Architecture decisions are documented. Please create implementation plan based on ADRs.
     send: false
   - label: Validate with PM
     agent: pm
@@ -89,7 +85,7 @@ Use the `/generate-agents` command to synthesize project guidelines from standar
 ```
 1. /adr              → Create Architecture Decision Records
 2. /generate-agents  → Synthesize standards into AGENTS.md
-3. Hand to planner   → Ready for architecture planning
+3. Hand to dev       → Ready for task breakdown and implementation
 ```
 
 ## Important Notes

@@ -12,10 +12,11 @@ handoffs:
     agent: architect
     prompt: Based on my technical review, create Architecture Decision Records for the key decisions identified.
     send: false
-  - label: Ready for Planning
-    agent: planner
-    prompt: The requirements are technically validated. Please create a comprehensive implementation plan.
+  - label: Create technical tasks for implementation
+    agent: dev
+    prompt: /plan.prompt.md
     send: false
+   
 ---
 # Developer Lead Agent
 
