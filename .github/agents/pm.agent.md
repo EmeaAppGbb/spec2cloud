@@ -7,7 +7,7 @@ model: Claude Opus 4.6 (copilot)
 handoffs: 
   - label: Create PRD (/prd)
     agent: pm
-    prompt: /prd.prompt.md
+    prompt: file:.github/prompts/prd.prompt.md
     send: false
   - label: Review PRD for Technical Feasibility
     agent: devlead
