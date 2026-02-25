@@ -58,8 +58,8 @@ cd spec2cloud
 ### Full Installation
 
 Includes everything:
-- ✅ 7 specialized AI agents
-- ✅ 13 workflow prompts
+- ✅ 10 specialized AI agents
+- ✅ 12 workflow prompts
 - ✅ MCP server configuration
 - ✅ Dev container setup
 - ✅ APM configuration
@@ -76,8 +76,8 @@ Includes everything:
 ### Minimal Installation
 
 Includes only:
-- ✅ 7 specialized AI agents
-- ✅ 13 workflow prompts
+- ✅ 10 specialized AI agents
+- ✅ 12 workflow prompts
 
 ```bash
 # Linux/Mac
@@ -106,26 +106,28 @@ After installation, your project will have:
 ```
 your-project/
 ├── .github/
-│   ├── agents/              # 7 specialized AI agents
+│   ├── agents/              # 10 specialized AI agents
 │   │   ├── architect.agent.md
 │   │   ├── azure.agent.md
-│   │   ├── dev-lead.agent.md
 │   │   ├── dev.agent.md
+│   │   ├── devlead.agent.md
+│   │   ├── extender.agent.md
 │   │   ├── modernizer.agent.md
+│   │   ├── planner.agent.md
 │   │   ├── pm.agent.md
-│   │   └── rev-eng.agent.md
-│   └── prompts/             # 13 workflow prompts
-│       ├── architect.prompt.md
+│   │   ├── spec2cloud.agent.md
+│   │   └── tech-analyst.agent.md
+│   └── prompts/             # 12 workflow prompts
+│       ├── adr.prompt.md
+│       ├── bootstrap-agents.prompt.md
 │       ├── delegate.prompt.md
 │       ├── deploy.prompt.md
-│       ├── frd-brown.prompt.md
+│       ├── extend.prompt.md
 │       ├── frd.prompt.md
 │       ├── generate-agents.prompt.md
 │       ├── implement.prompt.md
 │       ├── modernize.prompt.md
-│       ├── plan-brown.prompt.md
 │       ├── plan.prompt.md
-│       ├── prd-brown.prompt.md
 │       ├── prd.prompt.md
 │       └── rev-eng.prompt.md
 ├── .vscode/
@@ -360,7 +362,7 @@ ls .github/agents/*.agent.md
 # Check prompts
 ls .github/prompts/*.prompt.md
 
-# Should see 7 agents and 13 prompts
+# Should see 10 agents and 12 prompts
 ```
 
 ## 📊 Verification
@@ -372,8 +374,8 @@ After installation, verify everything is working:
 tree .github/
 
 # 2. Count installed components
-find .github/agents -name "*.agent.md" | wc -l   # Should be 7
-find .github/prompts -name "*.prompt.md" | wc -l  # Should be 13
+find .github/agents -name "*.agent.md" | wc -l   # Should be 10
+find .github/prompts -name "*.prompt.md" | wc -l  # Should be 12
 
 # 3. Open in VS Code
 code .
@@ -382,10 +384,10 @@ code .
 # Press Ctrl+Shift+I (Windows/Linux) or Cmd+Shift+I (Mac)
 
 # 5. Type @ and verify agents appear
-# Should see: @pm, @dev, @dev-lead, @azure, @rev-eng, @modernize, @architect
+# Should see: @spec2cloud, @pm, @devlead, @architect, @planner, @dev, @azure, @tech-analyst, @modernizer, @extender
 
 # 6. Type / and verify prompts appear
-# Should see: /prd, /frd, /plan, /implement, /deploy, /delegate, /rev-eng, /modernize, etc.
+# Should see: /prd, /frd, /plan, /implement, /deploy, /delegate, /rev-eng, /modernize, /extend, /adr, etc.
 ```
 
 ## 🔄 Updating Spec2Cloud

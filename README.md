@@ -75,8 +75,8 @@ code .
 ```
 
 **What Gets Installed**:
-- ✅ 8 specialized AI agents (PM, Dev Lead, Dev, Azure, Rev-Eng, Modernizer, Planner, Architect)
-- ✅ 13 workflow prompts
+- ✅ 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
+- ✅ 12 workflow prompts
 - ✅ MCP server configuration (optional)
 - ✅ Dev container setup (optional)
 - ✅ APM configuration (optional)

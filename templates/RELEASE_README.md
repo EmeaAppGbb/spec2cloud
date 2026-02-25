@@ -6,17 +6,19 @@ Transform any project into a spec2cloud-enabled development environment with spe
 
 This package contains:
 
-✅ **8 Specialized AI Agents**
+✅ **10 Specialized AI Agents**
+- Spec2Cloud Orchestrator - Main entry point, delegates to specialized agents
 - PM Agent - Product requirements and feature planning
-- Dev Lead Agent - Technical architecture and standards
-- Dev Agent - Implementation and code generation  
+- Dev Lead Agent - Technical review and feasibility assessment
+- Architect Agent - Standards, guidelines, and AGENTS.md management
+- Planner Agent - Research and multi-step planning (no implementation)
+- Dev Agent - Implementation and code generation
 - Azure Agent - Cloud deployment and infrastructure
-- Reverse Engineering Agent - Codebase documentation
+- Tech Analyst Agent - Reverse engineering and codebase documentation
 - Modernization Agent - Technical debt and upgrades
-- Planner Agent - Task breakdown and planning
-- Architect Agent - System design and patterns
+- Extension Agent - New feature requirements and integration strategies
 
-✅ **13 Workflow Prompts**
+✅ **12 Workflow Prompts**
 - `/prd` - Create Product Requirements Document
 - `/frd` - Create Feature Requirements Documents
 - `/plan` - Create Technical Task Breakdown
@@ -25,11 +27,10 @@ This package contains:
 - `/deploy` - Deploy to Azure
 - `/rev-eng` - Reverse engineer existing codebase
 - `/modernize` - Create modernization plan
+- `/extend` - Plan new feature extensions
 - `/generate-agents` - Generate agent guidelines
-- `/architect` - Design system architecture
-- `/prd-brown` - Generate PRD from existing code
-- `/frd-brown` - Generate FRDs from existing code
-- `/plan-brown` - Generate tasks from existing code
+- `/bootstrap-agents` - Bootstrap agent configurations
+- `/adr` - Create Architecture Decision Records
 
 ✅ **Additional Components** (Full Package Only)
 - MCP server configuration for enhanced AI capabilities
@@ -76,7 +77,7 @@ After installation:
 3. Type `@` to see available agents
 4. Type `/` to see available workflows
 
-You should see all 8 agents and 13 prompts listed.
+You should see all 10 agents and 12 prompts listed.
 
 ## 📖 Usage
 

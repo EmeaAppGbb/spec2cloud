@@ -215,8 +215,8 @@ jobs:
             ### 📋 What's Included
             
             **Full Package**:
-            - ✅ 8 specialized AI agents (PM, Dev Lead, Dev, Azure, Rev-Eng, Modernizer, Planner, Architect)
-            - ✅ 13 workflow prompts
+            - ✅ 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
+            - ✅ 12 workflow prompts
             - ✅ MCP server configuration
             - ✅ Dev container setup
             - ✅ Installation scripts (Linux/Mac/Windows)
@@ -224,8 +224,8 @@ jobs:
             - ✅ Documentation
             
             **Minimal Package**:
-            - ✅ 8 specialized AI agents
-            - ✅ 13 workflow prompts
+            - ✅ 10 specialized AI agents
+            - ✅ 12 workflow prompts
             
             ### 🔐 Verification
             
