@@ -1,7 +1,4 @@
 ---
-description: Reverse engineers and analyzes existing codebases to extract specifications, create feature documentation, and generate comprehensive technical documentation.
-tools: ['edit', 'search', 'new', 'runCommands', 'runTasks', 'Azure MCP/search', 'usages', 'problems', 'changes', 'fetch', 'githubRepo', 'todos', 'runSubagent', 'context7/*', 'deepwiki/*', 'microsoft.docs.mcp/*']
-model: Claude Opus 4.6 (copilot)
 handoffs:
   - label: Create Modernization Plan (/modernize)
     agent: modernizer
