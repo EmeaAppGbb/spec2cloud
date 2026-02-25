@@ -1,0 +1,193 @@
+name: CI - Validate Spec2Cloud Structure
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/agents/**'
+      - '.github/prompts/**'
+      - 'docs/**'
+      - 'scripts/**'
+      - 'templates/**'
+      - '*.md'
+  push:
+    branches: [main]
+    paths:
+      - '.github/agents/**'
+      - '.github/prompts/**'
+      - 'docs/**'
+      - 'scripts/**'
+      - 'templates/**'
+      - '*.md'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate spec2cloud structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate required directories
+        run: |
+          echo "=== Checking required directories ==="
+          errors=0
+
+          for dir in .github/agents .github/prompts scripts templates docs; do
+            if [ -d "$dir" ]; then
+              echo "✓ $dir exists"
+            else
+              echo "✗ $dir is missing"
+              errors=$((errors + 1))
+            fi
+          done
+
+          if [ "$errors" -gt 0 ]; then
+            echo "::error::$errors required directories are missing"
+            exit 1
+          fi
+
+      - name: Validate agent files
+        run: |
+          echo "=== Validating agent files ==="
+          agent_count=$(find .github/agents -name "*.agent.md" | wc -l)
+          echo "Found $agent_count agent files"
+
+          # Each agent file must have a YAML front matter with required fields
+          errors=0
+          for agent in .github/agents/*.agent.md; do
+            filename=$(basename "$agent")
+
+            # Check for YAML front matter delimiter
+            if ! head -1 "$agent" | grep -q "^---"; then
+              echo "✗ $filename: missing YAML front matter"
+              errors=$((errors + 1))
+              continue
+            fi
+
+            echo "✓ $filename"
+          done
+
+          if [ "$errors" -gt 0 ]; then
+            echo "::error::$errors agent files have validation errors"
+            exit 1
+          fi
+
+          echo "All $agent_count agents validated successfully"
+
+      - name: Validate prompt files
+        run: |
+          echo "=== Validating prompt files ==="
+          prompt_count=$(find .github/prompts -name "*.prompt.md" | wc -l)
+          echo "Found $prompt_count prompt files"
+
+          errors=0
+          for prompt in .github/prompts/*.prompt.md; do
+            filename=$(basename "$prompt")
+
+            # Check file is not empty
+            if [ ! -s "$prompt" ]; then
+              echo "✗ $filename: file is empty"
+              errors=$((errors + 1))
+              continue
+            fi
+
+            echo "✓ $filename"
+          done
+
+          if [ "$errors" -gt 0 ]; then
+            echo "::error::$errors prompt files have validation errors"
+            exit 1
+          fi
+
+          echo "All $prompt_count prompts validated successfully"
+
+      - name: Check for broken internal links
+        run: |
+          echo "=== Checking internal markdown links ==="
+          errors=0
+
+          # Check all markdown files for broken relative links
+          # NOTE: Uses process substitution (< <(...)) instead of a pipe so
+          # the while loop runs in the current shell and $errors is visible after done.
+          while IFS= read -r -d '' md_file; do
+            # Extract relative markdown links: [text](path)
+            # Skip URLs (http/https), anchors (#), mailto:, and image refs ![]()
+            links=$(grep -oP '(?<!\!)\[.*?\]\(\K[^)]+' "$md_file" \
+              | grep -v '^http' \
+              | grep -v '^#' \
+              | grep -v '^mailto:' \
+              | sed 's/#.*//' \
+              | sed 's/^[[:space:]]*//' \
+              || true)
+
+            dir=$(dirname "$md_file")
+
+            for link in $links; do
+              [ -z "$link" ] && continue
+              # Resolve relative to the file's directory
+              target="$dir/$link"
+              if [ ! -e "$target" ]; then
+                echo "::error file=$md_file::Broken link: $link (resolved to $target)"
+                errors=$((errors + 1))
+              fi
+            done
+          done < <(find . -name "*.md" -not -path './.github/*' -type f -print0)
+
+          if [ "$errors" -gt 0 ]; then
+            echo "::error::$errors broken internal link(s) found"
+            exit 1
+          else
+            echo "✓ No broken internal links detected"
+          fi
+
+      - name: Lint shell scripts with ShellCheck
+        run: |
+          echo "=== Checking shell scripts with ShellCheck ==="
+          shellcheck --severity=warning scripts/*.sh
+          echo "✓ All shell scripts passed ShellCheck"
+
+      - name: Verify scripts have executable bit in git
+        run: |
+          echo "=== Checking git executable permissions ==="
+          errors=0
+          for script in scripts/*.sh; do
+            # Check git's file mode (100755 = executable, 100644 = not)
+            mode=$(git ls-files --stage "$script" | awk '{print $1}')
+            if [ "$mode" = "100755" ]; then
+              echo "✓ $script (mode $mode)"
+            else
+              echo "::warning file=$script::Missing executable bit in git (mode $mode). Fix with: git update-index --chmod=+x $script"
+              errors=$((errors + 1))
+            fi
+          done
+
+          if [ "$errors" -gt 0 ]; then
+            echo "::warning::$errors script(s) missing executable bit"
+          fi
+
+      - name: Summary
+        run: |
+          agent_count=$(find .github/agents -name "*.agent.md" | wc -l)
+          prompt_count=$(find .github/prompts -name "*.prompt.md" | wc -l)
+
+          echo "## Spec2Cloud Validation Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Component | Count | Status |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-----------|-------|--------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Agents | $agent_count | ✅ |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Prompts | $prompt_count | ✅ |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Agents" >> "$GITHUB_STEP_SUMMARY"
+          for f in .github/agents/*.agent.md; do
+            echo "- \`$(basename "$f")\`" >> "$GITHUB_STEP_SUMMARY"
+          done
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Prompts" >> "$GITHUB_STEP_SUMMARY"
+          for f in .github/prompts/*.prompt.md; do
+            echo "- \`$(basename "$f")\`" >> "$GITHUB_STEP_SUMMARY"
+          done
