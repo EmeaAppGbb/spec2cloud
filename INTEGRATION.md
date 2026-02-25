@@ -402,25 +402,38 @@ curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/
 
 ## 🗑️ Uninstalling
 
-To remove spec2cloud:
+Use the provided uninstall scripts to cleanly remove spec2cloud:
 
+**Linux/Mac**:
 ```bash
-# Remove agents and prompts
-rm -rf .github/agents
-rm -rf .github/prompts
+# Remove agents, prompts, and configs (preserves specs/)
+./scripts/uninstall.sh
 
-# Remove specs directory (be careful - may contain your work!)
-# Only if you want to remove generated documentation
-rm -rf specs/
+# Remove everything including generated specs
+./scripts/uninstall.sh --remove-specs
 
-# Remove configurations (if no conflicts)
-rm .vscode/mcp.json
-rm .devcontainer/devcontainer.json
-rm apm.yml
-
-# Remove any .spec2cloud backup files
-find . -name "*.spec2cloud" -delete
+# Skip confirmation prompts
+./scripts/uninstall.sh --force
 ```
+
+**Windows**:
+```powershell
+# Remove agents, prompts, and configs (preserves specs/)
+.\scripts\uninstall.ps1
+
+# Remove everything including generated specs
+.\scripts\uninstall.ps1 -RemoveSpecs
+
+# Skip confirmation prompts
+.\scripts\uninstall.ps1 -Force
+```
+
+The uninstall scripts will:
+- Remove `.github/agents/` and `.github/prompts/`
+- Remove `.vscode/mcp.json`, `.devcontainer/devcontainer.json`, `apm.yml`, `AGENTS.md`
+- Remove any `*.spec2cloud` backup files
+- Clean up empty directories
+- Optionally remove `specs/` (only with `--remove-specs` / `-RemoveSpecs`)
 
 ## 💡 Best Practices
 
