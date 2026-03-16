@@ -1,31 +1,48 @@
-# Key benefits
+# Benefits
 
-## Greenfield benefits
+## Spec-Driven Development
+- Specifications are the source of truth — implementation follows specs, not the reverse
+- Traceability from PRD → FRD → Gherkin → Tests → Code → Deployment
+- Changes start with spec updates, flow through tests, then implementation
 
-- **Zero Setup** - Dev container has everything preconfigured
-- **Structured Process** - Clear workflow from idea to production
-- **AI-Powered** - Specialized agents handle different aspects
-- **Best Practices** - Built-in architedtural guidance via `AGENTS.md`
-- **Flexible Standards** - Choose local development or delegation
-- **Composable** - Add only the standards you need (Python, React, .NET, etc.)
-- **Versioned** - Lock to specific standard versions or use latest
-- **Azure-Ready** - Automated IaC and CI/CD generation
+## Resumable Workflows
+- State persisted in .spec2cloud/state.json after every action
+- Resume from exact position after interruption
+- Shared state across developers and machines via git
+- Full audit trail in .spec2cloud/audit.log
 
-## Brownfield benefits
+## Human-in-the-Loop
+- Human gates at every critical transition
+- Nothing deploys without explicit approval
+- Interactive prototypes for UI review before coding
+- Gherkin scenarios for behavior review before test generation
 
-- **Comprehensive Documentation** - Reverse engineer complete product docs from code
-- **Full Traceability** - Every product requirement links to code implementation
-- **Honest Assessment** - Identifies gaps, missing tests, incomplete features
-- **Technology Agnostic** - Works with any language/framework (.NET, Python, Node.js, Java, etc.)
-- **Knowledge Capture** - Preserves understanding before team changes
-- **Bridge to Modernization** - Document current state, then enhance with greenfield workflow
-- **Onboarding Accelerator** - New developers understand system architecture quickly
+## Modular Brownfield Support
+- Pure extraction first — understand before changing
+- User chooses the path — no assumptions about intent
+- Assessment adapts depth based on findings
+- ADRs document every significant decision
 
-## Universal benefits
+## Skills Ecosystem
+- 43 built-in skills covering the full lifecycle
+- Community skills available via skills.sh
+- Create custom skills following agentskills.io standard
+- Skills are versioned and locked via skills-lock.json
 
-- **Living Documentation** - Specs evolve with the codebase
-- **Bidirectional Workflow** - Start with idea OR start with code
-- **Specialized Agents** - PM, Dev, Dev Lead, and Azure agents with distinct roles
-- **Evidence-Based** - Brownfield never fabricates, greenfield builds intentionally
+## Stack Agnostic
+- Framework works with any tech stack
+- Shell templates provide stack-specific wiring
+- Skills operate at the spec level, not the code level
+- Same pipeline handles Next.js, .NET, Python, and more
 
-Back to [docs index](index.md).
+## Test-First Everything
+- Tests generated before implementation code
+- Red baseline verified — new tests must fail initially
+- Implementation makes tests green
+- Full regression after every change
+
+## Azure-Ready Deployment
+- Azure Container Apps deployment via azd
+- Infrastructure-as-code with Bicep
+- CI/CD workflows with GitHub Actions
+- Smoke tests verify production after every deployment

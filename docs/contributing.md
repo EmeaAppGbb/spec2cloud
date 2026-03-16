@@ -1,104 +1,50 @@
-# Contributing to Spec2Cloud
+# Contributing
 
-Thank you for your interest in contributing to Spec2Cloud!
+## Ways to Contribute
 
-## Development Workflow
+### Create New Skills
+The most impactful contribution is creating new skills. Skills follow the [agentskills.io specification](https://agentskills.io/specification).
 
-1. **Fork the repository**
-2. **Create a feature branch**
-3. **Make your changes**
-4. **Write tests**
-5. **Submit a pull request**
+1. Create a directory in .github/skills/{skill-name}/
+2. Add SKILL.md with YAML frontmatter (name, description) and detailed instructions
+3. Optionally add references/, scripts/, assets/ subdirectories
+4. Test the skill in a real project
+5. Submit a PR
 
-## Coding Standards
+Use the skill-creator skill for guidance on creating well-structured skills.
 
-Please refer to the `AGENTS.md` file in the root directory for detailed coding standards.
+### Build Shell Templates
+Create shells for new tech stacks:
+1. Fork an existing shell template
+2. Replace the stack-specific code (src/, infra/, test configs)
+3. Update AGENTS.md Section 7 with your stack's commands
+4. Update copilot-instructions.md with your stack's conventions
+5. Test the full pipeline end-to-end
 
-### Backend (.NET)
+### Improve Existing Skills
+- Add references/ for additional context
+- Improve output format for downstream compatibility
+- Add framework-specific detection patterns
+- Fix bugs in skill logic
 
-- Follow C# coding conventions
-- Use async/await for I/O operations
-- Write unit tests with ≥85% coverage
-- Use dependency injection
+### Publish to skills.sh
+Share your skills with the community on [skills.sh](https://skills.sh/).
 
-### Frontend (Next.js/React)
+### Improve Documentation
+- Add examples and walkthroughs
+- Improve getting-started guides
+- Translate documentation
 
-- Use TypeScript for type safety
-- Follow React best practices
-- Use functional components and hooks
-- Write component tests
+## Development Setup
 
-### Documentation
+1. Clone the repo
+2. Open in VS Code with Copilot extension
+3. Use the Dev Container for a consistent environment
+4. Test changes against a real project
 
-- Write clear, concise documentation
-- Use MkDocs format (Markdown)
-- Include code examples
-- Keep documentation up-to-date
+## Commit Conventions
 
-## Testing
-
-### Running Tests
-
-#### Backend Tests
-
-```bash
-dotnet test
-```
-
-#### Frontend Tests
-
-```bash
-cd frontend
-npm test
-```
-
-### Writing Tests
-
-- Test all public methods and functions
-- Test edge cases and error conditions
-- Aim for ≥85% code coverage
-- Use descriptive test names
-
-## Documentation
-
-### Building Documentation
-
-```bash
-pip install -r requirements-docs.txt
-mkdocs build --strict
-```
-
-### Serving Documentation Locally
-
-```bash
-mkdocs serve
-```
-
-Visit `http://localhost:8000` to view the documentation.
-
-## Pull Request Process
-
-1. **Update documentation** - Ensure all changes are documented
-2. **Run tests** - All tests must pass
-3. **Code review** - Address review comments
-4. **Merge** - Maintainers will merge approved PRs
-
-## Quality Checklist
-
-Before submitting a pull request:
-
-- ✅ All tests pass
-- ✅ Code coverage ≥85%
-- ✅ Type safety enforced
-- ✅ Linters and formatters pass
-- ✅ Documentation updated
-- ✅ No secrets committed
-- ✅ Code follows team standards
-
-## Questions?
-
-If you have questions, please:
-
-1. Check existing documentation
-2. Search existing issues
-3. Open a new issue with the `question` label
+- feat: New features or skills
+- fix: Bug fixes
+- docs: Documentation changes
+- refactor: Code restructuring

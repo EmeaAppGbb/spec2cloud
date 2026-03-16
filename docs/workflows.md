@@ -1,189 +1,124 @@
 # Workflows
 
-## Greenfield Workflow (Forward: Idea → Code)
+## Greenfield Workflow (New Applications)
 
-```mermaid
-graph TB
-    Start[("👤 User<br/>High-level app description")]
+### Phase 0: Shell Setup
+Select a shell template for your tech stack. The shell provides project scaffolding, test frameworks, and infrastructure templates.
 
-    Start --> PRD["<b>/prd</b><br/>📝 PM Agent creates<br/>Product Requirements Document"]
+Available shells: Next.js + TypeScript, .NET, Agentic .NET, Agentic Python
 
-    PRD --> FRD["<b>/frd</b><br/>📋 PM Agent breaks down<br/>Feature Requirements Documents"]
+### Phase 1: Product Discovery
 
-    FRD --> GenAgents["<b>/generate-agents</b><br/>📦 Dev Lead reads standards<br/>Generates AGENTS.md"]
+| Sub-phase | Skill | What Happens |
+|-----------|-------|-------------|
+| 1a: Spec Refinement | spec-refinement | PRD/FRDs reviewed through product + technical lenses (max 5 passes). Human gate. |
+| 1b: UI/UX Design | ui-ux-design | Interactive HTML wireframe prototypes generated. Human gate. |
+| 1c: Increment Planning | orchestrator | FRDs broken into ordered increments. Walking skeleton first. Human gate. |
+| 1d: Tech Stack Resolution | tech-stack-resolution | Every technology researched and resolved. ADRs generated. Human gate. |
 
-    GenAgents --> Plan["<b>/plan</b><br/>🔧 Dev Agent creates<br/>Technical Task Breakdown"]
+### Phase 2: Increment Delivery (repeats per increment)
 
-    Plan --> Choice{"Implementation<br/>Choice"}
+| Step | Skill(s) | What Happens |
+|------|----------|-------------|
+| 1: Tests | e2e-generation, gherkin-generation, test-generation | Playwright + Cucumber + unit tests scaffolded. Red baseline verified. |
+| 2: Contracts | contract-generation | API specs, shared types, infra requirements generated. |
+| 3: Implementation | implementation | Code written to make tests pass. API → Web → Integration slices. Human gate (PR review). |
+| 4: Verify & Ship | azure-deployment | Full regression, azd provision, azd deploy, smoke tests. Human gate. |
 
-    Choice -->|Local| Implement["<b>/implement</b><br/>💻 Dev Agent<br/>implements code locally"]
+After each increment, main is fully working — all tests pass, Azure deployment is live.
 
-    Choice -->|Delegated| Delegate["<b>/delegate</b><br/>🎯 Dev Agent creates<br/>GitHub Issue + assigns<br/>Copilot Coding Agent"]
+## Brownfield Workflow (Existing Applications)
 
-    Implement --> Deploy["<b>/deploy</b><br/>☁️ Azure Agent<br/>creates IaC + deploys to Azure"]
+### Phase B1: Extract (Pure Facts)
 
-    Delegate --> Deploy
+6 extraction skills scan the codebase and produce factual documentation with zero judgment:
 
-    Deploy --> Done[("✅ Production-Ready<br/>Application on Azure")]
+| Skill | Output |
+|-------|--------|
+| codebase-scanner | specs/docs/technology/stack.md |
+| dependency-inventory | specs/docs/technology/dependencies.md |
+| architecture-mapper | specs/docs/architecture/overview.md, components.md |
+| api-extractor | specs/contracts/ (OpenAPI YAML) |
+| data-model-extractor | specs/docs/architecture/data-models.md |
+| test-discovery | specs/docs/testing/coverage.md |
 
-    style Start fill:#e1f5ff
-    style PRD fill:#fff4e6
-    style FRD fill:#fff4e6
-    style GenAgents fill:#e3f2fd
-    style Plan fill:#e8f5e9
-    style Implement fill:#e8f5e9
-    style Delegate fill:#e8f5e9
-    style Deploy fill:#f3e5f5
-    style Done fill:#e1f5ff
-    style Choice fill:#fff9c4
-```
+Human gate: Review extraction accuracy.
 
-## Brownfield Workflow (Reverse: Code → Documentation → Evolution)
+### Phase B2: Spec-Enable
 
-```mermaid
-graph TB
-    StartBrown[("📦 Existing Codebase<br/>Undocumented or<br/>poorly documented")]
+| Skill | Output |
+|-------|--------|
+| prd-generator | specs/prd.md (product vision, personas, features from code) |
+| frd-generator | specs/frd-{feature}.md (standard format + Current Implementation section) |
 
-    StartBrown --> RevEng["<b>/rev-eng</b><br/>📋 Reverse Engineering Agent<br/>Analyzes code & documents<br/>current state + extension points"]
+Human gate: Review and approve generated specs.
 
-    RevEng --> Choice{"Evolution<br/>Choice"}
+### User Choice Point
 
-    Choice -->|Improve Quality| Modernize["<b>/modernize</b><br/>🔧 Modernization Agent<br/>Plans technical improvements"]
+After extraction and spec generation, you choose your path(s):
 
-    Choice -->|Add Features| Extend["<b>/extend</b><br/>✨ Extension Agent<br/>Plans new capabilities"]
+| Path | Assessment Skill | Planning Skill | Purpose |
+|------|-----------------|----------------|---------|
+| Modernize | modernization-assessment | modernization-planner | Upgrade deps, refactor architecture |
+| Rewrite | rewrite-assessment | rewrite-planner | Rewrite in different language/framework |
+| Cloud-Native | cloud-native-assessment | cloud-native-planner | Containerize, add observability, deploy to Azure |
+| Extend | (none needed) | extension-planner | Add new features |
+| Fix Bugs | (none needed) | (uses bug-fix skill) | Test-first bug fixes |
+| Security | security-assessment | security-planner | Audit and fix vulnerabilities |
+| Performance | performance-assessment | (modernization-planner) | Identify and resolve bottlenecks |
 
-    Modernize --> Plan["<b>/plan</b><br/>💻 Developer Agent<br/>Implements changes"]
+Select one or more paths. Each generates targeted assessments and ADRs.
 
-    Extend --> Plan
+### Phase A: Assess (Per Selected Path)
 
-    Plan --> Deploy["<b>/deploy</b><br/>☁️ Azure Agent<br/>creates IaC + deploys to Azure"]
+Each assessment skill uses adaptive depth — starts surface-level, escalates based on findings. Significant decisions produce ADRs in specs/adrs/.
 
-    Deploy --> Done[("✅ Evolved Application<br/>Modernized and/or Extended<br/>on Azure")]
+Human gate: Review assessments and ADRs.
 
-    RevEng --> DocOnly[("📚 Documentation Only<br/>Comprehensive technical docs")]
+### Phase P: Plan (Per Selected Path)
 
-    style StartBrown fill:#ffe0b2
-    style RevEng fill:#e8f5e9
-    style Choice fill:#fff9c4
-    style Modernize fill:#e3f2fd
-    style Extend fill:#f3e5f5
-    style Plan fill:#e8f5e9
-    style Deploy fill:#f3e5f5
-    style Done fill:#e1f5ff
-    style DocOnly fill:#e1f5ff
-```
+Each planner generates increments in the standard format. All feed into Phase 2.
 
-## Greenfield Workflow Steps (Forward)
+Human gate: Approve plan.
 
-1. **`/prd`** - Product Requirements Document
-   - PM Agent engages in conversation to understand the product vision
-   - Creates `specs/prd.md` with goals, scope, requirements, and user stories
-   - Living document that evolves with feedback
+### Phase 2: Increment Delivery
 
-2. **`/frd`** - Feature Requirements Documents
-   - PM Agent decomposes the PRD into individual features
-   - Creates files in `specs/features/` for each feature
-   - Defines inputs, outputs, dependencies, and acceptance criteria
+Same pipeline as greenfield. Modernization tasks, rewrites, extensions, and bug fixes are all just increments.
 
-3. **`/generate-agents`** - Generate Agent Guidelines (Optional)
-   - Dev Lead Agent reads all standards from `standards/` directory
-   - Consolidates engineering standards into comprehensive `AGENTS.md`
-   - Can be run at project start or deferred until before `/plan` and `/implement`
-   - **Must be completed before planning and implementation begins**
+## Bug Fix Workflow
 
-4. **`/plan`** - Technical Planning
-   - Dev Agent analyzes FRDs and creates technical task breakdowns
-   - Creates files in `specs/tasks/` with implementation details
-   - Identifies dependencies, estimates complexity, defines scaffolding needs
+Lightweight entry point via the bug-fix skill:
+1. Link bug to relevant FRD
+2. Generate failing test
+3. Fix code (minimal change)
+4. Run regression
+5. Commit: [bugfix] {frd-id}: {description}
 
-5. **`/implement`** OR **`/delegate`** - Implementation
-   - **Option A (`/implement`)**: Dev Agent writes code directly in `src/backend` and `src/frontend`
-   - **Option B (`/delegate`)**: Dev Agent creates GitHub Issues with full task descriptions and assigns to GitHub Copilot Coding Agent
+## ADR Workflow
 
-6. **`/deploy`** - Azure Deployment
-   - Azure Agent analyzes the codebase
-   - Generates Bicep IaC templates
-   - Creates GitHub Actions workflows for CI/CD
-   - Deploys to Azure using Azure Dev CLI and MCP tools
+ADRs are generated throughout both flows:
+- Greenfield: technology choices, contract decisions
+- Brownfield: path decisions, migration approaches
+- Format: specs/adrs/adr-NNN-{slug}.md
+- Status lifecycle: proposed → accepted → deprecated/superseded
 
-## Brownfield Workflow Steps (Reverse)
+## Human Gates
 
-1. **`/rev-eng`** - Reverse Engineer Codebase
-   - Reverse Engineering Agent analyzes existing codebase
-   - Creates technical documentation, feature requirements, and current state analysis
-   - **NEW**: Identifies extension points, capability gaps, and integration opportunities
-   - Follows strict rules to ensure accuracy and honesty about existing functionality
-   - **Critical Rules**:
-     - ⚠️ **NEVER modifies code** - Read-only analysis
-     - ⚠️ **Documents ONLY what exists** - No fabrication
-     - ⚠️ **Honest about gaps** - Notes missing tests, incomplete features
-     - Links each finding to actual code files and implementations
-   - **Output supports two pathways**: Modernization OR Extension
+The orchestrator pauses for approval at:
+- Phase boundaries (spec review, UI/UX approval, plan approval)
+- After Gherkin generation (test contract review)
+- After implementation (PR review)
+- After deployment (verification)
+- After extraction (brownfield accuracy review)
+- Path selection (brownfield choice point)
+- After assessment (brownfield finding review)
 
-2. **`/modernize`** - Create Modernization Plan (Option A)
-   - Modernization Agent assesses existing codebase for technical improvements
-   - Creates files in `specs/modernize/` with modernization analysis
-   - Creates files in `specs/tasks/` with specific modernization tasks
-   - Develops risk assessment and mitigation strategies
-   - **Focus**: Technical debt, security, performance, architecture improvements
-   - **Critical Rules**:
-     - ⚠️ **NEVER modifies code** - Read-only analysis
-     - ⚠️ **Evidence-based** - Recommendations based on actual code quality
-     - ⚠️ **Honest about feasibility** - Notes technical debt and potential risks
+## Resume
 
-3. **`/extend`** - Create Extension Plan (Option B) **NEW**
-   - Extension Agent gathers requirements from the user for new features
-   - **Creates FRDs** in `specs/features/` for user-requested capabilities (same format as greenfield)
-   - Creates extension strategy in `specs/extend/` (how to integrate with existing system)
-   - Creates implementation tasks in `specs/tasks/`
-   - **Focus**: New features, API extensions, data model extensions, UI additions
-   - **Critical Rules**:
-     - ⚠️ **User defines features** - Always ask user what they want to add
-     - ⚠️ **FRDs in standard location** - New features go in `specs/features/`
-     - ⚠️ **Leverages existing patterns** - New features follow established conventions
-     - ⚠️ **Preserves stability** - Extensions must not break existing functionality
-
-4. **`/plan`** - Implement Tasks (Optional)
-   - Dev Agent reads tasks from `specs/tasks/` (modernization OR extension)
-   - Implements tasks in the codebase
-   - Follows best practices and existing architectural patterns
-   - Ensures comprehensive testing of both new and existing functionality
-
-5. **`/deploy`** - Azure Deployment (Optional)
-   - Azure Agent deploys the evolved application to Azure
-   - Generates updated Bicep IaC templates and CI/CD workflows
-   - Uses Azure Dev CLI and MCP tools for deployment
-
-## Why Use Brownfield Workflow?
-
-### Documentation-Only Use Cases
-
-- **Onboard new team members** - Comprehensive documentation of existing systems
-- **Legacy system understanding** - Reverse engineer undocumented codebases
-- **Pre-acquisition due diligence** - Document technical assets before purchase
-- **Audit and compliance** - Document what the system actually does
-- **Knowledge preservation** - Capture tribal knowledge before team changes
-
-### Modernization Use Cases (Option A: `/modernize`)
-
-- **Technical debt reduction** - Upgrade dependencies, fix code smells
-- **Security improvements** - Patch vulnerabilities, implement security patterns
-- **Performance optimization** - Fix bottlenecks, improve scalability
-- **Architecture evolution** - Refactor toward modern patterns
-- **Cloud migration** - Prepare legacy apps for cloud deployment
-
-### Extension Use Cases (Option B: `/extend`) **NEW**
-
-- **Feature additions** - Add new business capabilities to existing systems
-- **API expansion** - Add new endpoints to existing APIs
-- **Integration additions** - Connect new external services
-- **UI enhancements** - Add new pages and user interactions
-- **Workflow extensions** - Add new business processes
-
-### Combined Use Cases
-
-- **Comprehensive evolution** - First modernize, then extend (or vice versa)
-- **Iterative improvement** - Alternate between modernization and extension phases
-- **Prioritized evolution** - Address critical technical debt before adding features
+All state is persisted in .spec2cloud/state.json. If interrupted:
+1. Next session reads state.json
+2. Re-validates by running relevant tests
+3. Resumes from exact position
+4. Continues the Ralph Loop
 
 Back to [docs index](index.md).

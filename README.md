@@ -12,7 +12,7 @@ The vNext release introduces a **skills-based architecture** built on the [agent
 
 | Feature | Previous (v1) | vNext |
 |---------|---------------|-------|
-| **Architecture** | Multi-agent delegation (10 agents) | Monolithic orchestrator + 22 skills |
+| **Architecture** | Multi-agent delegation (10 agents) | Monolithic orchestrator + 43 skills |
 | **State Management** | None (stateless) | .spec2cloud/state.json + audit log |
 | **Orchestration** | Agent-to-agent handoffs | Ralph Loop (read, decide, execute, verify, commit) |
 | **Extensibility** | Edit agent .md files | Create/install skills (agentskills.io) |
@@ -91,7 +91,29 @@ spec2cloud uses a single monolithic orchestrator that follows the **Ralph Loop**
       Step 3: Implementation       -> skill: implementation
       Step 4: Verify and Ship      -> skill: azure-deployment
 
-### Skills Catalog (22 skills)
+### Brownfield Flow
+
+For existing codebases, spec2cloud provides a modular brownfield pipeline:
+
+```
+Extract (pure facts) → Spec-Enable (PRD/FRDs) → User Picks Path(s)
+→ Assess (targeted + ADRs) → Plan (increments) → Phase 2 Delivery
+```
+
+**Phase B1: Extract** — 6 skills scan the codebase and produce factual documentation. Zero judgment — only what exists.
+
+**Phase B2: Spec-Enable** — Generate PRD and FRDs from extraction data. FRDs include a "Current Implementation" section.
+
+**User Choice Point** — Select one or more paths:
+- Modernize | Rewrite | Cloud-Native | Extend | Fix Bugs | Security | Performance
+
+**Phase A: Assess** — Only selected paths run. Each produces findings + ADRs.
+
+**Phase P: Plan** — Each path generates increments for the standard Phase 2 pipeline.
+
+### Skills Catalog (43 skills)
+
+#### Greenfield Skills (22)
 
 | Category | Skills |
 |----------|--------|
@@ -99,6 +121,20 @@ spec2cloud uses a single monolithic orchestrator that follows the **Ralph Loop**
 | **Increment Delivery** | e2e-generation, gherkin-generation, test-generation, contract-generation, implementation, azure-deployment |
 | **Protocol** | state-management, commit-protocol, audit-log, human-gate, resume, error-handling |
 | **Utility** | spec-validator, test-runner, build-check, deploy-diagnostics, research-best-practices, skill-creator, skill-discovery, find-skills |
+
+#### Brownfield Skills (20)
+
+| Category | Skills |
+|----------|--------|
+| **Extraction (B1)** | codebase-scanner, dependency-inventory, architecture-mapper, api-extractor, data-model-extractor, test-discovery |
+| **Spec Generation (B2)** | prd-generator, frd-generator |
+| **Assessment (A)** | modernization-assessment, rewrite-assessment, cloud-native-assessment, security-assessment, performance-assessment |
+| **Planning (P)** | modernization-planner, rewrite-planner, cloud-native-planner, extension-planner, security-planner |
+| **Cross-cutting** | adr, bug-fix |
+
+#### find-skills
+
+The `find-skills` skill searches both local (.github/skills/) and community (skills.sh) catalogs to locate skills for any task.
 
 Skills follow the [agentskills.io specification](https://agentskills.io/specification) and live in .github/skills/.
 
@@ -122,7 +158,7 @@ State is committed to the repo after every action, enabling resume from any inte
       .github/
         agents/             - 10 specialized AI agents (Copilot Chat)
         prompts/            - 12 workflow prompts (/prd, /frd, /plan, etc.)
-        skills/             - 22 agentskills.io skills (core framework)
+        skills/             - 43 agentskills.io skills (22 greenfield + 20 brownfield + find-skills)
         copilot-instructions.md
         lsp.json
       .spec2cloud/          - State management framework

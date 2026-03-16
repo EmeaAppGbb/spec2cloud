@@ -1,89 +1,68 @@
 # Getting Started
 
-This guide will help you get started with Spec2Cloud.
-
 ## Prerequisites
 
-Before you begin, ensure you have:
-
-- Python 3.10 or higher
-- Node.js 18 or higher
-- Azure subscription (for deployment)
+- VS Code with GitHub Copilot extension
+- Node.js 20+ (for JavaScript/TypeScript shells)
+- Azure Developer CLI (azd) for deployment
 - Git
 
-## Installation
+## Option 1: Shell Template (New Project)
 
-### 1. Clone the Repository
+Choose a shell template:
 
-```bash
-git clone https://github.com/EmeaAppGbb/spec2cloud.git
-cd spec2cloud
-```
+| Shell | Stack |
+|-------|-------|
+| [spec2cloud-shell-nextjs-typescript](https://github.com/EmeaAppGbb/spec2cloud-shell-nextjs-typescript) | Next.js + Express + TypeScript |
+| [shell-dotnet](https://github.com/EmeaAppGbb/shell-dotnet) | ASP.NET Core + Blazor |
+| [agentic-shell-dotnet](https://github.com/EmeaAppGbb/agentic-shell-dotnet) | .NET + AI Agents |
+| [agentic-shell-python](https://github.com/EmeaAppGbb/agentic-shell-python) | Python + AI Agents |
 
-### 2. Install Dependencies
-
-#### Backend Dependencies
-
-```bash
-# Install .NET dependencies
-dotnet restore
-```
-
-#### Frontend Dependencies
+Create from template:
 
 ```bash
-# Install Node.js dependencies
-cd frontend
-npm install
+gh repo create my-app --template EmeaAppGbb/spec2cloud-shell-nextjs-typescript
+cd my-app
 ```
 
-### 3. Configure Environment
-
-Create a `.env` file in the root directory:
+## Option 2: Install Into Existing Project (Brownfield)
 
 ```bash
-cp .env.example .env
+curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash
 ```
 
-Edit `.env` with your configuration:
+This installs:
 
-```env
-AZURE_SUBSCRIPTION_ID=your-subscription-id
-AZURE_TENANT_ID=your-tenant-id
-# Add other required environment variables
-```
+- 43 skills in `.github/skills/`
+- 10 agents in `.github/agents/`
+- 12 prompts in `.github/prompts/`
+- `.spec2cloud/` state management
+- `AGENTS.md` orchestrator
+- `.mcp.json` MCP configuration
 
-## Running Locally
+## Greenfield: Your First Project
 
-### Backend
+1. Write your PRD in `specs/prd.md`
+2. The orchestrator will guide you through Phase 1 (discovery) and Phase 2 (delivery)
+3. Human gates pause for your approval at each transition
 
-```bash
-dotnet run --project src/Backend/Backend.csproj
-```
+## Brownfield: Spec-Enabling an Existing App
 
-### Frontend
+1. Install spec2cloud into your project
+2. The orchestrator detects existing code and enters brownfield mode
+3. Phase B1 extracts factual documentation from your codebase
+4. Phase B2 generates PRD and FRDs from the extraction
+5. You choose your path: modernize, rewrite, extend, etc.
+6. The pipeline handles the rest
 
-```bash
-cd frontend
-npm run dev
-```
+## Key Files
 
-### Documentation Server
-
-To view this documentation locally:
-
-```bash
-# Install documentation dependencies
-pip install -r requirements-docs.txt
-
-# Serve the documentation
-mkdocs serve
-```
-
-The documentation will be available at `http://localhost:8000`
-
-## Next Steps
-
-- Learn about the [Benefits](benefits.md) of Spec2Cloud
-- Understand the [Architecture](architecture.md)
-- Start [Contributing](contributing.md)
+| File | Purpose |
+|------|---------|
+| `AGENTS.md` | Orchestrator instructions |
+| `.spec2cloud/state.json` | Current progress state |
+| `.spec2cloud/audit.log` | Action history |
+| `.spec2cloud/models.json` | Model assignments per role |
+| `.github/skills/` | All 43 skills |
+| `.github/copilot-instructions.md` | Coding conventions |
+| `specs/` | All specifications, assessments, ADRs |

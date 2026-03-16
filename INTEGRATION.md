@@ -4,10 +4,10 @@ This guide explains how to integrate spec2cloud into your existing projects to e
 
 ## 🎯 What is Spec2Cloud?
 
-Spec2cloud is a collection of specialized GitHub Copilot agents and workflows that transform how you build software:
+Spec2cloud is an AI-powered spec-driven development framework. It provides 43 specialized skills, 10 Copilot Chat agents, and 12 workflow prompts that transform how you build software:
 
-- **Greenfield**: Turn product ideas into production-ready applications
-- **Brownfield**: Reverse engineer existing codebases into comprehensive documentation
+- **Greenfield**: Turn product ideas into deployed applications through structured specification-driven development
+- **Brownfield**: Extract specifications from existing codebases, then modernize, extend, rewrite, or fix
 
 ## 📦 Installation Methods
 
@@ -58,12 +58,15 @@ cd spec2cloud
 ### Full Installation
 
 Includes everything:
-- ✅ 10 specialized AI agents
-- ✅ 12 workflow prompts
-- ✅ MCP server configuration
-- ✅ Dev container setup
-- ✅ APM configuration
-- ✅ Directory structure templates
+- 43 agentskills.io skills (22 greenfield + 20 brownfield + find-skills)
+- 10 specialized AI agents
+- 12 workflow prompts
+- .spec2cloud/ state management framework
+- AGENTS.md orchestrator instructions
+- MCP server configuration
+- Dev container setup
+- APM configuration
+- Directory structure templates
 
 ```bash
 # Linux/Mac
@@ -76,8 +79,11 @@ Includes everything:
 ### Minimal Installation
 
 Includes only:
-- ✅ 10 specialized AI agents
-- ✅ 12 workflow prompts
+- 43 agentskills.io skills
+- 10 specialized AI agents
+- 12 workflow prompts
+- .spec2cloud/ state management
+- AGENTS.md orchestrator
 
 ```bash
 # Linux/Mac
@@ -99,46 +105,47 @@ Includes only:
 
 ## 📁 What Gets Installed
 
+What Gets Installed:
+- 43 agentskills.io skills (22 greenfield + 20 brownfield + find-skills)
+- 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
+- 12 workflow prompts
+- .spec2cloud/ state management (state.json, audit.log, models.json)
+- AGENTS.md orchestrator
+- MCP server configuration (optional)
+- Dev container setup (optional)
+- APM configuration (optional)
+
 ### Directory Structure
 
 After installation, your project will have:
 
 ```
 your-project/
-├── .github/
-│   ├── agents/              # 10 specialized AI agents
-│   │   ├── architect.agent.md
-│   │   ├── azure.agent.md
-│   │   ├── dev.agent.md
-│   │   ├── devlead.agent.md
-│   │   ├── extender.agent.md
-│   │   ├── modernizer.agent.md
-│   │   ├── planner.agent.md
-│   │   ├── pm.agent.md
-│   │   ├── spec2cloud.agent.md
-│   │   └── tech-analyst.agent.md
-│   └── prompts/             # 12 workflow prompts
-│       ├── adr.prompt.md
-│       ├── bootstrap-agents.prompt.md
-│       ├── delegate.prompt.md
-│       ├── deploy.prompt.md
-│       ├── extend.prompt.md
-│       ├── frd.prompt.md
-│       ├── generate-agents.prompt.md
-│       ├── implement.prompt.md
-│       ├── modernize.prompt.md
-│       ├── plan.prompt.md
-│       ├── prd.prompt.md
-│       └── rev-eng.prompt.md
-├── .vscode/
-│   └── mcp.json             # MCP server configuration (full install)
-├── .devcontainer/
-│   └── devcontainer.json    # Dev container config (full install)
-├── specs/                   # Documentation will be generated here
-│   ├── features/
-│   ├── tasks/
-│   └── docs/
-└── apm.yml                  # APM configuration (full install)
+  .github/
+    agents/              # 10 specialized AI agents
+    prompts/             # 12 workflow prompts
+    skills/              # 43 agentskills.io skills (core framework)
+    copilot-instructions.md
+    lsp.json
+  .spec2cloud/           # State management
+    state.json           # Current phase/increment tracking
+    audit.log            # Action history
+    models.json          # Model assignments per role
+    models-schema.json   # Model config schema
+  .vscode/
+    mcp.json             # MCP server configuration (full install)
+  .devcontainer/
+    devcontainer.json    # Dev container config (full install)
+  AGENTS.md              # Orchestrator instructions
+  skills-lock.json       # Skills version lock
+  .mcp.json              # Repo-level MCP config
+  specs/                 # Specifications (generated or authored)
+    prd.md
+    frd-{feature}.md
+    adrs/                # Architecture Decision Records
+    assessment/          # Brownfield assessment outputs
+    docs/                # Brownfield extraction outputs
+  apm.yml                # APM configuration (full install)
 ```
 
 ## 🔄 Integration Scenarios
@@ -191,6 +198,25 @@ curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/
 # Existing .github files preserved
 # New agents/prompts added
 # Conflicting configs saved as *.spec2cloud for manual merge
+```
+
+### Scenario 4: Brownfield Spec-Enablement
+
+Have an existing codebase you want to spec-enable?
+
+```bash
+cd my-existing-project
+
+# Install spec2cloud
+curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash
+
+# Open in VS Code
+code .
+
+# The orchestrator will detect existing code and enter brownfield mode
+# Phase B1 extracts factual documentation
+# Phase B2 generates specs from your code
+# Then you choose: modernize, rewrite, extend, etc.
 ```
 
 ## ⚙️ Configuration
@@ -362,7 +388,7 @@ ls .github/agents/*.agent.md
 # Check prompts
 ls .github/prompts/*.prompt.md
 
-# Should see 10 agents and 12 prompts
+# Should see 10 agents, 12 prompts, and 43 skills
 ```
 
 ## 📊 Verification
@@ -374,8 +400,9 @@ After installation, verify everything is working:
 tree .github/
 
 # 2. Count installed components
-find .github/agents -name "*.agent.md" | wc -l   # Should be 10
-find .github/prompts -name "*.prompt.md" | wc -l  # Should be 12
+find .github/agents -name "*.agent.md" | wc -l    # Should be 10
+find .github/prompts -name "*.prompt.md" | wc -l   # Should be 12
+find .github/skills -name "SKILL.md" | wc -l       # Should be 43
 
 # 3. Open in VS Code
 code .

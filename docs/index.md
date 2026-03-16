@@ -1,19 +1,24 @@
-# Spec2Cloud Documentation
+# spec2cloud Documentation
 
-This folder holds the long-form documentation that used to live in the root README.
+Welcome to the spec2cloud documentation. spec2cloud transforms product specifications into deployed cloud applications using 43 AI-powered skills.
 
-- Start here: if you’re new, read the root [README](../README.md) first.
+## Quick Links
 
-## Topics
+- [Getting Started](getting-started. Installation and first projectmd) 
+- [Primer](PRIMER. Core concepts in 5 minutesmd) 
+- [Architecture](architecture. Skills, Ralph Loop, state managementmd) 
+- [Workflows](workflows. Greenfield and brownfield pipelinesmd) 
+- [Shell Templates](shells. Pre-wired project scaffoldsmd) 
+- [Specification Structure](specs-structure. How specs, ADRs, and assessments are organizedmd) 
+- [Examples](examples. Greenfield, brownfield, and bug fix walkthroughsmd) 
+- [Benefits](benefits. Why spec-driven developmentmd) 
+- [Contributing](contributing. Create skills, build shells, improve docsmd) 
+- [APM Integration](apm. Agent Package Managermd) 
 
-- [Shell baselines (Greenfield)](shells.md)
-- [Architecture (Dev Container, MCP, Agents)](architecture.md)
-- [Workflows (Greenfield + Brownfield)](workflows.md)
-- [Generated documentation structure (`specs/` layout)](specs-structure.md)
-- [Managing standards with APM](apm.md)
-- [Example usage](examples.md)
-- [Key benefits](benefits.md)
+## What is spec2cloud?
 
-## Related guides
+An AI-powered framework for spec-driven development:
 
-- [Integration & installation guide](../INTEGRATION.md)
+ AI builds, tests, and deploys
+ modernize, extend, or rewrite
+ deployment
