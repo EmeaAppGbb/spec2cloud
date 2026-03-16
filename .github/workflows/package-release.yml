@@ -36,7 +36,7 @@ jobs:
           echo "Validating spec2cloud structure..."
           
           # Check required directories
-          required_dirs=(".github/agents" ".github/prompts")
+          required_dirs=(".github/agents" ".github/prompts" ".github/skills")
           for dir in "${required_dirs[@]}"; do
             if [ ! -d "$dir" ]; then
               echo "Error: Required directory $dir not found"
@@ -44,15 +44,17 @@ jobs:
             fi
           done
           
-          # Count agents and prompts
+          # Count agents, prompts, and skills
           agent_count=$(find .github/agents -name "*.agent.md" | wc -l)
           prompt_count=$(find .github/prompts -name "*.prompt.md" | wc -l)
+          skill_count=$(find .github/skills -name "SKILL.md" | wc -l)
           
           echo "Found $agent_count agents"
           echo "Found $prompt_count prompts"
+          echo "Found $skill_count skills"
           
-          if [ $agent_count -eq 0 ] || [ $prompt_count -eq 0 ]; then
-            echo "Error: No agents or prompts found"
+          if [ $agent_count -eq 0 ] || [ $prompt_count -eq 0 ] || [ $skill_count -eq 0 ]; then
+            echo "Error: No agents, prompts, or skills found"
             exit 1
           fi
           
@@ -74,6 +76,41 @@ jobs:
           cp -r .github/agents/*.agent.md release-full/.github/agents/
           cp -r .github/prompts/*.prompt.md release-full/.github/prompts/
           
+          # Copy skills (vNext core framework)
+          if [ -d ".github/skills" ]; then
+            cp -r .github/skills release-full/.github/skills
+          fi
+          
+          # Copy copilot instructions
+          if [ -f ".github/copilot-instructions.md" ]; then
+            cp .github/copilot-instructions.md release-full/.github/
+          fi
+          
+          # Copy LSP config
+          if [ -f ".github/lsp.json" ]; then
+            cp .github/lsp.json release-full/.github/
+          fi
+          
+          # Copy .spec2cloud state management framework
+          if [ -d ".spec2cloud" ]; then
+            cp -r .spec2cloud release-full/.spec2cloud
+          fi
+          
+          # Copy AGENTS.md orchestrator
+          if [ -f "AGENTS.md" ]; then
+            cp AGENTS.md release-full/
+          fi
+          
+          # Copy MCP config
+          if [ -f ".mcp.json" ]; then
+            cp .mcp.json release-full/
+          fi
+          
+          # Copy skills-lock.json
+          if [ -f "skills-lock.json" ]; then
+            cp skills-lock.json release-full/
+          fi
+          
           # Copy VS Code configuration
           if [ -f ".vscode/mcp.json" ]; then
             mkdir -p release-full/.vscode
@@ -82,13 +119,12 @@ jobs:
           
           # Copy devcontainer (optional)
           if [ -d ".devcontainer" ]; then
-            mkdir -p release-full/.devcontainer
-            cp .devcontainer/devcontainer.json release-full/.devcontainer/
+            cp -r .devcontainer release-full/.devcontainer
           fi
           
           # Copy templates
           mkdir -p release-full/templates/specs/{features,tasks,docs}
-          cp templates/apm.yml.template release-full/templates/
+          cp -r templates/ release-full/templates/
           touch release-full/templates/specs/.gitkeep
           touch release-full/templates/specs/features/.gitkeep
           touch release-full/templates/specs/tasks/.gitkeep
@@ -111,11 +147,31 @@ jobs:
         run: |
           echo "Building minimal spec2cloud package..."
           
-          # Copy only agents and prompts
+          # Copy agents, prompts, and skills
           mkdir -p release-minimal/.github/agents
           mkdir -p release-minimal/.github/prompts
           cp -r .github/agents/*.agent.md release-minimal/.github/agents/
           cp -r .github/prompts/*.prompt.md release-minimal/.github/prompts/
+          
+          # Include skills (core vNext framework)
+          if [ -d ".github/skills" ]; then
+            cp -r .github/skills release-minimal/.github/skills
+          fi
+          
+          # Include copilot instructions
+          if [ -f ".github/copilot-instructions.md" ]; then
+            cp .github/copilot-instructions.md release-minimal/.github/
+          fi
+          
+          # Include .spec2cloud framework
+          if [ -d ".spec2cloud" ]; then
+            cp -r .spec2cloud release-minimal/.spec2cloud
+          fi
+          
+          # Include AGENTS.md
+          if [ -f "AGENTS.md" ]; then
+            cp AGENTS.md release-minimal/
+          fi
           
           # Create minimal README
           cat > release-minimal/README.md << 'EOF'

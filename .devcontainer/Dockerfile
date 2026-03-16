@@ -1,3 +1,3 @@
-FROM mcr.microsoft.com/devcontainers/python:1-3.12-bullseye
+FROM mcr.microsoft.com/devcontainers/typescript-node:20
 
 RUN rm -f /etc/apt/sources.list.d/yarn.list

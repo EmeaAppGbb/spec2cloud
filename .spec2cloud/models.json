@@ -1,0 +1,38 @@
+{
+  "$schema": "./models-schema.json",
+  "description": "Model assignments for spec2cloud agent roles. Override per shell to tune cost/quality tradeoffs.",
+  "models": {
+    "orchestrator": {
+      "model": "claude-opus-4.6",
+      "description": "Coordinates phases and manages state. Needs good reasoning but runs frequently — balance cost and quality."
+    },
+    "spec-refinement": {
+      "model": "claude-opus-4.6",
+      "description": "Reviews PRDs/FRDs for completeness and feasibility. Highest quality model — this is the most valuable phase."
+    },
+    "gherkin-generation": {
+      "model": "claude-opus-4.6",
+      "description": "Generates Gherkin scenarios from FRDs. Good balance of quality and speed."
+    },
+    "test-generation": {
+      "model": "claude-opus-4.6",
+      "description": "Generates test scaffolding from Gherkin. Needs to produce correct code structure."
+    },
+    "contract-generation": {
+      "model": "claude-opus-4.6",
+      "description": "Generates API contracts, shared types, and infrastructure contracts from Gherkin + tests. Needs strong reasoning for cross-feature consistency."
+    },
+    "implementation": {
+      "model": "claude-opus-4.6",
+      "description": "Writes application code to pass tests. Core coding agent — needs strong coding ability."
+    },
+    "test-verification": {
+      "model": "claude-opus-4.6",
+      "description": "Runs tests and reports results. Simple task — fastest/cheapest model is fine."
+    },
+    "deployment": {
+      "model": "claude-opus-4.6",
+      "description": "Manages AZD provisioning and deployment. Needs to diagnose infrastructure issues."
+    }
+  }
+}

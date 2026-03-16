@@ -1,0 +1,44 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "azure": {
+      "command": "npx",
+      "args": ["-y", "@azure/mcp@latest", "server", "start"]
+    },
+    "deepwiki": {
+      "serverUrl": "https://mcp.deepwiki.com/mcp"
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "microsoft.docs.mcp": {
+			"type": "http",
+			"url": "https://learn.microsoft.com/api/mcp"
+		},
+    "aspire": {
+      "type": "local",
+      "command": "aspire",
+      "args": [
+        "mcp",
+        "start"
+      ],
+      "env": {
+        "DOTNET_ROOT": "${DOTNET_ROOT}"
+      },
+      "tools": [
+        "*"
+      ]
+    }
+  }
+}

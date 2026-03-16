@@ -1,0 +1,41 @@
+site_name: Application User Manual
+site_description: Auto-generated from UI/UX wireframes, Gherkin features, and Playwright screenshots
+docs_dir: docs
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.tabs
+    - content.tabs.link
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+# Navigation is auto-generated — see docs/nav.yml for the generated structure.
+# Copy the contents of docs/nav.yml here after running `npm run docs:generate`.

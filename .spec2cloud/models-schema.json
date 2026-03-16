@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "spec2cloud Model Configuration",
+  "description": "Schema for spec2cloud agent role model assignments. Defines which AI model each agent role uses.",
+  "type": "object",
+  "required": ["models"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Reference to this JSON Schema file."
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of this model configuration."
+    },
+    "models": {
+      "type": "object",
+      "description": "Map of agent role names to their model configuration.",
+      "additionalProperties": {
+        "$ref": "#/definitions/modelAssignment"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "modelAssignment": {
+      "type": "object",
+      "description": "Model assignment for a single agent role.",
+      "required": ["model"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "The AI model identifier to use for this role.",
+          "examples": [
+            "claude-opus-4",
+            "claude-sonnet-4",
+            "claude-haiku-4",
+            "gpt-4o",
+            "gpt-4o-mini",
+            "o1",
+            "o1-mini"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable explanation of why this model was chosen for this role."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

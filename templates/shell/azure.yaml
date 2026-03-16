@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+name: spec2cloud-app
+
+infra:
+  provider: bicep
+  path: ./infra
+
+services:
+  api:
+    project: ./src/api
+    host: containerapp
+    language: ts
+  web:
+    project: ./src/web
+    host: containerapp
+    language: ts
+resources:
+  api:
+    type: host.containerapp
+    port: 8080
+  web:
+    type: host.containerapp
+    uses:
+      - api
+    port: 3000
+hooks:
+  predeploy:
+    posix:
+      shell: sh
+      run: ./infra/scripts/predeploy.sh
+      continueOnError: false
+    windows:
+      shell: pwsh
+      run: ./infra/scripts/predeploy.ps1
+      continueOnError: false

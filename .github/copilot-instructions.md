@@ -1,0 +1,102 @@
+# Copilot Instructions
+
+## Project Overview
+This project uses the **spec2cloud** framework — a spec-driven development process
+where specifications (PRD → FRD → Gherkin) are the source of truth, and implementation
+is driven by automated tests generated from those specifications.
+
+## Framework
+- Orchestration: See `AGENTS.md` for the master orchestrator instructions
+- Skills: See `.github/skills/*/SKILL.md` ([agentskills.io](https://agentskills.io/specification) standard)
+- Ecosystem: Search [skills.sh](https://skills.sh/) for community skills via `npx skills find [query]`
+- State: See `.spec2cloud/state.json` for current project state
+- Audit: See `.spec2cloud/audit.log` for execution history
+
+## Coding Conventions
+- Write minimal code to pass tests — no gold-plating
+- Follow existing patterns in the codebase
+- All code must be covered by tests (unit, integration, or e2e)
+- No hardcoded secrets — use environment variables
+- No hardcoded URLs — use configuration
+- Error handling: every external call must have error handling
+- Logging: use structured logging (not console.log/print)
+- Comments: only when code intent is non-obvious
+
+## Spec-Driven Development Rules
+- **Never implement features not in the specs** (specs/frd-*.md)
+- **Never modify tests** without human approval — tests are the contract
+- **Always check Gherkin scenarios** before implementing a feature
+- **Always run tests** after making changes
+- If a spec seems wrong, flag it — do not silently deviate
+
+## File Organization
+```
+specs/          → Specifications (PRD, FRDs, Gherkin)
+specs/contracts/→ Contracts (API specs per feature, infrastructure resources)
+specs/tech-stack.md → Resolved tech stack (all technology decisions, wiring, deployment)
+e2e/            → Playwright end-to-end tests (integration slice)
+tests/          → Cucumber.js BDD tests (integration slice)
+src/shared/     → Contract types shared between API and Web
+src/api/        → Express.js backend (API slice)
+src/web/        → Next.js frontend (Web slice)
+infra/          → Azure infrastructure (Bicep)
+.spec2cloud/    → Framework state and config
+```
+
+## Git Conventions
+- Commit messages: `[impl] {feature}/{slice} — slice green` (e.g., `[impl] user-auth/api — slice green`)
+- Branch naming: `spec2cloud/{phase}/{feature}` (e.g., `spec2cloud/impl/user-auth`)
+- Always commit `.spec2cloud/state.json` and `.spec2cloud/audit.log` with changes
+- Never commit secrets, .env files, or node_modules
+
+## Testing Hierarchy
+1. **Unit tests** — API slice: fastest feedback, run on every backend change
+2. **Component tests** — Web slice: build verification and component tests
+3. **Playwright e2e** — Full user flow tests, run against Aspire environment
+4. **Gherkin step definitions** — BDD behavioral tests, run against Aspire environment
+5. **Smoke tests** — post-deployment verification (per increment)
+
+> **All Cucumber and Playwright tests run against the Aspire environment** (`aspire run`), which orchestrates API and Web services identically to production.
+> **Iterative delivery:** Each increment goes through the full test → implement → deploy cycle. After each increment, ALL tests pass and the app is deployed.
+
+## Human Gates
+The agent MUST pause and ask for human approval at these points:
+- After FRD review (before UI/UX design)
+- After UI/UX design (before increment planning)
+- After increment plan approval (before tech stack resolution)
+- After tech stack resolution (before first increment) — technology choices must be approved
+- Per increment: after Gherkin generation (before BDD test scaffolding)
+- Per increment: after implementation (before deployment) — via PR review
+- Per increment: after deployment (verify it works)
+
+## State Management
+- Read `.spec2cloud/state.json` at the start of every session
+- Update it after completing each task
+- Append to `.spec2cloud/audit.log` after every action
+- If state.json is missing, start from Phase 0
+
+## Agentic Solutions & Workflows
+
+When the project requires AI agents, agentic workflows, or human-in-the-loop AI features, use the following frameworks:
+
+- **LangGraph** (backend — `src/api/`): Use LangGraph.js for building stateful, multi-step agent workflows. Define agents as graphs with nodes (tools, LLM calls, logic) and edges (conditional routing, cycles). Use checkpointing for persistence and human-in-the-loop patterns. Prefer `@langchain/langgraph` for orchestration and `@langchain/core` for primitives.
+- **CopilotKit** (frontend — `src/web/`): Use CopilotKit for embedding AI copilot experiences in the Next.js frontend. Use `<CopilotKit>` provider, `useCopilotAction` for frontend actions, `useCopilotReadable` for context, and `CopilotSidebar`/`CopilotPopup` for UI. Connect to LangGraph backends via CopilotKit's `CoAgents` integration for full-stack agentic flows.
+
+**When to use:**
+- Any feature involving AI agents, chatbots, or multi-step AI workflows → LangGraph + CopilotKit
+- Backend-only agent orchestration (no UI) → LangGraph alone
+- Frontend copilot/assistant UX without custom agent logic → CopilotKit alone
+
+**Conventions:**
+- Agent graphs live in `src/api/src/agents/` — one file per agent graph
+- CopilotKit actions live alongside their React components in `src/web/`
+- Always define agent state as a TypeScript interface in `src/shared/types/`
+- Use streaming for all agent responses — no blocking LLM calls in request handlers
+
+## Shell-Specific Extensions
+<!-- Shells should add stack-specific instructions below this line -->
+<!-- Examples: language-specific conventions, framework patterns, test commands -->
+
+<!-- Shell templates add stack-specific conventions below this line. -->
+<!-- Examples: language-specific conventions, framework patterns, test commands, naming conventions. -->
+<!-- When using a shell template, this section will be populated with the shell's coding standards. -->

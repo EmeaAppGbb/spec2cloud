@@ -1,108 +1,164 @@
-
 # spec2cloud
 
-**Spec2Cloud** is an AI-powered development workflow that transforms high-level product ideas into production-ready applications deployed on Azure—using specialized GitHub Copilot agents working together.
+**Spec2Cloud** is an AI-powered development workflow that transforms high-level product ideas into production-ready applications deployed on  using specialized GitHub Copilot skills and agents working together.Azure 
 
-## 🎯 Overview
+## Overview
 
-This repository provides a preconfigured development environment and agent-driven workflow that works in two directions:
+spec2cloud provides a complete framework for **spec-driven development**: specifications are the source of truth, tests are generated from specs, and implementation is driven by making tests pass. AI agents orchestrate the entire pipeline with human approval gates at every critical transition.
 
-- **Greenfield (Build New)**: Transform product ideas into deployed applications through structured specification-driven development
+### What is New in vNext
 
-https://github.com/user-attachments/assets/f0529e70-f437-4a14-93bc-4ab5a0450540
+The vNext release introduces a **skills-based architecture** built on the [agentskills.io](https://agentskills.io/specification) standard:
 
+| Feature | Previous (v1) | vNext |
+|---------|---------------|-------|
+| **Architecture** | Multi-agent delegation (10 agents) | Monolithic orchestrator + 22 skills |
+| **State Management** | None (stateless) | .spec2cloud/state.json + audit log |
+| **Orchestration** | Agent-to-agent handoffs | Ralph Loop (read, decide, execute, verify, commit) |
+| **Extensibility** | Edit agent .md files | Create/install skills (agentskills.io) |
+| **Resumability** | Start from scratch each session | Resume from exact position after interruption |
+| **Model Selection** | Fixed per agent | Configurable per role (.spec2cloud/models.json) |
+| **Ecosystem** | Closed |  search and install community skills from skills.sh |Open 
 
-- **Greenfield (Shell-Based)**: Start from a predefined “shell” baseline and let coding agents translate natural language requirements to fill in the gaps via code.
-   - https://github.com/EmeaAppGbb/shell-dotnet
-   - https://github.com/EmeaAppGbb/agentic-shell-dotnet
-   - https://github.com/EmeaAppGbb/agentic-shell-python
+> **Note:** The existing agents and prompts are preserved for compatibility and can complement the skills-based workflow.
 
+### Workflow Modes
 
+- **Greenfield (Build New)**: PRD -> FRD -> UI Prototypes -> Tests -> Contracts -> Implementation -> Azure Deployment
+- **Greenfield (Shell-Based)**: Start from a predefined shell template and let agents fill in the gaps
+- **Brownfield (Modernize)**: Reverse engineer existing codebases -> documentation -> modernization
 
-- **Brownfield (Document Existing + Modernize)**: Reverse engineer existing codebases into comprehensive product and technical documentation and optionally modernize codebases
+## Quick Start
 
-Both workflows use specialized GitHub Copilot agents working together to maintain consistency, traceability, and best practices.
+### Option 1: Use a Shell Template (Recommended for New Projects)
 
-## 🚀 Quick Start
+Shell templates provide a complete, pre-wired project scaffold:
 
-### Option 1: Use This Repository as a Template (Full Environment)
+| Shell | Stack | Repository |
+|-------|-------|-----------|
+| Next.js + TypeScript | Next.js, Express, Playwright, Cucumber | [spec2cloud-shell-nextjs-typescript](https://github.com/EmeaAppGbb/spec2cloud-shell-nextjs-typescript) |
+| .NET | ASP.NET Core, Blazor | [shell-dotnet](https://github.com/EmeaAppGbb/shell-dotnet) |
+| Agentic .NET | .NET + AI Agents | [agentic-shell-dotnet](https://github.com/EmeaAppGbb/agentic-shell-dotnet) |
+| Agentic Python | Python + AI Agents | [agentic-shell-python](https://github.com/EmeaAppGbb/agentic-shell-python) |
 
-**Greenfield (New Project)**:
-1. **Use this repo as a template** - Click "Use this template" to create your own GitHub repository
-2. **Open in Dev Container** - Everything is preconfigured in `.devcontainer/`
-3. **Describe your app idea** - The more specific, the better
-4. **Follow the workflow** - Use the prompts to guide specialized agents through each phase
+### Option 2: Install Into Existing Project
 
-**Brownfield (Existing Codebase)**:
-1. **Use this repo as a template** - Click "Use this template" to create your own GitHub repository
-2. **copy your existing codebase** into the new repository
-3. **Open in Dev Container** - Everything is preconfigured in `.devcontainer/`
-4. **Run `/rev-eng`** - Reverse engineer codebase into specs and documentation
-5. **Run `/modernize`** - (optional) Create modernization plan and tasks
-6. **Run `/plan`** - (optional) Execute modernization tasks planned by the modernization agent
+One-line install (full):
 
-### Option 2: Install Into Existing Project using VSCode Extension
+    curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash
 
-TODO
+Minimal install (skills, agents, prompts only):
 
-### Option 3: Install Into Existing Project using APM CLI
+    curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash -s -- --minimal
 
-TODO
+### Option 3: Use as Template Repository
 
-### Option 4: Install Into Existing Project using Manual Script
+1. Click "Use this template" on GitHub
+2. Open in Dev Container (everything pre-configured)
+3. Describe your app idea and follow the workflow
 
-Transform any existing project into a spec2cloud-enabled development environment:
+See **[INTEGRATION.md](INTEGRATION.md)** for detailed installation options.
 
-**One-Line Install** (Recommended):
-```bash
-curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash
-```
+## Architecture
 
-**Manual Install**:
-```bash
-# Download latest release
-curl -L https://github.com/EmeaAppGbb/spec2cloud/releases/latest/download/spec2cloud-full-latest.zip -o spec2cloud.zip
-unzip spec2cloud.zip -d spec2cloud
-cd spec2cloud
+### The Ralph Loop
 
-# Run installer
-./scripts/install.sh --full                    # Linux/Mac
-.\scripts\install.ps1 -Full                    # Windows
+spec2cloud uses a single monolithic orchestrator that follows the **Ralph Loop** pattern:
 
-# Start using workflows
-code .
-# Use @pm, @dev, @azure agents and /prd, /frd, /plan, /deploy prompts
-```
+    1. Read current state (.spec2cloud/state.json)             -> skill: state-management
+    2. Determine the next task toward the current phase goal
+    3. Check .github/ does a local skill cover this?skills/ 
+    4. Search skills. is there a community skill?           -> skill: skill-discoverysh 
+    5.  query MCP tools for best practices            -> skill: research-best-practicesResearch 
+    6. Execute the task (using the skill or directly)
+    7. Verify the outcome
+    8. If a new reusable pattern emerged -> create a skill      -> skill: skill-creator
+    9. Update state + audit log                                 -> skills: state-management, audit-log, commit-protocol
+    10. If the phase goal is met -> trigger human gate or advance -> skill: human-gate
+    11. If not -> loop back to 1
 
-**What Gets Installed**:
-- ✅ 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
-- ✅ 12 workflow prompts
-- ✅ MCP server configuration (optional)
-- ✅ Dev container setup (optional)
-- ✅ APM configuration (optional)
+### Phase Pipeline
 
-See **[INTEGRATION.md](INTEGRATION.md)** for detailed installation options and troubleshooting.
+    Phase 0: Shell Setup           (one-time)
+    Phase 1: Product Discovery     (one-time)
+      1a: Spec Refinement          -> skill: spec-refinement
+      1b: UI/UX Design             -> skill: ui-ux-design
+      1c: Increment Planning       -> orchestrator (inline)
+      1d: Tech Stack               -> skill: tech-stack-resolution
+    Phase 2: Increment Delivery    (repeats per increment)
+      Step 1: Tests                -> skills: e2e-generation, gherkin-generation, test-generation
+      Step 2: Contracts            -> skill: contract-generation
+      Step 3: Implementation       -> skill: implementation
+      Step 4: Verify and Ship      -> skill: azure-deployment
 
+### Skills Catalog (22 skills)
 
-## 📚 Documentation
+| Category | Skills |
+|----------|--------|
+| **Phase** | spec-refinement, ui-ux-design, tech-stack-resolution |
+| **Increment Delivery** | e2e-generation, gherkin-generation, test-generation, contract-generation, implementation, azure-deployment |
+| **Protocol** | state-management, commit-protocol, audit-log, human-gate, resume, error-handling |
+| **Utility** | spec-validator, test-runner, build-check, deploy-diagnostics, research-best-practices, skill-creator, skill-discovery, find-skills |
 
-Longer guides are in the `docs/` folder (MkDocs-ready structure).
+Skills follow the [agentskills.io specification](https://agentskills.io/specification) and live in .github/skills/.
 
-- Docs index: [docs/index.md](docs/index.md)
-- Shell baselines: [docs/shells.md](docs/shells.md)
-- Architecture: [docs/architecture.md](docs/architecture.md)
-- Workflows: [docs/workflows.md](docs/workflows.md)
-- Generated docs structure: [docs/specs-structure.md](docs/specs-structure.md)
-- Standards / APM: [docs/apm.md](docs/apm.md)
-- Examples: [docs/examples.md](docs/examples.md)
-- Benefits: [docs/benefits.md](docs/benefits.md)
+### State Management
 
-For installation/integration scenarios, see [INTEGRATION.md](INTEGRATION.md).
+    .spec2cloud/
+      state.json            - Current position (phase, increment, status)
+      audit.log             - Full history (every action, in order)
+      models.json           - Model assignments per agent role
+      models-schema.json    - JSON Schema for model config
+      audit-log-format.md   - Audit log format reference
+      README.md             - State persistence documentation
 
-## 🤝 Contributing
+State is committed to the repo after every action, enabling resume from any interruption, shared state across machines, and full audit trail via git history.
 
-Contributions welcome! Extend with additional agents, prompts, or MCP servers.
+## What Gets Installed
+
+### Full Installation
+
+    your-project/
+      .github/
+        agents/             - 10 specialized AI agents (Copilot Chat)
+        prompts/            - 12 workflow prompts (/prd, /frd, /plan, etc.)
+        skills/             - 22 agentskills.io skills (core framework)
+        copilot-instructions.md
+        lsp.json
+      .spec2cloud/          - State management framework
+      .mcp.json             - MCP server configuration
+      .devcontainer/        - Dev container setup
+      AGENTS.md             - Orchestrator instructions
+      skills-lock.json      - Skills lock file
+      apm.yml               - APM configuration
+
+## Agents and Prompts (Copilot Chat)
+
+The existing multi-agent system is preserved for complementary use:
+
+**Agents:** @spec2cloud (orchestrator), @pm, @devlead, @architect, @planner, @dev, @azure, @tech-analyst, @modernizer, @extender
+
+**Prompts:** /prd, /frd, /plan, /implement, /delegate, /deploy, /rev-eng, /modernize, /extend, /adr, /generate-agents, /bootstrap-agents
+
+## Documentation
+
+- [AGENTS.md](AGENTS. Orchestrator reference (Ralph Loop, phase flow, skills catalog)md) 
+- [INTEGRATION.md](INTEGRATION. Installation and integration guidemd) 
+- [SPEC2CLOUD.md](SPEC2CLOUD. Framework metadatamd) 
+- [docs/]( Extended documentation (architecture, workflows, examples)docs/) 
+
+## Contributing
+
+Contributions welcome! You can:
+- Create new skills following the [agentskills.io spec](https://agentskills.io/specification)
+- Build new shell templates for different tech stacks
+- Improve existing agents, prompts, or documentation
+- Publish skills to [skills.sh](https://skills.sh/)
+
+## License
+
+See [LICENSE.md](LICENSE.md) for details.
 
 ---
 
-**From idea to production in minutes, not months.** 🚀
+**From idea to  spec-driven, AI-powered, human-approved.**production 

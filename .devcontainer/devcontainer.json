@@ -1,74 +1,21 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "Spec2Win",
-	// Build from a Dockerfile to remove stale apt sources before features install.
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/azure-cli:1": {
-			"installBicep": true,
-			"version": "latest",
-			"bicepVersion": "latest"
-		},
-		"ghcr.io/devcontainers-community/npm-features/typescript:1": {
-			"version": "latest"
-		},
-		"ghcr.io/azure/azure-dev/azd:0": {
-			"version": "stable"
-		},
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"moby": true,
-			"azureDnsAutoDetection": true,
-			"installDockerBuildx": true,
-			"installDockerComposeSwitch": true,
-			"version": "latest",
-			"dockerDashComposeVersion": "none"
-		},
-		"ghcr.io/devcontainers/features/dotnet:2": {
-			"version": "9.0"
-		},
-		"ghcr.io/dotnet/aspire-devcontainer-feature/dotnetaspire:1": {
-			"version": "latest"
-		},
-		"ghcr.io/devcontainers-extra/features/mkdocs:2": {
-			"version": "latest",
-			"plugins": "mkdocs-material pymdown-extensions mkdocstrings[crystal,python] mkdocs-monorepo-plugin mkdocs-pdf-export-plugin mkdocs-awesome-pages-plugin mkdocs-minify-plugin mkdocs-git-revision-date-localized-plugin"
-		}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"GitHub.copilot-chat",
-				"ms-vscode.vscode-node-azure-pack",
-				"ms-windows-ai-studio.windows-ai-studio",
-				"ms-dotnettools.csdevkit"
-			]
-		}
-	},
+  "name": "Node.js (TypeScript)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers-community/npm-features/typescript:1": {},
+    "ghcr.io/azure/azure-dev/azd:0": {},
+    "ghcr.io/devcontainers/features/copilot-cli:1": {},
+    "ghcr.io/devcontainers/features/python": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker": {
+      "moby": false
+    }
+  },
 
-	// Install APM CLI after container creation
-	"postCreateCommand": "pip install --user apm-cli && apm --version",
+  "postStartCommand": "copilot plugin marketplace add microsoft/github-copilot-for-azure && copilot plugin install azure@github-copilot-for-azure",
 
-	// Pass through GitHub tokens from local environment
-	"remoteEnv": {
-		"GITHUB_COPILOT_PAT": "${localEnv:GITHUB_COPILOT_PAT}",
-		"GITHUB_APM_PAT": "${localEnv:GITHUB_APM_PAT}"
-	}
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
 }

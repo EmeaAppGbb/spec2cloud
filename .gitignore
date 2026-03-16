@@ -1,6 +1,50 @@
-
-# APM dependencies
+# Dependencies
+node_modules/
+.pnp.*
 apm_modules/
-**/AGENTS.md
-AGENTS.md
+
+# Build
+.next/
+out/
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test results
+test-results/
+playwright-report/
+coverage/
+
+# AZD
+.azure/
+
+# Aspire
+.aspire/
+.agents/
+
+# APM generated
 .apm
+
+# Docs (auto-generated)
+docs/features/
+docs/design/
+docs/screenshots/
+docs/nav.yml
+site/
+
+# UI/UX prototypes (generated, not committed)
+specs/ui/prototypes/
