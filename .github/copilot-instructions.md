@@ -93,6 +93,45 @@ When the project requires AI agents, agentic workflows, or human-in-the-loop AI 
 - Always define agent state as a TypeScript interface in `src/shared/types/`
 - Use streaming for all agent responses — no blocking LLM calls in request handlers
 
+## Brownfield Rules
+- **Extraction is not assessment** — Phase B1 documents what exists. No opinions, no recommendations.
+- **User chooses the path** — Never run assessment or planning without the user selecting which path(s) to pursue.
+- **ADRs for all decisions** — Every significant technical decision (brownfield or greenfield) gets an ADR in specs/adrs/.
+- **Existing code is truth** — When docs, comments, and code disagree, code wins. Document reality, not intent.
+- **Existing tests are sacred** — Never modify or delete existing tests. New tests are added alongside.
+- **Incremental always** — Every change must leave the application in a working state. No big-bang transformations.
+
+## Brownfield File Organization
+```
+specs/
+  prd.md                    # Product Requirements (generated from code in brownfield)
+  frd-{feature}.md          # Feature Requirements (with Current Implementation section)
+  adrs/                     # Architecture Decision Records
+    adr-001-{slug}.md
+    adr-002-{slug}.md
+  assessment/               # Assessment outputs (per selected path)
+    modernization.md
+    security.md
+    cloud-native.md
+  docs/                     # Extraction outputs (factual documentation)
+    technology/
+      stack.md
+      dependencies.md
+    architecture/
+      overview.md
+      components.md
+      data-models.md
+    testing/
+      coverage.md
+  increment-plan.md         # Unified increment plan (all paths)
+```
+
+## Bug Fix Protocol
+- Bug fixes use the `bug-fix` skill — lightweight path through the pipeline
+- Every bug fix MUST: link to an FRD, create a failing test, fix minimally, verify regression
+- Commit format: `[bugfix] {frd-id}: {description}`
+- Tracked as micro-increments in state.json
+
 ## Shell-Specific Extensions
 <!-- Shells should add stack-specific instructions below this line -->
 <!-- Examples: language-specific conventions, framework patterns, test commands -->

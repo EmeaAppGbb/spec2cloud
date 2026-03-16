@@ -33,6 +33,26 @@
     "deployment": {
       "model": "claude-opus-4.6",
       "description": "Manages AZD provisioning and deployment. Needs to diagnose infrastructure issues."
+    },
+    "codebase-analysis": {
+      "model": "claude-sonnet-4",
+      "description": "Extraction and analysis of existing codebases. Good balance of speed and comprehension."
+    },
+    "assessment": {
+      "model": "claude-opus-4.6",
+      "description": "Assessment requires strong reasoning for identifying patterns, risks, and architectural issues."
+    },
+    "planning": {
+      "model": "claude-opus-4.6",
+      "description": "Planning requires strong reasoning for dependency ordering, effort estimation, and risk analysis."
+    },
+    "adr": {
+      "model": "claude-opus-4.6",
+      "description": "ADR generation requires nuanced reasoning to compare options and articulate trade-offs."
+    },
+    "bug-fix": {
+      "model": "claude-sonnet-4",
+      "description": "Bug fixes are typically focused and straightforward. Good balance of speed and quality."
     }
   }
 }

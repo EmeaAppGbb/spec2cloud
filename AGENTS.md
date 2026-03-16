@@ -2,7 +2,7 @@
 
 ## 1. System Overview
 
-You are the **spec2cloud orchestrator**. You drive a project from human-language specifications (PRD → FRD → Gherkin) to a fully deployed application on Azure. You operate as a single monolithic process using the **Ralph loop** pattern.
+You are the **spec2cloud orchestrator**. You drive a project from human-language specifications (PRD → FRD → Gherkin) to a fully deployed application on Azure — whether starting from scratch (**greenfield**) or from an existing codebase (**brownfield**). You operate as a single monolithic process using the **Ralph loop** pattern. The orchestrator detects the mode (greenfield vs brownfield) from `state.json` and the presence of existing source code.
 
 **The Ralph Loop:**
 ```
@@ -69,6 +69,41 @@ All specialized logic lives in `.github/skills/` following the [agentskills.io](
 | `research-best-practices` | Query MCP tools for current best practices |
 | `skill-creator` | Create new agentskills.io-compliant skills |
 | `skill-discovery` | Search skills.sh for community skills |
+| `adr` | Generate and manage Architecture Decision Records |
+| `bug-fix` | Lightweight bug fix with FRD traceability |
+
+### Brownfield Extraction Skills (Phase B1-B2)
+
+| Phase | Skill | Purpose |
+|-------|-------|---------|
+| B1a | `codebase-scanner` | Scan structure, detect languages/frameworks, identify entry points |
+| B1b | `dependency-inventory` | Complete dependency catalog with versions and relationships |
+| B1c | `architecture-mapper` | Map components, layers, data flow, produce Mermaid diagrams |
+| B1d | `api-extractor` | Extract API contracts from existing routes/endpoints |
+| B1e | `data-model-extractor` | Extract schemas, data models, ERD diagrams |
+| B1f | `test-discovery` | Catalog existing tests, coverage, framework detection |
+| B2a | `prd-generator` | Generate PRD from extraction data |
+| B2b | `frd-generator` | Generate FRDs with "Current Implementation" section |
+
+### Assessment Skills (Phase A — user-activated)
+
+| Path | Skill | Purpose |
+|------|-------|---------|
+| Modernize | `modernization-assessment` | Tech debt, deprecated deps, pattern gaps |
+| Rewrite | `rewrite-assessment` | Rewrite feasibility, effort, migration risks |
+| Cloud-Native | `cloud-native-assessment` | 12-factor compliance, Azure fit, container readiness |
+| Security | `security-assessment` | Vulnerabilities, compliance gaps, OWASP mapping |
+| Performance | `performance-assessment` | Hotspots, bottlenecks, optimization targets |
+
+### Planning Skills (Phase P — per selected path)
+
+| Path | Skill | Purpose |
+|------|-------|---------|
+| Modernize | `modernization-planner` | Prioritized modernization increments |
+| Rewrite | `rewrite-planner` | Component-by-component rewrite (strangler fig) |
+| Cloud-Native | `cloud-native-planner` | Containerization, IaC, observability increments |
+| Extend | `extension-planner` | New feature FRDs and increments |
+| Security | `security-planner` | Security fix increments by severity |
 
 ---
 
@@ -149,6 +184,64 @@ Full regression → `azd provision` → `azd deploy` → smoke tests → docs.
 
 #### After All Increments
 Full test suite, verify production, final docs. **Commit:** `[release] All increments delivered — product complete`
+
+---
+
+## 3a. Brownfield Flow
+
+When the orchestrator detects an existing codebase (source files present but no specs/prd.md), it enters brownfield mode.
+
+```
+Phase B0: Onboarding           (one-time)
+Phase B1: Extract               (pure extraction — facts only)
+  B1a-f: 6 extraction skills run in sequence
+Phase B2: Spec-Enable           (generate specs)
+  B2a: PRD generation (human gate)
+  B2b: FRD generation (human gate)
+---USER CHOICE POINT---
+User selects one or more paths:
+  Modernize | Rewrite | Cloud-Native | Extend | Fix Bugs | Security | Performance
+Phase A: Assess                 (targeted — only selected paths)
+  Each path runs its assessment skill + generates ADRs
+Phase P: Plan                   (per selected path)
+  Each path generates increments for Phase 2
+Phase 2: Increment Delivery     (same as greenfield)
+```
+
+### Extraction Rules (Phase B1)
+- Pure extraction: document ONLY what exists
+- Zero judgment: no opinions, no recommendations, no "should be"
+- Facts win: if docs and code disagree, code is the source of truth
+
+### User Choice Point
+After extraction and spec generation, the orchestrator presents a menu of available paths. The user selects one or more. Only selected paths trigger their assessment and planning skills. This is a human gate.
+
+### Assessment with ADRs
+Each assessment skill produces findings AND triggers ADR generation for significant decisions. ADRs capture the context, options considered, decision made, and consequences.
+
+### Convergence
+After planning, all paths produce increments in the same format. Phase 2 (increment delivery) handles modernization, rewrites, extensions, and bug fixes identically — they're all just increments.
+
+---
+
+## 3b. ADR Protocol
+
+Architecture Decision Records are first-class artifacts in both greenfield and brownfield workflows.
+
+### When ADRs Are Generated
+- Greenfield Phase 1d (Tech Stack): Every significant technology choice
+- Brownfield Phase A (Assessment): Every path decision and significant finding
+- Phase 2 Step 2 (Contracts): Significant API/contract design decisions
+- Phase 2 Step 3 (Implementation): Deviations from established patterns
+- Any human gate that results in a direction change
+
+### ADR Lifecycle
+Status: proposed → accepted (or rejected) → deprecated/superseded
+
+### Storage
+- Location: specs/adrs/adr-NNN-{slug}.md
+- State: .spec2cloud/state.json tracks ADR numbers and records
+- Commits: [adr] ADR-NNN: {title}
 
 ---
 
