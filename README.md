@@ -178,10 +178,21 @@ The existing multi-agent system is preserved for complementary use:
 
 ## Documentation
 
-- [AGENTS.md](AGENTS. Orchestrator reference (Ralph Loop, phase flow, skills catalog)md) 
-- [INTEGRATION.md](INTEGRATION. Installation and integration guidemd) 
-- [SPEC2CLOUD.md](SPEC2CLOUD. Framework metadatamd) 
-- [docs/]( Extended documentation (architecture, workflows, examples)docs/) 
+Explore the **[full documentation](docs/README.md)** with animated infographics and visual guides:
+
+| Guide | Description |
+|-------|-------------|
+| [Visual Overview](docs/overview.md) | See the big picture with animated SVG infographics |
+| [Quick Start](docs/quickstart.md) | Get running in 5 minutes |
+| [Architecture](docs/architecture.md) | The Ralph Loop, state persistence, and how it all fits |
+| [Greenfield Guide](docs/greenfield.md) | Build new applications from spec to Azure |
+| [Brownfield Guide](docs/brownfield.md) | Modernize, extend, or rewrite existing code |
+| [Skills Catalog](docs/skills.md) | All 43 skills with visual architecture map |
+| [State & Human Gates](docs/state-and-gates.md) | Resumability, auditability, and approval checkpoints |
+| [Shell Templates](docs/shells.md) | Pre-configured project scaffolds |
+| [Examples](docs/examples.md) | Step-by-step walkthroughs with visuals |
+
+Reference files: [AGENTS.md](AGENTS.md) | [INTEGRATION.md](INTEGRATION.md) | [SPEC2CLOUD.md](SPEC2CLOUD.md)
 
 ## Contributing
 

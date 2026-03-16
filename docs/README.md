@@ -1,24 +1,26 @@
-# Documentation
+# spec2cloud Documentation
 
-This directory contains the spec2cloud documentation, structured for MkDocs.
+> Transform specifications into production-ready cloud applications.
 
-## Building Docs
+spec2cloud is an AI-powered, spec-driven development framework that systematically converts product specifications into fully functional applications deployed on Azure. The framework orchestrates 43 specialized skills through an intelligent orchestrator (the Ralph Loop), enabling both greenfield and brownfield development workflows.
 
-```
-pip install mkdocs mkdocs-material
-mkdocs serve
-```
+## Start Here
 
-## Structure
+- [Visual Overview](overview.md) — See the big picture with the Ralph Loop and key architectural patterns
+- [Quick Start](quickstart.md) — Get running in 5 minutes
 
-- index.md — Home page
-- PRIMER.md — Quick overview
-- getting-started.md — Installation guide
-- architecture.md — Technical architecture
-- workflows.md — Greenfield and brownfield pipelines
-- shells.md — Shell template guide
-- specs-structure.md — Specification file organization
-- examples.md — Usage examples
-- benefits.md — Framework benefits
-- contributing.md — How to contribute
-- apm.md — APM integration
+## Core Concepts
+
+- [Architecture](architecture.md) — The Ralph Loop, state management, and system design
+- [Skills Catalog](skills.md) — All 43 skills explained with their roles and interactions
+- [State & Human Gates](state-and-gates.md) — Resumability, auditability, and approval checkpoints
+
+## Workflows
+
+- [Greenfield Guide](greenfield.md) — Building new applications from specification to cloud deployment
+- [Brownfield Guide](brownfield.md) — Modernizing, extending, or rewriting existing codebases
+
+## Reference
+
+- [Shell Templates](shells.md) — Pre-configured project scaffolds for rapid onboarding
+- [Examples & Walkthroughs](examples.md) — Step-by-step scenarios with visual guides

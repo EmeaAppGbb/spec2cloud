@@ -1,44 +1,46 @@
 # Shell Templates
 
-Shells are pre-wired project scaffolds that provide a specific tech stack integrated with the spec2cloud framework. Each shell includes:
-
-- Project structure for the chosen stack
-- Test frameworks (unit, BDD, e2e) pre-configured
-- Azure infrastructure templates (Bicep)
-- CI/CD workflows (GitHub Actions)
-- Dev container setup
-- Stack-specific skill references and AGENTS.md section 7
+Shells are pre-configured project scaffolds that give you a running start. Each shell provides the project structure, test frameworks, Azure infrastructure, and CI/CD workflows for a specific tech stack.
 
 ## Available Shells
 
-| Shell | Stack | Repo |
-|-------|-------|------|
-| Next.js + TypeScript | Next.js, Express, Playwright, Cucumber, Vitest | [spec2cloud-shell-nextjs-typescript](https://github.com/EmeaAppGbb/spec2cloud-shell-nextjs-typescript) |
-| .NET | ASP.NET Core, Blazor | [shell-dotnet](https://github.com/EmeaAppGbb/shell-dotnet) |
-| Agentic .NET | .NET + AI Agents (LangGraph) | [agentic-shell-dotnet](https://github.com/EmeaAppGbb/agentic-shell-dotnet) |
-| Agentic Python | Python + AI Agents (LangGraph) | [agentic-shell-python](https://github.com/EmeaAppGbb/agentic-shell-python) |
+| Shell | Tech Stack | Repository |
+|-------|-----------|-----------|
+| **Next.js + TypeScript** | Next.js, Express, Playwright, Cucumber, Vitest | [spec2cloud-shell-nextjs-typescript](https://github.com/EmeaAppGbb/spec2cloud-shell-nextjs-typescript) |
+| **.NET** | ASP.NET Core, Blazor, .NET testing | [shell-dotnet](https://github.com/EmeaAppGbb/shell-dotnet) |
+| **Agentic .NET** | .NET + AI Agents (LangGraph) | [agentic-shell-dotnet](https://github.com/EmeaAppGbb/agentic-shell-dotnet) |
+| **Agentic Python** | Python + AI Agents (LangGraph) | [agentic-shell-python](https://github.com/EmeaAppGbb/agentic-shell-python) |
 
-## What a Shell Provides
+## What's in a Shell
 
-A shell template fills in the stack-specific parts of the framework:
+Every shell provides:
 
-1. **AGENTS.md Section  Stack reference with project structure, test commands, dev server commands, build commands, deploy commands7** 
-2. **.github/copilot-instructions.md  Language/framework-specific coding conventionsextensions** 
-3. **apphost. .NET Aspire service orchestration configurationcs** 
-4. **azure. Azure Developer CLI service definitionsyaml** 
-5. ** Bicep templates for Azure infrastructureinfra/** 
-6. **Test framework  Cucumber, Playwright, and unit test configurationswiring** 
+- **Project structure** — Organized directories for your stack
+- **Test frameworks** — Unit, BDD, and e2e testing pre-configured
+- **Azure infrastructure** — Bicep templates for provisioning
+- **CI/CD workflows** — GitHub Actions for build, test, and deploy
+- **Dev container** — Consistent development environment
+- **Stack-specific AGENTS.md** — Section 7 with commands for your stack
+- **Copilot instructions** — Stack-specific guidance for AI assistants
 
-## Creating a New Shell
+## Skills Work With Any Stack
 
-To create a shell for a new tech stack:
+The 43 skills are stack-agnostic. Shells provide the stack-specific wiring (which test runner to use, which build commands, which Azure resources), but the skills themselves—spec refinement, gherkin generation, implementation strategy—work identically regardless of your technology choice.
 
-1. Start from the spec2cloud framework (this repo)
-2. Add your project scaffolding in `src/`
-3. Configure test frameworks
-4. Fill in AGENTS.md Section 7 with stack-specific commands
-5. Add stack-specific conventions to `copilot-instructions.md`
-6. Create Azure infrastructure templates
-7. Wire up CI/CD workflows
+## Starting from a Shell
 
-The framework's 43 skills work with ANY  shells just provide the stack-specific wiring.stack 
+1. Clone the shell repository
+2. Run the installer: `./scripts/install.sh --full`
+3. Open in VS Code with the dev container
+4. Write your PRD in `specs/prd.md`
+5. Start with `/prd` in Copilot Chat
+
+## Adding to an Existing Project
+
+If you already have a project, use merge mode:
+
+```bash
+./scripts/install.sh --merge
+```
+
+This adds spec2cloud's skills, agents, and state management without overwriting your existing files. The installer detects your stack and configures accordingly.

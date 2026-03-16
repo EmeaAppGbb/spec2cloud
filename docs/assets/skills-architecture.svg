@@ -1,0 +1,423 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <style>
+    @keyframes fadeInStagger {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scanPulse {
+      0% { stroke-dashoffset: 300; opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 0.3; }
+    }
+
+    @keyframes categoryGlow {
+      0%, 100% { filter: drop-shadow(0 0 2px rgba(88, 166, 255, 0.2)); }
+      50% { filter: drop-shadow(0 0 6px rgba(88, 166, 255, 0.5)); }
+    }
+
+    @keyframes flowArrow {
+      0% { stroke-dashoffset: 8; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes skillPulse {
+      0%, 100% { filter: drop-shadow(0 0 2px rgba(88, 166, 255, 0.3)); }
+      50% { filter: drop-shadow(0 0 8px rgba(88, 166, 255, 0.8)); }
+    }
+
+    .bg { fill: #0d1117; }
+    .text-primary { fill: #e6edf3; font-family: Arial, sans-serif; font-size: 11px; }
+    .text-title { fill: #e6edf3; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; }
+    .text-category { fill: #c9d1d9; font-family: Arial, sans-serif; font-size: 10px; font-weight: bold; }
+
+    .card-greenfield { fill: #1c2128; stroke: #30363d; stroke-width: 1.5; }
+    .card-brownfield { fill: #1c2128; stroke: #30363d; stroke-width: 1.5; }
+
+    .flow-box { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+    .flow-arrow { fill: none; stroke: #58a6ff; stroke-width: 2; stroke-dasharray: 8, 4; }
+
+    .phase-skill { fill: #58a6ff; opacity: 0.1; }
+    .delivery-skill { fill: #7ee787; opacity: 0.1; }
+    .protocol-skill { fill: #d2a8ff; opacity: 0.1; }
+    .utility-skill { fill: #f0883e; opacity: 0.1; }
+    .extraction-skill { fill: #79c0ff; opacity: 0.1; }
+    .spec-gen-skill { fill: #d2a8ff; opacity: 0.1; }
+    .assessment-skill { fill: #f0883e; opacity: 0.1; }
+    .planning-skill { fill: #7ee787; opacity: 0.1; }
+    .cross-skill { fill: #ff7b72; opacity: 0.1; }
+
+    .card-group { animation: categoryGlow 4s ease-in-out infinite; }
+
+    .skill-card { animation: fadeInStagger 0.8s ease-out forwards; }
+    .skill-card-delay-1 { animation-delay: 0.1s; }
+    .skill-card-delay-2 { animation-delay: 0.2s; }
+    .skill-card-delay-3 { animation-delay: 0.3s; }
+    .skill-card-delay-4 { animation-delay: 0.4s; }
+    .skill-card-delay-5 { animation-delay: 0.5s; }
+    .skill-card-delay-6 { animation-delay: 0.6s; }
+
+    .flow-step { animation: fadeInStagger 0.8s ease-out forwards; }
+    .flow-step-1 { animation-delay: 0s; }
+    .flow-step-2 { animation-delay: 0.15s; }
+    .flow-step-3 { animation-delay: 0.3s; }
+    .flow-step-4 { animation-delay: 0.45s; }
+
+    .flow-arrow-anim { animation: flowArrow 2s linear infinite; }
+  </style>
+</defs>
+
+<!-- Background -->
+<rect class="bg" width="1000" height="600"/>
+
+<!-- Title -->
+<text class="text-title" x="500" y="25" text-anchor="middle">Skills Architecture - spec2cloud</text>
+
+<!-- ============== SKILL DISCOVERY FLOW (TOP) ============== -->
+<g id="discovery-flow">
+  <text class="text-category" x="20" y="50">SKILL DISCOVERY FLOW</text>
+
+  <!-- Step 1: Orchestrator needs skill -->
+  <g class="flow-step flow-step-1">
+    <rect class="flow-box" x="20" y="60" width="140" height="45" rx="4"/>
+    <text class="text-primary" x="90" y="88" text-anchor="middle">Orchestrator</text>
+    <text class="text-primary" x="90" y="100" text-anchor="middle" style="font-size: 9px;">needs skill</text>
+  </g>
+
+  <!-- Arrow -->
+  <path class="flow-arrow flow-arrow-anim" d="M 160 82 L 200 82" stroke-dasharray="8,4"/>
+
+  <!-- Step 2: Check .github/skills/ -->
+  <g class="flow-step flow-step-2">
+    <rect class="flow-box" x="200" y="60" width="140" height="45" rx="4"/>
+    <text class="text-primary" x="270" y="82" text-anchor="middle" style="font-size: 10px;">Check</text>
+    <text class="text-primary" x="270" y="96" text-anchor="middle" style="font-size: 9px;">.github/skills/</text>
+  </g>
+
+  <!-- Arrow -->
+  <path class="flow-arrow flow-arrow-anim" d="M 340 82 L 380 82" stroke-dasharray="8,4" style="animation-delay: 0.3s;"/>
+
+  <!-- Step 3: Search skills.sh -->
+  <g class="flow-step flow-step-3">
+    <rect class="flow-box" x="380" y="60" width="140" height="45" rx="4"/>
+    <text class="text-primary" x="450" y="82" text-anchor="middle" style="font-size: 10px;">Search</text>
+    <text class="text-primary" x="450" y="96" text-anchor="middle" style="font-size: 9px;">skills.sh</text>
+  </g>
+
+  <!-- Arrow -->
+  <path class="flow-arrow flow-arrow-anim" d="M 520 82 L 560 82" stroke-dasharray="8,4" style="animation-delay: 0.6s;"/>
+
+  <!-- Step 4: Use or Create -->
+  <g class="flow-step flow-step-4">
+    <rect class="flow-box" x="560" y="60" width="140" height="45" rx="4"/>
+    <text class="text-primary" x="630" y="88" text-anchor="middle">Use or</text>
+    <text class="text-primary" x="630" y="100" text-anchor="middle">Create</text>
+  </g>
+</g>
+
+<!-- ============== GREENFIELD SECTION ============== -->
+<g id="greenfield-section">
+  <text class="text-title" x="20" y="135">GREENFIELD (22 skills)</text>
+
+  <!-- PHASE SKILLS (Blue) -->
+  <g class="card-group">
+    <text class="text-category" x="20" y="160" style="fill: #58a6ff;">Phase Skills</text>
+    <!-- spec-refinement -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-greenfield phase-skill" x="20" y="170" width="90" height="35" rx="3"/>
+      <rect class="card-greenfield" x="20" y="170" width="90" height="35" rx="3" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+      <text class="text-primary" x="65" y="193" text-anchor="middle" style="font-size: 10px;">Spec Refine</text>
+    </g>
+    <!-- ui-ux-design -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-greenfield phase-skill" x="115" y="170" width="90" height="35" rx="3"/>
+      <rect class="card-greenfield" x="115" y="170" width="90" height="35" rx="3" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+      <text class="text-primary" x="160" y="193" text-anchor="middle" style="font-size: 10px;">UI/UX Design</text>
+    </g>
+    <!-- tech-stack-resolution -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-greenfield phase-skill" x="210" y="170" width="90" height="35" rx="3"/>
+      <rect class="card-greenfield" x="210" y="170" width="90" height="35" rx="3" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+      <text class="text-primary" x="255" y="193" text-anchor="middle" style="font-size: 10px;">Tech Stack</text>
+    </g>
+  </g>
+
+  <!-- DELIVERY SKILLS (Green) -->
+  <g class="card-group">
+    <text class="text-category" x="20" y="225" style="fill: #7ee787;">Delivery Skills</text>
+    <!-- e2e-generation -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-greenfield delivery-skill" x="20" y="235" width="80" height="35" rx="3"/>
+      <rect class="card-greenfield" x="20" y="235" width="80" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="60" y="258" text-anchor="middle" style="font-size: 9px;">E2E Gen</text>
+    </g>
+    <!-- gherkin-generation -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-greenfield delivery-skill" x="105" y="235" width="80" height="35" rx="3"/>
+      <rect class="card-greenfield" x="105" y="235" width="80" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="145" y="258" text-anchor="middle" style="font-size: 9px;">Gherkin Gen</text>
+    </g>
+    <!-- test-generation -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-greenfield delivery-skill" x="190" y="235" width="80" height="35" rx="3"/>
+      <rect class="card-greenfield" x="190" y="235" width="80" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="230" y="258" text-anchor="middle" style="font-size: 9px;">Test Gen</text>
+    </g>
+    <!-- contract-generation -->
+    <g class="skill-card skill-card-delay-4">
+      <rect class="card-greenfield delivery-skill" x="275" y="235" width="80" height="35" rx="3"/>
+      <rect class="card-greenfield" x="275" y="235" width="80" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="315" y="258" text-anchor="middle" style="font-size: 9px;">Contract Gen</text>
+    </g>
+    <!-- implementation -->
+    <g class="skill-card skill-card-delay-5">
+      <rect class="card-greenfield delivery-skill" x="360" y="235" width="80" height="35" rx="3"/>
+      <rect class="card-greenfield" x="360" y="235" width="80" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="400" y="258" text-anchor="middle" style="font-size: 9px;">Implement</text>
+    </g>
+    <!-- azure-deployment -->
+    <g class="skill-card skill-card-delay-6">
+      <rect class="card-greenfield delivery-skill" x="445" y="235" width="80" height="35" rx="3"/>
+      <rect class="card-greenfield" x="445" y="235" width="80" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="485" y="258" text-anchor="middle" style="font-size: 9px;">Azure Deploy</text>
+    </g>
+  </g>
+
+  <!-- PROTOCOL SKILLS (Purple) -->
+  <g class="card-group">
+    <text class="text-category" x="20" y="290" style="fill: #d2a8ff;">Protocol Skills</text>
+    <!-- state-management -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-greenfield protocol-skill" x="20" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="20" y="300" width="75" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="57" y="323" text-anchor="middle" style="font-size: 9px;">State Mgmt</text>
+    </g>
+    <!-- commit-protocol -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-greenfield protocol-skill" x="100" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="100" y="300" width="75" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="137" y="323" text-anchor="middle" style="font-size: 9px;">Commit Proto</text>
+    </g>
+    <!-- audit-log -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-greenfield protocol-skill" x="180" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="180" y="300" width="75" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="217" y="323" text-anchor="middle" style="font-size: 9px;">Audit Log</text>
+    </g>
+    <!-- human-gate -->
+    <g class="skill-card skill-card-delay-4">
+      <rect class="card-greenfield protocol-skill" x="260" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="260" y="300" width="75" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="297" y="323" text-anchor="middle" style="font-size: 9px;">Human Gate</text>
+    </g>
+    <!-- resume -->
+    <g class="skill-card skill-card-delay-5">
+      <rect class="card-greenfield protocol-skill" x="340" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="340" y="300" width="75" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="377" y="323" text-anchor="middle" style="font-size: 9px;">Resume</text>
+    </g>
+    <!-- error-handling -->
+    <g class="skill-card skill-card-delay-6">
+      <rect class="card-greenfield protocol-skill" x="420" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="420" y="300" width="75" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="457" y="323" text-anchor="middle" style="font-size: 9px;">Error Handle</text>
+    </g>
+  </g>
+
+  <!-- UTILITY SKILLS (Orange) -->
+  <g class="card-group">
+    <text class="text-category" x="20" y="355" style="fill: #f0883e;">Utility Skills</text>
+    <!-- spec-validator -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-greenfield utility-skill" x="20" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="20" y="365" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="57" y="388" text-anchor="middle" style="font-size: 9px;">Spec Valid</text>
+    </g>
+    <!-- test-runner -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-greenfield utility-skill" x="100" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="100" y="365" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="137" y="388" text-anchor="middle" style="font-size: 9px;">Test Runner</text>
+    </g>
+    <!-- build-check -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-greenfield utility-skill" x="180" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="180" y="365" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="217" y="388" text-anchor="middle" style="font-size: 9px;">Build Check</text>
+    </g>
+    <!-- deploy-diagnostics -->
+    <g class="skill-card skill-card-delay-4">
+      <rect class="card-greenfield utility-skill" x="260" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="260" y="365" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="297" y="388" text-anchor="middle" style="font-size: 9px;">Deploy Diag</text>
+    </g>
+    <!-- research-best-practices -->
+    <g class="skill-card skill-card-delay-5">
+      <rect class="card-greenfield utility-skill" x="340" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="340" y="365" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="377" y="388" text-anchor="middle" style="font-size: 9px;">Best Pract</text>
+    </g>
+    <!-- skill-creator -->
+    <g class="skill-card skill-card-delay-6">
+      <rect class="card-greenfield utility-skill" x="420" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-greenfield" x="420" y="365" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="457" y="388" text-anchor="middle" style="font-size: 9px;">Skill Create</text>
+    </g>
+  </g>
+</g>
+
+<!-- ============== BROWNFIELD SECTION ============== -->
+<g id="brownfield-section">
+  <text class="text-title" x="550" y="135">BROWNFIELD (20 skills)</text>
+
+  <!-- EXTRACTION (Cyan) -->
+  <g class="card-group">
+    <text class="text-category" x="550" y="160" style="fill: #79c0ff;">Extraction</text>
+    <!-- codebase-scanner -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-brownfield extraction-skill" x="550" y="170" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="550" y="170" width="85" height="35" rx="3" fill="none" stroke="#79c0ff" stroke-width="1.5"/>
+      <text class="text-primary" x="592" y="193" text-anchor="middle" style="font-size: 9px;">Code Scanner</text>
+    </g>
+    <!-- dependency-inventory -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-brownfield extraction-skill" x="640" y="170" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="640" y="170" width="85" height="35" rx="3" fill="none" stroke="#79c0ff" stroke-width="1.5"/>
+      <text class="text-primary" x="682" y="193" text-anchor="middle" style="font-size: 9px;">Depend Inv</text>
+    </g>
+    <!-- architecture-mapper -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-brownfield extraction-skill" x="730" y="170" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="730" y="170" width="85" height="35" rx="3" fill="none" stroke="#79c0ff" stroke-width="1.5"/>
+      <text class="text-primary" x="772" y="193" text-anchor="middle" style="font-size: 9px;">Arch Map</text>
+    </g>
+    <!-- api-extractor -->
+    <g class="skill-card skill-card-delay-4">
+      <rect class="card-brownfield extraction-skill" x="820" y="170" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="820" y="170" width="85" height="35" rx="3" fill="none" stroke="#79c0ff" stroke-width="1.5"/>
+      <text class="text-primary" x="862" y="193" text-anchor="middle" style="font-size: 9px;">API Extract</text>
+    </g>
+    <!-- data-model-extractor -->
+    <g class="skill-card skill-card-delay-5">
+      <rect class="card-brownfield extraction-skill" x="910" y="170" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="910" y="170" width="85" height="35" rx="3" fill="none" stroke="#79c0ff" stroke-width="1.5"/>
+      <text class="text-primary" x="952" y="193" text-anchor="middle" style="font-size: 9px;">Data Model</text>
+    </g>
+  </g>
+
+  <!-- SPEC GENERATION (Purple) -->
+  <g class="card-group">
+    <text class="text-category" x="550" y="225" style="fill: #d2a8ff;">Spec Generation</text>
+    <!-- prd-generator -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-brownfield spec-gen-skill" x="550" y="235" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="550" y="235" width="85" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="592" y="258" text-anchor="middle" style="font-size: 9px;">PRD Gen</text>
+    </g>
+    <!-- frd-generator -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-brownfield spec-gen-skill" x="640" y="235" width="85" height="35" rx="3"/>
+      <rect class="card-brownfield" x="640" y="235" width="85" height="35" rx="3" fill="none" stroke="#d2a8ff" stroke-width="1.5"/>
+      <text class="text-primary" x="682" y="258" text-anchor="middle" style="font-size: 9px;">FRD Gen</text>
+    </g>
+  </g>
+
+  <!-- ASSESSMENT (Orange) -->
+  <g class="card-group">
+    <text class="text-category" x="550" y="290" style="fill: #f0883e;">Assessment</text>
+    <!-- modernization-assessment -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-brownfield assessment-skill" x="550" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="550" y="300" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="587" y="323" text-anchor="middle" style="font-size: 9px;">Modern Assess</text>
+    </g>
+    <!-- rewrite-assessment -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-brownfield assessment-skill" x="630" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="630" y="300" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="667" y="323" text-anchor="middle" style="font-size: 9px;">Rewrite Assess</text>
+    </g>
+    <!-- cloud-native-assessment -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-brownfield assessment-skill" x="710" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="710" y="300" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="747" y="323" text-anchor="middle" style="font-size: 9px;">Cloud Native</text>
+    </g>
+    <!-- security-assessment -->
+    <g class="skill-card skill-card-delay-4">
+      <rect class="card-brownfield assessment-skill" x="790" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="790" y="300" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="827" y="323" text-anchor="middle" style="font-size: 9px;">Security Assess</text>
+    </g>
+    <!-- performance-assessment -->
+    <g class="skill-card skill-card-delay-5">
+      <rect class="card-brownfield assessment-skill" x="870" y="300" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="870" y="300" width="75" height="35" rx="3" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+      <text class="text-primary" x="907" y="323" text-anchor="middle" style="font-size: 9px;">Perf Assess</text>
+    </g>
+  </g>
+
+  <!-- PLANNING (Green) -->
+  <g class="card-group">
+    <text class="text-category" x="550" y="355" style="fill: #7ee787;">Planning</text>
+    <!-- modernization-planner -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-brownfield planning-skill" x="550" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="550" y="365" width="75" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="587" y="388" text-anchor="middle" style="font-size: 9px;">Modern Plan</text>
+    </g>
+    <!-- rewrite-planner -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-brownfield planning-skill" x="630" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="630" y="365" width="75" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="667" y="388" text-anchor="middle" style="font-size: 9px;">Rewrite Plan</text>
+    </g>
+    <!-- cloud-native-planner -->
+    <g class="skill-card skill-card-delay-3">
+      <rect class="card-brownfield planning-skill" x="710" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="710" y="365" width="75" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="747" y="388" text-anchor="middle" style="font-size: 9px;">Cloud Plan</text>
+    </g>
+    <!-- extension-planner -->
+    <g class="skill-card skill-card-delay-4">
+      <rect class="card-brownfield planning-skill" x="790" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="790" y="365" width="75" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="827" y="388" text-anchor="middle" style="font-size: 9px;">Ext Plan</text>
+    </g>
+    <!-- security-planner -->
+    <g class="skill-card skill-card-delay-5">
+      <rect class="card-brownfield planning-skill" x="870" y="365" width="75" height="35" rx="3"/>
+      <rect class="card-brownfield" x="870" y="365" width="75" height="35" rx="3" fill="none" stroke="#7ee787" stroke-width="1.5"/>
+      <text class="text-primary" x="907" y="388" text-anchor="middle" style="font-size: 9px;">Sec Plan</text>
+    </g>
+  </g>
+
+  <!-- CROSS-CUTTING (Red) -->
+  <g class="card-group">
+    <text class="text-category" x="550" y="430" style="fill: #ff7b72;">Cross-cutting</text>
+    <!-- adr -->
+    <g class="skill-card skill-card-delay-1">
+      <rect class="card-brownfield cross-skill" x="550" y="440" width="80" height="35" rx="3"/>
+      <rect class="card-brownfield" x="550" y="440" width="80" height="35" rx="3" fill="none" stroke="#ff7b72" stroke-width="1.5"/>
+      <text class="text-primary" x="590" y="463" text-anchor="middle" style="font-size: 9px;">ADR</text>
+    </g>
+    <!-- bug-fix -->
+    <g class="skill-card skill-card-delay-2">
+      <rect class="card-brownfield cross-skill" x="635" y="440" width="80" height="35" rx="3"/>
+      <rect class="card-brownfield" x="635" y="440" width="80" height="35" rx="3" fill="none" stroke="#ff7b72" stroke-width="1.5"/>
+      <text class="text-primary" x="675" y="463" text-anchor="middle" style="font-size: 9px;">Bug Fix</text>
+    </g>
+  </g>
+
+  <!-- Test Discovery (part of extraction) -->
+  <g class="skill-card skill-card-delay-6">
+    <rect class="card-brownfield extraction-skill" x="550" y="440" width="0" height="0" rx="3"/>
+  </g>
+</g>
+
+<!-- Footer legend -->
+<text class="text-category" x="20" y="545" style="font-size: 9px; fill: #8b949e;">Skill cards organized by category with color-coded groups • Animations: fade-in stagger + continuous flow pulse</text>
+<text class="text-category" x="20" y="560" style="font-size: 9px; fill: #8b949e;">CSS-only animations for GitHub compatibility • Total animation cycle: ~12 seconds</text>
+
+</svg>
