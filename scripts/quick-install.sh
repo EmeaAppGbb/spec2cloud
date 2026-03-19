@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Spec2Cloud Quick Install Script
-# One-liner installation from GitHub releases
+# One-liner installation from GitHub branches or tags
 
 set -e
 
 REPO="EmeaAppGbb/spec2cloud"
-VERSION="latest"
+REF="vNext"
 MODE="full"
 TARGET_DIR="."
 
@@ -26,6 +26,10 @@ log_success() {
   echo -e "${GREEN}✓${NC} $1"
 }
 
+log_warning() {
+  echo -e "${YELLOW}⚠${NC} $1"
+}
+
 log_error() {
   echo -e "${RED}✗${NC} $1"
 }
@@ -41,7 +45,7 @@ print_header() {
 check_dependencies() {
   local missing=()
   
-  for cmd in curl unzip; do
+  for cmd in curl tar; do
     if ! command -v $cmd &> /dev/null; then
       missing+=($cmd)
     fi
@@ -64,8 +68,8 @@ parse_args() {
         MODE="minimal"
         shift
         ;;
-      --version)
-        VERSION="$2"
+      --ref|--branch|--tag|--version)
+        REF="$2"
         shift 2
         ;;
       --target)
@@ -76,26 +80,31 @@ parse_args() {
         cat << EOF
 Spec2Cloud Quick Install Script
 
-Usage: curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash -s -- [OPTIONS]
+Usage: curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash -s -- [OPTIONS]
 
 OPTIONS:
   --minimal           Install minimal package (agents and prompts only)
-  --version VERSION   Install specific version (default: latest)
+  --ref REF           Branch or tag to install from (default: vNext)
+  --branch BRANCH     Alias for --ref
+  --tag TAG           Alias for --ref
   --target DIR        Install to specific directory (default: current)
   --help              Show this help message
 
 EXAMPLES:
-  # Default installation (full package, latest version)
-  curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash
+  # Default installation (full package from vNext branch)
+  curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash
 
   # Minimal installation
-  curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash -s -- --minimal
+  curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash -s -- --minimal
 
-  # Specific version
-  curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash -s -- --version v1.0.0
+  # Install from a specific branch
+  curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash -s -- --ref feature/new-skills
+
+  # Install from a specific tag
+  curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash -s -- --tag v2.0.0
 
   # Custom directory
-  curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash -s -- --target /path/to/project
+  curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash -s -- --target /path/to/project
 
 EOF
         exit 0
@@ -109,58 +118,56 @@ EOF
   done
 }
 
-get_download_url() {
-  local package_name="spec2cloud-${MODE}"
-  
-  if [ "$VERSION" = "latest" ]; then
-    echo "https://github.com/${REPO}/releases/latest/download/${package_name}-latest.zip"
-  else
-    echo "https://github.com/${REPO}/releases/download/${VERSION}/${package_name}-${VERSION}.zip"
-  fi
-}
-
 download_and_install() {
-  local download_url=$(get_download_url)
+  local archive_url="https://github.com/${REPO}/archive/${REF}.tar.gz"
   local temp_dir=$(mktemp -d)
-  local zip_file="${temp_dir}/spec2cloud.zip"
+  local archive_file="${temp_dir}/spec2cloud.tar.gz"
   
-  log_info "Downloading spec2cloud $MODE package ($VERSION)..."
+  log_info "Downloading spec2cloud from ref: $REF ..."
   
-  if ! curl -fsSL "$download_url" -o "$zip_file"; then
-    log_error "Failed to download from: $download_url"
-    log_info "This might be because the release doesn't exist yet."
-    log_info "Check available releases at: https://github.com/${REPO}/releases"
+  if ! curl -fsSL "$archive_url" -o "$archive_file"; then
+    log_error "Failed to download from: $archive_url"
+    log_info "Check that branch or tag '${REF}' exists at: https://github.com/${REPO}"
     rm -rf "$temp_dir"
     exit 1
   fi
   
   log_success "Downloaded successfully"
   
-  log_info "Extracting package..."
-  unzip -q "$zip_file" -d "$temp_dir/spec2cloud"
+  log_info "Extracting archive..."
+  tar -xzf "$archive_file" -C "$temp_dir"
   log_success "Extracted successfully"
+  
+  # Find the extracted directory (GitHub names it {repo}-{ref})
+  local extracted_dir
+  extracted_dir=$(find "$temp_dir" -mindepth 1 -maxdepth 1 -type d | head -1)
+  
+  if [ -z "$extracted_dir" ]; then
+    log_error "Failed to find extracted directory"
+    rm -rf "$temp_dir"
+    exit 1
+  fi
   
   log_info "Installing to: $TARGET_DIR"
   
-  if [ -f "$temp_dir/spec2cloud/scripts/install.sh" ]; then
-    # Run the installer from the package
-    chmod +x "$temp_dir/spec2cloud/scripts/install.sh"
+  if [ -f "$extracted_dir/scripts/install.sh" ]; then
+    chmod +x "$extracted_dir/scripts/install.sh"
     
     if [ "$MODE" = "minimal" ]; then
-      "$temp_dir/spec2cloud/scripts/install.sh" --agents-only "$TARGET_DIR"
+      "$extracted_dir/scripts/install.sh" --agents-only "$TARGET_DIR"
     else
-      "$temp_dir/spec2cloud/scripts/install.sh" --full "$TARGET_DIR"
+      "$extracted_dir/scripts/install.sh" --full "$TARGET_DIR"
     fi
   else
-    # Fallback: manual copy for minimal package
+    # Fallback: manual copy
     log_info "Copying files..."
     
-    if [ -d "$temp_dir/spec2cloud/.github" ]; then
+    if [ -d "$extracted_dir/.github" ]; then
       mkdir -p "$TARGET_DIR/.github"
-      cp -r "$temp_dir/spec2cloud/.github/"* "$TARGET_DIR/.github/"
+      cp -r "$extracted_dir/.github/"* "$TARGET_DIR/.github/"
       log_success "Installation complete"
     else
-      log_error "Package structure is invalid"
+      log_error "Archive structure is invalid"
       rm -rf "$temp_dir"
       exit 1
     fi
@@ -176,7 +183,7 @@ parse_args "$@"
 print_header
 
 log_info "Mode: $MODE"
-log_info "Version: $VERSION"
+log_info "Ref: $REF"
 log_info "Target: $TARGET_DIR"
 echo
 
@@ -189,6 +196,7 @@ log_success "Spec2Cloud installation complete!"
 echo
 echo "Next steps:"
 echo "1. Open your project in VS Code with GitHub Copilot"
-echo "2. Use workflows like /prd, /frd, /plan, /implement, /deploy"
-echo "3. Learn more: https://github.com/${REPO}"
+echo "2. The spec2cloud orchestrator and 43 skills are now active"
+echo "3. Start a conversation with Copilot to begin your workflow"
+echo "4. Learn more: https://github.com/${REPO}"
 echo

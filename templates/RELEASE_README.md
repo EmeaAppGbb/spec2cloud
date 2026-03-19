@@ -1,71 +1,36 @@
 # Spec2Cloud - AI-Powered Development Workflows
 
-Transform any project into a spec2cloud-enabled development environment with specialized GitHub Copilot agents and workflows.
+Transform any project into a spec2cloud-enabled development environment with specialized GitHub Copilot skills.
 
-## 🎯 What's Included
+## What's Included
 
 This package contains:
 
-✅ **10 Specialized AI Agents**
-- Spec2Cloud Orchestrator - Main entry point, delegates to specialized agents
-- PM Agent - Product requirements and feature planning
-- Dev Lead Agent - Technical review and feasibility assessment
-- Architect Agent - Standards, guidelines, and AGENTS.md management
-- Planner Agent - Research and multi-step planning (no implementation)
-- Dev Agent - Implementation and code generation
-- Azure Agent - Cloud deployment and infrastructure
-- Tech Analyst Agent - Reverse engineering and codebase documentation
-- Modernization Agent - Technical debt and upgrades
-- Extension Agent - New feature requirements and integration strategies
+✅ **43 Specialized Skills** ([agentskills.io](https://agentskills.io/specification) standard)
+- 22 greenfield skills (spec refinement, UI/UX, testing, contracts, implementation, deployment)
+- 20 brownfield skills (extraction, assessment, planning, modernization)
+- find-skills (discover and install community skills)
 
-✅ **12 Workflow Prompts**
-- `/prd` - Create Product Requirements Document
-- `/frd` - Create Feature Requirements Documents
-- `/plan` - Create Technical Task Breakdown
-- `/implement` - Implement features locally
-- `/delegate` - Delegate to GitHub Copilot Coding Agent
-- `/deploy` - Deploy to Azure
-- `/rev-eng` - Reverse engineer existing codebase
-- `/modernize` - Create modernization plan
-- `/extend` - Plan new feature extensions
-- `/generate-agents` - Generate agent guidelines
-- `/bootstrap-agents` - Bootstrap agent configurations
-- `/adr` - Create Architecture Decision Records
+✅ **Orchestrator** (AGENTS.md)
+- Ralph Loop pattern: read state → decide → execute → verify → commit
+- Automatic phase management with human gates
+- State persistence and resumability
 
 ✅ **Additional Components** (Full Package Only)
 - MCP server configuration for enhanced AI capabilities
 - Dev container setup with all required tools
-- APM (Agent Package Manager) template for standards
 - Directory structure templates
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
-Run the installer script:
-
-**Linux/Mac**:
 ```bash
-# Full installation (recommended)
-./scripts/install.sh --full
+# Using npx (recommended)
+npx spec2cloud init
 
-# Minimal installation (agents and prompts only)
-./scripts/install.sh --agents-only
-
-# Install to specific directory
-./scripts/install.sh --full /path/to/your/project
-```
-
-**Windows**:
-```powershell
-# Full installation (recommended)
-.\scripts\install.ps1 -Full
-
-# Minimal installation (agents and prompts only)
-.\scripts\install.ps1 -AgentsOnly
-
-# Install to specific directory
-.\scripts\install.ps1 -Full C:\path\to\your\project
+# Minimal installation (skills only)
+npx spec2cloud init --minimal
 ```
 
 ### Verification
@@ -73,58 +38,59 @@ Run the installer script:
 After installation:
 
 1. Open your project in VS Code
-2. Open GitHub Copilot Chat (`Ctrl+Shift+I` or `Cmd+Shift+I`)
-3. Type `@` to see available agents
-4. Type `/` to see available workflows
+2. Start a conversation with GitHub Copilot
+3. The orchestrator activates automatically via AGENTS.md
+4. Describe your app idea or ask to analyze existing code
 
-You should see all 10 agents and 12 prompts listed.
-
-## 📖 Usage
-
-### Greenfield (New Features)
-
-Build new features from product ideas:
-
+```bash
+# Verify installation
+find .github/skills -name "SKILL.md" | wc -l    # Should be 43
+test -f AGENTS.md && echo "Orchestrator installed"
 ```
-1. /prd       → Define product vision and requirements
-2. /frd       → Break down into features
-3. /plan      → Create technical tasks
-4. /implement → Write the code
-5. /deploy    → Deploy to Azure
+
+## Usage
+
+### Greenfield (New Project)
+
+Start a conversation with Copilot:
 ```
+"Create a PRD for a task management app with real-time collaboration"
+```
+
+The orchestrator walks you through:
+1. **Phase 1: Discovery** — PRD → FRD → UI/UX → Increment Plan → Tech Stack
+2. **Phase 2: Delivery** — Tests → Contracts → Implementation → Deploy (per increment)
 
 ### Brownfield (Existing Code)
 
-Document and modernize existing codebases:
-
+Start a conversation with Copilot:
 ```
-1. /rev-eng   → Reverse engineer into documentation
-2. /modernize → (Optional) Create modernization plan
-3. /plan      → (Optional) Implement modernization
-4. /deploy    → (Optional) Deploy to Azure
+"Analyze this codebase and generate specs"
 ```
 
-## 📁 Directory Structure
+The orchestrator walks you through:
+1. **Extract** — Scan codebase, document architecture, APIs, data models
+2. **Spec-Enable** — Generate PRD and FRDs from code
+3. **Choose Path** — Modernize, Rewrite, Cloud-Native, Extend, Security, Performance
+4. **Assess & Plan** — Targeted assessment, generate increments
+5. **Deliver** — Same Phase 2 pipeline as greenfield
 
-After installation, your project will have:
+## Directory Structure
+
+After installation:
 
 ```
 your-project/
 ├── .github/
-│   ├── agents/              # AI agent definitions
-│   └── prompts/             # Workflow prompts
-├── .vscode/
-│   └── mcp.json            # MCP configuration (full install)
-├── .devcontainer/
-│   └── devcontainer.json   # Dev container (full install)
-├── specs/                   # Generated documentation
-│   ├── features/
-│   ├── tasks/
-│   └── docs/
-└── apm.yml                 # APM config (full install)
+│   └── skills/             # 43 agentskills.io skills
+├── .spec2cloud/            # State management
+├── .devcontainer/          # Dev container (full install)
+├── specs/                  # Generated specifications
+├── AGENTS.md               # Orchestrator instructions
+└── skills-lock.json        # Skills version lock
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### MCP Servers (Full Install)
 
@@ -134,78 +100,27 @@ Model Context Protocol servers provide enhanced capabilities:
 - **microsoft.docs.mcp** - Microsoft/Azure docs
 - **playwright** - Browser automation
 
-Requires: Docker, uvx, Node.js
-
 ### Dev Container (Full Install)
 
 Pre-configured development container includes:
-- Python 3.12
-- Node.js and TypeScript
+- Python 3.12, Node.js, TypeScript
 - Azure CLI & Azure Developer CLI
 - Docker-in-Docker
 - VS Code extensions (Copilot, Azure, AI Toolkit)
 
-### APM - Agent Package Manager (Full Install)
-
-Manage engineering standards across projects:
-
-```bash
-# Install standards
-apm install
-
-# Generate consolidated agent guidelines
-apm compile
-```
-
-## 🎓 Examples
-
-### Example 1: New Feature
-
-```
-User: "I want to add user authentication to my app"
-
-@pm /prd
-→ Creates PRD with authentication requirements
-
-@pm /frd  
-→ Breaks down into login, signup, password reset features
-
-@dev /plan
-→ Creates technical tasks for each feature
-
-@dev /implement
-→ Implements authentication code
-
-@azure /deploy
-→ Deploys to Azure with proper security
-```
-
-### Example 2: Document Legacy Code
-
-```
-User: "I inherited a Python app with no documentation"
-
-@rev-eng /rev-eng
-→ Analyzes codebase, creates comprehensive documentation
-→ Generates tasks, features, and product vision
-
-@modernize /modernize
-→ Identifies modernization opportunities
-→ Creates upgrade plan for dependencies and architecture
-```
-
-## ⚙️ Installation Options
+## Installation Options
 
 | Flag | Description |
 |------|-------------|
-| `--full` / `-Full` | Install all components (recommended) |
-| `--agents-only` / `-AgentsOnly` | Install only agents and prompts |
-| `--merge` / `-Merge` | Merge with existing files (default) |
-| `--force` / `-Force` | Overwrite without prompting |
+| `--minimal` | Install only skills and AGENTS.md |
+| `--force` | Overwrite existing files without prompting |
+| `--ref <ref>` | Branch or tag (default: vNext) |
+| `--target <dir>` | Target directory (default: current) |
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
-### Agents Not Showing
+### Skills Not Loading
+- Verify `.github/skills/` exists with SKILL.md files
 - Reload VS Code: `Ctrl+Shift+P` → "Reload Window"
 
 ### MCP Servers Not Loading
@@ -213,40 +128,22 @@ User: "I inherited a Python app with no documentation"
 - Verify Docker, uvx, Node.js are installed
 - Restart VS Code
 
-### Permission Issues
-```bash
-chmod +x scripts/install.sh
-```
-
 ### Conflicting Configurations
 - Check for `*.spec2cloud` files
 - Manually merge with your existing configs
 - Delete `.spec2cloud` files after merging
 
-## 📚 Learn More
+## Learn More
 
-- **Integration Guide**: See `INTEGRATION.md` for detailed setup instructions
+- **Integration Guide**: See `INTEGRATION.md` for detailed setup
 - **GitHub Repository**: https://github.com/EmeaAppGbb/spec2cloud
-- **APM Documentation**: https://github.com/danielmeppiel/apm
+- **agentskills.io**: https://agentskills.io/specification
+- **skills.sh**: https://skills.sh
 
-## 🆘 Support
-
-- **Documentation**: Check README.md and INTEGRATION.md
-- **Issues**: Report bugs on GitHub
-- **Discussions**: Ask questions on GitHub Discussions
-
-## 📝 License
+## License
 
 See LICENSE.md for details.
 
 ---
 
-**Ready to start?** Run the installer and open your project in VS Code! 🚀
-
-```bash
-# Linux/Mac
-./scripts/install.sh --full
-
-# Windows
-.\scripts\install.ps1 -Full
-```
+**Ready to start?** Run `npx spec2cloud init` and open your project in VS Code! 🚀

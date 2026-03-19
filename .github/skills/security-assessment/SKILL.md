@@ -1,8 +1,9 @@
-# Security Assessment
-
-**name:** security-assessment
-**description:** Audit codebase for security vulnerabilities, insecure patterns, and compliance gaps. Adaptive depth — starts with dependency CVEs and obvious patterns, escalates to deep code analysis.
-
+---
+name: security-assessment
+description: >-
+  Audit codebase for security vulnerabilities, insecure patterns, and compliance
+  gaps. Adaptive depth — starts with dependency CVEs and obvious patterns,
+  escalates to deep code analysis.
 ---
 
 ## Role

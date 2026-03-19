@@ -9,13 +9,19 @@ Get spec2cloud running in your project in under 5 minutes.
 - Azure CLI + Azure Developer CLI (azd)
 - Node.js 20+ or .NET 8+
 
-## Option 1: One-Line Install
+## Option 1: npx (Recommended)
+
+```bash
+npx spec2cloud init
+```
+
+## Option 2: One-Line Install
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash
 ```
 
-## Option 2: Shell Template (Recommended for New Projects)
+## Option 3: Shell Template (Recommended for New Projects)
 
 Use a pre-configured shell:
 
@@ -24,17 +30,17 @@ Use a pre-configured shell:
 - **Agentic .NET**: `agentic-shell-dotnet`
 - **Agentic Python**: `agentic-shell-python`
 
-## Option 3: Add to Existing Project
+## Option 4: Add to Existing Project
 
 ```bash
-./scripts/install.sh --merge
+npx spec2cloud init --minimal
 ```
 
 ## Your First Workflow
 
-1. Write your PRD in `specs/prd.md`
-2. Open Copilot Chat, type: `/prd`
-3. The orchestrator refines your spec, generates UI prototypes, plans increments
+1. Open your project in VS Code with GitHub Copilot
+2. Start a conversation with Copilot — the orchestrator (AGENTS.md) activates automatically
+3. Describe your app idea or ask Copilot to analyze your existing codebase
 4. At each human gate, review and approve
 5. Watch as tests, contracts, implementation, and deployment happen automatically
 
@@ -43,11 +49,3 @@ Use a pre-configured shell:
 **Phase 1: Discovery** (spec → UI → plan → tech stack)
 
 **Phase 2: Delivery** (tests → contracts → code → deploy) × N increments
-
-## Useful Commands
-
-- `/prd` — Start spec refinement
-- `/frd` — Generate feature documents
-- `/plan` — Create increment plan
-- `/implement` — Begin coding
-- `/deploy` — Ship to Azure

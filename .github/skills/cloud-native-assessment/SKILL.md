@@ -1,8 +1,9 @@
-# Cloud-Native Assessment
-
-**name:** cloud-native-assessment
-**description:** Assess application readiness for cloud-native deployment. Evaluate against 12-factor app principles, containerization readiness, and Azure service fit. Adaptive depth.
-
+---
+name: cloud-native-assessment
+description: >-
+  Assess application readiness for cloud-native deployment. Evaluate against
+  12-factor app principles, containerization readiness, and Azure service fit.
+  Adaptive depth.
 ---
 
 ## Role

@@ -1,8 +1,8 @@
-# Performance Assessment
-
-**name:** performance-assessment
-**description:** Identify performance bottlenecks, inefficient patterns, and optimization opportunities through static analysis. Adaptive depth.
-
+---
+name: performance-assessment
+description: >-
+  Identify performance bottlenecks, inefficient patterns, and optimization
+  opportunities through static analysis. Adaptive depth.
 ---
 
 ## Role

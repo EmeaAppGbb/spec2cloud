@@ -1,8 +1,9 @@
-# Rewrite Assessment
-
-**name:** rewrite-assessment
-**description:** Assess feasibility and effort of rewriting the application in a different language, framework, or architecture. Compare current stack against target stack. Produce ADRs for rewrite vs modernize decision.
-
+---
+name: rewrite-assessment
+description: >-
+  Assess feasibility and effort of rewriting the application in a different
+  language, framework, or architecture. Compare current stack against target
+  stack. Produce ADRs for rewrite vs modernize decision.
 ---
 
 ## Role

@@ -1,8 +1,10 @@
-# Modernization Assessment
-
-**name:** modernization-assessment
-**description:** Assess codebase for modernization opportunities — tech debt, deprecated dependencies, outdated patterns, architectural improvements. Adaptive depth — starts surface-level, escalates based on findings. Produces ADRs for significant decisions.
-
+---
+name: modernization-assessment
+description: >-
+  Assess codebase for modernization opportunities — tech debt, deprecated
+  dependencies, outdated patterns, architectural improvements. Adaptive depth —
+  starts surface-level, escalates based on findings. Produces ADRs for
+  significant decisions.
 ---
 
 ## Role

@@ -1,0 +1,32 @@
+{
+  "name": "spec2cloud",
+  "version": "2.0.0",
+  "description": "Install spec2cloud AI-powered development workflows into your project",
+  "type": "module",
+  "bin": {
+    "spec2cloud": "bin/spec2cloud.mjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "bin/"
+  ],
+  "keywords": [
+    "spec2cloud",
+    "ai",
+    "copilot",
+    "azure",
+    "development",
+    "workflows",
+    "agents",
+    "skills"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EmeaAppGbb/spec2cloud",
+    "directory": "packages/spec2cloud"
+  },
+  "homepage": "https://github.com/EmeaAppGbb/spec2cloud#readme"
+}
