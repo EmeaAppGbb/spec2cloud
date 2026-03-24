@@ -46,6 +46,6 @@ npx spec2cloud init --minimal
 
 ## What Happens Next
 
-**Phase 1: Discovery** (spec → UI → plan → tech stack)
+**Greenfield:** Phase 1 Discovery (spec → UI → plan → tech stack) → Phase 2 Delivery (tests → contracts → code → deploy) × N increments
 
-**Phase 2: Delivery** (tests → contracts → code → deploy) × N increments
+**Brownfield:** Phase B1 Extract → Phase B2 Spec-Enable → Testability Gate (can you test it?) → Track A (green baseline tests) or Track B (behavioral docs) → Choose paths → Assess → Plan → Phase 2 Delivery

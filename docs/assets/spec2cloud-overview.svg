@@ -1,0 +1,85 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style="background-color: #F8FAFC;">
+  <defs>
+    <!-- Hand-drawn filter effect -->
+    <filter id="sketch" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+
+    <!-- Arrow marker -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1E40AF" filter="url(#sketch)"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box { fill: white; stroke-width: 3; stroke-linecap: round; filter: url(#sketch); }
+    .label-title { font-family: -apple-system, system-ui, sans-serif; font-size: 24px; font-weight: bold; fill: #1E40AF; text-anchor: middle; }
+    .label-text { font-family: -apple-system, system-ui, sans-serif; font-size: 14px; fill: #475569; text-anchor: middle; }
+    .arrow { stroke: #1E40AF; stroke-width: 3; fill: none; stroke-linecap: round; marker-end: url(#arrowhead); filter: url(#sketch); }
+    .subtitle { font-family: -apple-system, system-ui, sans-serif; font-size: 18px; font-weight: 500; fill: #64748B; text-anchor: middle; letter-spacing: 1px; }
+    
+    /* Box specific colors */
+    .stroke-blue { stroke: #3B82F6; }
+    .stroke-green { stroke: #10B981; }
+    .stroke-orange { stroke: #F59E0B; }
+    
+    .icon { font-size: 40px; text-anchor: middle; dominant-baseline: middle; filter: url(#sketch); }
+  </style>
+
+  <!-- Flow Arrows -->
+  <path d="M 230 180 Q 265 170, 300 180" class="arrow" />
+  <path d="M 500 180 Q 535 190, 570 180" class="arrow" />
+
+  <!-- Box 1: Specs -->
+  <g transform="translate(50, 80)">
+    <!-- Shadow box -->
+    <rect x="5" y="5" width="180" height="200" rx="8" fill="#E2E8F0" opacity="0.5" filter="url(#sketch)" />
+    <!-- Main box -->
+    <rect x="0" y="0" width="180" height="200" rx="8" class="box stroke-blue" />
+    <text x="90" y="50" class="icon">📝</text>
+    <text x="90" y="90" class="label-title">Specs</text>
+    <text x="90" y="125" class="label-text">PRD</text>
+    <text x="90" y="145" class="label-text">FRDs</text>
+    <text x="90" y="165" class="label-text">Gherkin</text>
+  </g>
+
+  <!-- Box 2: Tests -->
+  <g transform="translate(320, 80)">
+    <rect x="5" y="5" width="180" height="200" rx="8" fill="#E2E8F0" opacity="0.5" filter="url(#sketch)" />
+    <rect x="0" y="0" width="180" height="200" rx="8" class="box stroke-green" />
+    <text x="90" y="50" class="icon">🧪</text>
+    <text x="90" y="90" class="label-title" style="fill: #059669;">Tests</text>
+    <text x="90" y="125" class="label-text">Generated</text>
+    <text x="90" y="145" class="label-text">from specs</text>
+    <text x="90" y="165" class="label-text">Drive impl</text>
+  </g>
+
+  <!-- Box 3: Cloud -->
+  <g transform="translate(590, 80)">
+    <rect x="5" y="5" width="180" height="200" rx="8" fill="#E2E8F0" opacity="0.5" filter="url(#sketch)" />
+    <rect x="0" y="0" width="180" height="200" rx="8" class="box stroke-orange" />
+    <text x="90" y="50" class="icon">☁️</text>
+    <text x="90" y="90" class="label-title" style="fill: #D97706;">Cloud</text>
+    <text x="90" y="125" class="label-text">Deployed on</text>
+    <text x="90" y="145" class="label-text">Azure</text>
+    <text x="90" y="165" class="label-text">Live + Verified</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="400" y="360" class="subtitle">AI-Powered • Human-Approved • Spec-Driven</text>
+
+</svg>

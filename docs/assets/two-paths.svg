@@ -1,0 +1,114 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="background-color: #F8FAFC;">
+  <defs>
+    <!-- Hand-drawn filter effect -->
+    <filter id="sketch" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    
+    <!-- Arrow marker -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#475569" filter="url(#sketch)"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box { fill: white; stroke-width: 2.5; stroke-linecap: round; filter: url(#sketch); }
+    .title-header { font-family: -apple-system, system-ui, sans-serif; font-size: 22px; font-weight: 800; text-anchor: middle; }
+    .step-text { font-family: -apple-system, system-ui, sans-serif; font-size: 15px; font-weight: 500; fill: #334155; text-anchor: middle; dominant-baseline: middle; }
+    .arrow { stroke: #475569; stroke-width: 2; fill: none; stroke-linecap: round; marker-end: url(#arrowhead); filter: url(#sketch); opacity: 0.8; }
+    .phase-label { font-family: -apple-system, system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1E40AF; text-anchor: middle; dominant-baseline: middle; }
+    
+    /* Specific Colors */
+    .greenfield-bg { fill: #ECFDF5; stroke: #10B981; }
+    .brownfield-bg { fill: #FFF7ED; stroke: #F59E0B; }
+    .shared-bg { fill: #EFF6FF; stroke: #3B82F6; }
+    
+    .greenfield-text { fill: #059669; }
+    .brownfield-text { fill: #D97706; }
+  </style>
+
+  <!-- Left Column: Greenfield -->
+  <g transform="translate(100, 30)">
+    <text x="100" y="0" class="title-header greenfield-text">🌱 GREENFIELD</text>
+    <text x="100" y="25" class="step-text" style="font-size: 14px; font-style: italic;">"Build New"</text>
+    
+    <!-- Flow -->
+    <line x1="100" y1="40" x2="100" y2="65" class="arrow" />
+    
+    <!-- Step 1 -->
+    <rect x="0" y="70" width="200" height="40" rx="8" class="box greenfield-bg" />
+    <text x="100" y="90" class="step-text">PRD → FRD → UI</text>
+    
+    <line x1="100" y1="110" x2="100" y2="135" class="arrow" />
+    
+    <!-- Step 2 -->
+    <rect x="0" y="140" width="200" height="40" rx="8" class="box greenfield-bg" />
+    <text x="100" y="160" class="step-text">Tests → Contracts</text>
+    
+    <line x1="100" y1="180" x2="100" y2="205" class="arrow" />
+
+    <!-- Step 3 -->
+    <rect x="0" y="210" width="200" height="40" rx="8" class="box greenfield-bg" />
+    <text x="100" y="230" class="step-text">Implementation</text>
+
+    <!-- Path to Converge -->
+    <path d="M 100 250 Q 100 350, 100 480" class="arrow" style="stroke-dasharray: 4,2;" />
+  </g>
+
+  <!-- Right Column: Brownfield -->
+  <g transform="translate(500, 30)">
+    <text x="100" y="0" class="title-header brownfield-text">🏗️ BROWNFIELD</text>
+    <text x="100" y="25" class="step-text" style="font-size: 14px; font-style: italic;">"Modernize Existing"</text>
+    
+    <line x1="100" y1="40" x2="100" y2="65" class="arrow" />
+    
+    <!-- Step 1 -->
+    <rect x="0" y="70" width="200" height="40" rx="8" class="box brownfield-bg" />
+    <text x="100" y="90" class="step-text">Extract → Specs</text>
+    
+    <line x1="100" y1="110" x2="100" y2="135" class="arrow" />
+
+    <!-- Gate -->
+    <rect x="0" y="140" width="200" height="60" rx="8" class="box brownfield-bg" style="stroke-width: 3;" />
+    <text x="100" y="160" class="step-text" style="font-weight: bold;">Testability Gate</text>
+    <text x="100" y="180" class="step-text" style="font-size: 12px;">Track A / Track B</text>
+
+    <line x1="100" y1="200" x2="100" y2="225" class="arrow" />
+
+    <!-- Step 3 -->
+    <rect x="0" y="230" width="200" height="40" rx="8" class="box brownfield-bg" />
+    <text x="100" y="250" class="step-text">Assess → Plan</text>
+
+    <!-- Path to Converge -->
+    <path d="M 100 270 Q 100 350, 100 480" class="arrow" style="stroke-dasharray: 4,2;" />
+  </g>
+  
+  <!-- Connecting curved paths to the shared pipeline -->
+  <path d="M 200 480 Q 400 480, 600 480" stroke="none" fill="none"/> <!-- spacer -->
+  
+  <g transform="translate(150, 480)">
+     <!-- Connector Lines -->
+     <path d="M 50 -230 Q 50 -30, 250 -30" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="5,5" />
+     <path d="M 450 -210 Q 450 -30, 250 -30" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" />
+     
+     <!-- Shared Box -->
+     <rect x="0" y="0" width="500" height="100" rx="12" class="box shared-bg" style="stroke-width: 4;" />
+     <text x="250" y="30" class="phase-label" style="font-size: 20px;">Phase 2: Same Delivery Pipeline</text>
+     
+     <!-- Internal Flow -->
+     <g transform="translate(50, 60)">
+        <text x="0" y="0" class="step-text">Tests</text>
+        <path d="M 30 -4 L 80 -4" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowhead)" />
+        
+        <text x="110" y="0" class="step-text">Contracts</text>
+        <path d="M 150 -4 L 200 -4" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowhead)" />
+        
+        <text x="220" y="0" class="step-text">Impl</text>
+        <path d="M 245 -4 L 295 -4" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowhead)" />
+        
+        <text x="350" y="0" class="step-text">Deploy to Azure</text>
+     </g>
+  </g>
+
+</svg>

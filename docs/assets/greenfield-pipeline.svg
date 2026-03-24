@@ -1,330 +1,59 @@
-<svg viewBox="0 0 1000 400" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      @keyframes pulse-flow {
-        0% {
-          stop-color: #58a6ff;
-          stop-opacity: 0.3;
-          offset: -0.15;
-        }
-        50% {
-          stop-color: #58a6ff;
-          stop-opacity: 1;
-          offset: 0.5;
-        }
-        100% {
-          stop-color: #58a6ff;
-          stop-opacity: 0.3;
-          offset: 1.15;
-        }
-      }
+<svg width="800" height="550" viewBox="0 0 800 550" xmlns="http://www.w3.org/2000/svg">
 
-      @keyframes dash-flow {
-        0% {
-          stroke-dashoffset: 0;
-        }
-        100% {
-          stroke-dashoffset: -20;
-        }
-      }
+<style>
+    text { font-family: -apple-system, system-ui, sans-serif; }
+    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
+    .label { font-size: 14px; fill: #334155; }
+    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
+    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .gate-icon { fill: #EF4444; font-size: 16px; }
+    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
+</style>
 
-      @keyframes stage-glow {
-        0%, 100% {
-          filter: drop-shadow(0 0 0 rgba(88, 166, 255, 0));
-        }
-        50% {
-          filter: drop-shadow(0 0 8 rgba(88, 166, 255, 0.6));
-        }
-      }
+<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
 
-      @keyframes loop-rotate {
-        0%, 100% {
-          transform: rotate(0deg);
-          transform-origin: 50% 50%;
-        }
-        25% {
-          transform: rotate(5deg);
-          transform-origin: 50% 50%;
-        }
-        75% {
-          transform: rotate(-5deg);
-          transform-origin: 50% 50%;
-        }
-      }
+<!-- Idea -->
+<circle cx="400" cy="40" r="20" fill="#FEF3C7" stroke="#F59E0B" stroke-width="2"/>
+<text x="400" y="45" text-anchor="middle" font-size="20">💡</text>
+<text x="400" y="75" text-anchor="middle" class="title">Product Idea</text>
 
-      @keyframes cloud-glow {
-        0%, 100% {
-          filter: drop-shadow(0 0 0 rgba(88, 166, 255, 0));
-        }
-        50% {
-          filter: drop-shadow(0 0 20 rgba(88, 166, 255, 0.8));
-        }
-      }
+<path d="M400 80 L400 100" class="connector"/>
 
-      .stage-node {
-        transition: opacity 0.3s ease;
-        opacity: 0.7;
-      }
+<!-- Phase 0 -->
+<rect x="250" y="100" width="300" height="50" fill="#F1F5F9" stroke="#94A3B8" class="box"/>
+<text x="400" y="130" text-anchor="middle" class="title" style="font-size:16px">Phase 0: Shell Setup</text>
 
-      .stage-node:nth-child(1) { animation: stage-glow 12s ease-in-out infinite 0s; }
-      .stage-node:nth-child(2) { animation: stage-glow 12s ease-in-out infinite 1.5s; }
-      .stage-node:nth-child(3) { animation: stage-glow 12s ease-in-out infinite 3s; }
-      .stage-node:nth-child(4) { animation: stage-glow 12s ease-in-out infinite 4.5s; }
-      .stage-node:nth-child(5) { animation: stage-glow 12s ease-in-out infinite 6s; }
-      .stage-node:nth-child(6) { animation: stage-glow 12s ease-in-out infinite 7.5s; }
-      .stage-node:nth-child(7) { animation: stage-glow 12s ease-in-out infinite 9s; }
-      .stage-node:nth-child(8) { animation: stage-glow 12s ease-in-out infinite 10.5s; }
+<path d="M400 150 L400 170" class="connector"/>
 
-      .arrow-line {
-        animation: dash-flow 2s linear infinite;
-      }
+<!-- Phase 1 -->
+<rect x="200" y="170" width="400" height="180" fill="#DBEAFE" stroke="#3B82F6" class="box"/>
+<text x="220" y="195" class="phase-label" fill="#3B82F6">Phase 1: Discovery</text>
 
-      .phase2-box {
-        animation: loop-rotate 8s ease-in-out infinite;
-      }
+<g transform="translate(240, 210)">
+    <text x="0" y="20" class="label">1a: Spec Refinement</text>
+    <text x="200" y="20" class="label">→ 🚦 Human Gate</text>
+    
+    <text x="0" y="50" class="label">1b: UI/UX Design</text>
+    <text x="200" y="50" class="label">→ 🚦 Human Gate</text>
+    
+    <text x="0" y="80" class="label">1c: Increment Plan</text>
+    <text x="200" y="80" class="label">→ 🚦 Human Gate</text>
+    
+    <text x="0" y="110" class="label">1d: Tech Stack</text>
+    <text x="200" y="110" class="label">→ 🚦 Human Gate</text>
+</g>
 
-      .cloud-endpoint {
-        animation: cloud-glow 12s ease-in-out infinite 11s;
-      }
+<path d="M400 350 L400 370" class="connector"/>
 
-      text {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-        font-size: 12px;
-        fill: #e6edf3;
-      }
+<!-- Phase 2 -->
+<rect x="200" y="370" width="400" height="100" fill="#D1FAE5" stroke="#10B981" class="box"/>
+<text x="220" y="395" class="phase-label" fill="#10B981">Phase 2: Delivery (per increment)</text>
+<text x="400" y="425" text-anchor="middle" class="title" style="font-size:16px">Tests → Contracts → Implement → Deploy</text>
+<text x="400" y="450" text-anchor="middle" class="label">🔄 Repeat for each increment</text>
 
-      .stage-label {
-        font-weight: 600;
-        font-size: 11px;
-      }
+<path d="M400 470 L400 490" class="connector"/>
 
-      .phase-label {
-        font-size: 13px;
-        font-weight: 700;
-        fill: #79c0ff;
-      }
-    </style>
+<!-- Production -->
+<text x="400" y="520" text-anchor="middle" class="title" fill="#0EA5E9">☁️ Production on Azure</text>
 
-    <!-- Gradient for flowing pulse effect -->
-    <linearGradient id="pulseGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color: #58a6ff; stop-opacity: 0.3;" />
-      <stop offset="50%" style="stop-color: #58a6ff; stop-opacity: 1;" />
-      <stop offset="100%" style="stop-color: #58a6ff; stop-opacity: 0.3;" />
-      <animate attributeName="x1" values="0%; 100%; 0%" dur="12s" repeatCount="indefinite" />
-      <animate attributeName="x2" values="100%; 200%; 100%" dur="12s" repeatCount="indefinite" />
-    </linearGradient>
-
-    <!-- Marker for arrows -->
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#79c0ff" opacity="0.6" />
-    </marker>
-  </defs>
-
-  <!-- Background -->
-  <rect width="1000" height="400" fill="#0d1117" />
-
-  <!-- Title -->
-  <text x="500" y="25" text-anchor="middle" font-size="18" font-weight="700" fill="#79c0ff">
-    Greenfield Pipeline: Specification to Cloud
-  </text>
-
-  <!-- ===== PHASE 0: SHELL SETUP ===== -->
-  <g>
-    <!-- Node -->
-    <circle cx="60" cy="200" r="22" fill="#8b949e" class="stage-node" />
-    <text x="60" y="205" text-anchor="middle" font-weight="700" fill="#0d1117">S</text>
-
-    <!-- Label -->
-    <text x="60" y="240" text-anchor="middle" class="stage-label">
-      Shell Setup
-    </text>
-  </g>
-
-  <!-- Arrow Phase 0 → Phase 1 -->
-  <line x1="82" y1="200" x2="130" y2="200" stroke="#79c0ff" stroke-width="2"
-        stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="arrow-line" opacity="0.6" />
-
-  <!-- ===== PHASE 1: PRODUCT DISCOVERY ===== -->
-  <!-- Phase 1 Group Box -->
-  <rect x="130" y="120" width="280" height="160" fill="none" stroke="#79c0ff"
-        stroke-width="1.5" stroke-dasharray="3,3" rx="4" opacity="0.4" />
-
-  <text x="140" y="110" class="phase-label">Phase 1: Product Discovery</text>
-
-  <!-- 1a: Spec Refinement -->
-  <g>
-    <rect x="145" y="135" width="50" height="50" rx="4" fill="#58a6ff" class="stage-node" />
-    <circle cx="170" cy="160" r="8" fill="#0d1117" />
-    <circle cx="170" cy="160" r="5" fill="#58a6ff" />
-    <text x="170" y="215" text-anchor="middle" class="stage-label">Spec</text>
-    <text x="170" y="228" text-anchor="middle" class="stage-label">Refinement</text>
-  </g>
-
-  <!-- Gate icon 1a→1b -->
-  <g transform="translate(220, 160)">
-    <rect x="-6" y="-10" width="12" height="20" fill="none" stroke="#8b949e" stroke-width="1" opacity="0.6" />
-    <circle cx="0" cy="-5" r="2" fill="#8b949e" opacity="0.6" />
-    <polygon points="0,-1 -2,2 2,2" fill="#8b949e" opacity="0.6" />
-  </g>
-
-  <!-- 1b: UI/UX Design -->
-  <g>
-    <rect x="240" y="135" width="50" height="50" rx="4" fill="#d2a8ff" class="stage-node" />
-    <!-- Simple UI grid icon -->
-    <line x1="248" y1="143" x2="282" y2="143" stroke="#0d1117" stroke-width="1.5" opacity="0.6" />
-    <line x1="248" y1="153" x2="282" y2="153" stroke="#0d1117" stroke-width="1.5" opacity="0.6" />
-    <line x1="248" y1="163" x2="282" y2="163" stroke="#0d1117" stroke-width="1.5" opacity="0.6" />
-    <line x1="248" y1="173" x2="282" y2="173" stroke="#0d1117" stroke-width="1.5" opacity="0.6" />
-    <text x="265" y="215" text-anchor="middle" class="stage-label">UI/UX</text>
-    <text x="265" y="228" text-anchor="middle" class="stage-label">Design</text>
-  </g>
-
-  <!-- Gate icon 1b→1c -->
-  <g transform="translate(315, 160)">
-    <rect x="-6" y="-10" width="12" height="20" fill="none" stroke="#8b949e" stroke-width="1" opacity="0.6" />
-    <circle cx="0" cy="-5" r="2" fill="#8b949e" opacity="0.6" />
-    <polygon points="0,-1 -2,2 2,2" fill="#8b949e" opacity="0.6" />
-  </g>
-
-  <!-- 1c: Increment Planning -->
-  <g>
-    <rect x="335" y="135" width="50" height="50" rx="4" fill="#7ee787" class="stage-node" />
-    <!-- Simple chart icon -->
-    <rect x="345" y="168" width="6" height="12" fill="#0d1117" opacity="0.7" />
-    <rect x="355" y="163" width="6" height="17" fill="#0d1117" opacity="0.7" />
-    <rect x="365" y="158" width="6" height="22" fill="#0d1117" opacity="0.7" />
-    <text x="360" y="215" text-anchor="middle" class="stage-label">Increment</text>
-    <text x="360" y="228" text-anchor="middle" class="stage-label">Planning</text>
-  </g>
-
-  <!-- Gate icon 1c→1d -->
-  <g transform="translate(410, 160)">
-    <rect x="-6" y="-10" width="12" height="20" fill="none" stroke="#8b949e" stroke-width="1" opacity="0.6" />
-    <circle cx="0" cy="-5" r="2" fill="#8b949e" opacity="0.6" />
-    <polygon points="0,-1 -2,2 2,2" fill="#8b949e" opacity="0.6" />
-  </g>
-
-  <!-- 1d: Tech Stack -->
-  <g>
-    <rect x="430" y="135" width="50" height="50" rx="4" fill="#f0883e" class="stage-node" />
-    <!-- Simple stack icon -->
-    <rect x="440" y="145" width="30" height="8" fill="#0d1117" opacity="0.7" />
-    <rect x="440" y="158" width="30" height="8" fill="#0d1117" opacity="0.7" />
-    <rect x="440" y="171" width="30" height="8" fill="#0d1117" opacity="0.7" />
-    <text x="455" y="215" text-anchor="middle" class="stage-label">Tech</text>
-    <text x="455" y="228" text-anchor="middle" class="stage-label">Stack</text>
-  </g>
-
-  <!-- Arrow Phase 1 → Phase 2 -->
-  <line x1="480" y1="200" x2="540" y2="200" stroke="#79c0ff" stroke-width="2"
-        stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="arrow-line" opacity="0.6" />
-
-  <!-- ===== PHASE 2: INCREMENT DELIVERY ===== -->
-  <!-- Phase 2 Group Box with subtle repeat indicator -->
-  <g class="phase2-box">
-    <rect x="540" y="120" width="360" height="160" fill="none" stroke="#79c0ff"
-          stroke-width="2" stroke-dasharray="3,3" rx="4" opacity="0.4" />
-
-    <text x="550" y="110" class="phase-label">Phase 2: Increment Delivery (Per-Iteration Loop)</text>
-
-    <!-- Repeat arrow indicator -->
-    <path d="M 880 135 Q 900 160 880 185" fill="none" stroke="#79c0ff"
-          stroke-width="2" opacity="0.5" />
-    <polygon points="880,185 875,175 882,178" fill="#79c0ff" opacity="0.5" />
-  </g>
-
-  <!-- Step 1: Tests -->
-  <g>
-    <rect x="555" y="135" width="55" height="50" rx="4" fill="#ff7b72" class="stage-node" />
-    <!-- Test checkmarks icon -->
-    <polyline points="565,155 570,160 580,150" fill="none" stroke="#0d1117"
-              stroke-width="2" stroke-linecap="round" opacity="0.7" />
-    <polyline points="565,170 570,175 580,165" fill="none" stroke="#0d1117"
-              stroke-width="2" stroke-linecap="round" opacity="0.7" />
-    <text x="582.5" y="215" text-anchor="middle" class="stage-label">Tests</text>
-    <text x="582.5" y="228" text-anchor="middle" font-size="9">e2e, Unit</text>
-  </g>
-
-  <!-- Arrow Step1→Step2 -->
-  <line x1="610" y1="200" x2="650" y2="200" stroke="#79c0ff" stroke-width="2"
-        stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="arrow-line" opacity="0.6" />
-
-  <!-- Step 2: Contracts -->
-  <g>
-    <rect x="650" y="135" width="55" height="50" rx="4" fill="#79c0ff" class="stage-node" />
-    <!-- Document icon -->
-    <rect x="663" y="143" width="28" height="34" fill="none" stroke="#0d1117"
-          stroke-width="1.5" opacity="0.7" />
-    <line x1="668" y1="153" x2="686" y2="153" stroke="#0d1117" stroke-width="1" opacity="0.7" />
-    <line x1="668" y1="161" x2="686" y2="161" stroke="#0d1117" stroke-width="1" opacity="0.7" />
-    <line x1="668" y1="169" x2="680" y2="169" stroke="#0d1117" stroke-width="1" opacity="0.7" />
-    <text x="677.5" y="215" text-anchor="middle" class="stage-label">Contracts</text>
-    <text x="677.5" y="228" text-anchor="middle" font-size="9">API, Types</text>
-  </g>
-
-  <!-- Arrow Step2→Step3 -->
-  <line x1="705" y1="200" x2="745" y2="200" stroke="#79c0ff" stroke-width="2"
-        stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="arrow-line" opacity="0.6" />
-
-  <!-- Step 3: Implementation -->
-  <g>
-    <rect x="745" y="135" width="55" height="50" rx="4" fill="#7ee787" class="stage-node" />
-    <!-- Code brackets icon -->
-    <polyline points="757,148 750,160 757,172" fill="none" stroke="#0d1117"
-              stroke-width="2" stroke-linecap="round" opacity="0.7" />
-    <polyline points="798,148 805,160 798,172" fill="none" stroke="#0d1117"
-              stroke-width="2" stroke-linecap="round" opacity="0.7" />
-    <text x="772.5" y="215" text-anchor="middle" class="stage-label">Implement</text>
-    <text x="772.5" y="228" text-anchor="middle" font-size="9">API || Web</text>
-  </g>
-
-  <!-- Arrow Step3→Step4 -->
-  <line x1="800" y1="200" x2="840" y2="200" stroke="#79c0ff" stroke-width="2"
-        stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="arrow-line" opacity="0.6" />
-
-  <!-- Step 4: Deploy & Verify -->
-  <g>
-    <rect x="840" y="135" width="55" height="50" rx="4" fill="#f0883e" class="stage-node" />
-    <!-- Rocket icon -->
-    <polygon points="867.5,145 862,158 873,158" fill="#0d1117" opacity="0.7" />
-    <rect x="863" y="160" width="9" height="18" fill="none" stroke="#0d1117"
-          stroke-width="1.5" opacity="0.7" />
-    <circle cx="862" cy="172" r="2" fill="#0d1117" opacity="0.7" />
-    <circle cx="873" cy="172" r="2" fill="#0d1117" opacity="0.7" />
-    <text x="867.5" y="215" text-anchor="middle" class="stage-label">Deploy</text>
-    <text x="867.5" y="228" text-anchor="middle" font-size="9">&amp; Verify</text>
-  </g>
-
-  <!-- Loop back arrow (subtle, under phase box) -->
-  <path d="M 867 260 Q 720 300 640 260" fill="none" stroke="#79c0ff" stroke-width="1.5"
-        stroke-dasharray="3,3" opacity="0.3" />
-
-  <!-- Arrow Phase 2 → Azure Cloud -->
-  <line x1="895" y1="200" x2="945" y2="200" stroke="#79c0ff" stroke-width="2"
-        stroke-dasharray="5,5" marker-end="url(#arrowhead)" class="arrow-line" opacity="0.6" />
-
-  <!-- ===== FINAL: AZURE CLOUD ===== -->
-  <g>
-    <!-- Cloud shape -->
-    <path d="M 955 175 Q 950 165 960 160 Q 965 155 975 160 Q 985 155 990 170 Q 995 175 990 185 Q 985 195 975 195 Q 965 200 955 190 Z"
-          fill="#58a6ff" class="cloud-endpoint stage-node" />
-
-    <!-- Cloud glow effect (additional) -->
-    <path d="M 955 175 Q 950 165 960 160 Q 965 155 975 160 Q 985 155 990 170 Q 995 175 990 185 Q 985 195 975 195 Q 965 200 955 190 Z"
-          fill="none" stroke="#58a6ff" stroke-width="1" opacity="0.4" />
-
-    <!-- Label -->
-    <text x="972" y="210" text-anchor="middle" class="stage-label">☁️ Azure</text>
-    <text x="972" y="223" text-anchor="middle" class="stage-label">Cloud</text>
-  </g>
-
-  <!-- Legend / Info -->
-  <g opacity="0.7">
-    <text x="50" y="340" font-size="11" fill="#8b949e">
-      Animation: Pulse flows left-to-right through pipeline (12s cycle)
-    </text>
-    <text x="50" y="355" font-size="11" fill="#8b949e">
-      Phase 2 repeats per iteration • Arrows show data flow • Gate icons mark human decision points
-    </text>
-  </g>
 </svg>

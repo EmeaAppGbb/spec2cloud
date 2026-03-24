@@ -1,0 +1,71 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, system-ui, sans-serif">
+  <defs>
+    <filter id="handdrawn" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+    </filter>
+  </defs>
+  <rect width="800" height="500" fill="#F8FAFC" />
+  
+  <text x="400" y="50" text-anchor="middle" font-size="28" font-weight="bold" fill="#1E293B">43 Skills at a Glance</text>
+
+  <!-- Grid Layout: 2 rows of 3 columns, plus one separate on top right -->
+  
+  <!-- Phase Skills (Top Left - Green) -->
+  <g transform="translate(50, 80)">
+    <rect width="220" height="120" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="20" y="60" font-size="14" fill="# spec-refinement</text>064E3B">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#065F46">
+    <text x="20" y="80" font-size="14" fill="# ui-ux-design</text>064E3B">
+    <text x="20" y="100" font-size="14" fill="# tech-stack-resolution</text>064E3B">
+  </g>
+
+  <!-- Protocol Skills (Top Middle - Blue) -->
+  <g transform="translate(290, 80)">
+    <rect width="220" height="120" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="20" y="60" font-size="14" fill="# state-management</text>1E3A8A">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#1E40AF">
+    <text x="20" y="80" font-size="14" fill="# commit-protocol</text>1E3A8A">
+    <text x="20" y="100" font-size="14" fill="# audit-log, human-gate...</text>1E3A8A">
+  </g>
+
+  <!-- Utility Skills (Top Right - Purple) -->
+  <g transform="translate(530, 80)">
+    <rect width="220" height="120" rx="8" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="20" y="60" font-size="14" fill="# spec-validator</text>4C1D95">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#5B21B6">
+    <text x="20" y="80" font-size="14" fill="# test-runner, build-check</text>4C1D95">
+    <text x="20" y="100" font-size="14" fill="# deploy-diagnostics...</text>4C1D95">
+  </g>
+
+  <!-- Delivery Skills (Middle - Yellow) -->
+  <g transform="translate(50, 220)">
+    <rect width="220" height="150" rx="8" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="20" y="60" font-size="14" fill="# e2e-generation</text>78350F">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#92400E">
+    <text x="20" y="80" font-size="14" fill="# gherkin-generation</text>78350F">
+    <text x="20" y="100" font-size="14" fill="# test-gen, contract-gen</text>78350F">
+    <text x="20" y="120" font-size="14" fill="# implementation</text>78350F">
+    <text x="20" y="140" font-size="14" fill="# azure-deployment</text>78350F">
+  </g>
+
+  <!-- Extraction Skills (Bottom Left - Brown) -->
+  <g transform="translate(290, 220)">
+    <rect width="220" height="120" rx="8" fill="#FAF5FF" stroke="#A8A29E" stroke-width="2" filter="url(#handdrawn)"/> <!-- Using greyish for neutral extraction -->
+    <text x="20" y="60" font-size="14" fill="# codebase-scanner</text>292524">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#44403C">
+    <text x="20" y="80" font-size="14" fill="# dependency-inventory</text>292524">
+    <text x="20" y="100" font-size="14" fill="# arch-mapper, api-ext...</text>292524">
+  </g>
+
+  <!-- Assessment (Bottom Middle - Red) -->
+  <g transform="translate(530, 220)">
+    <rect width="220" height="120" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="20" y="60" font-size="14" fill="# modernization-assess</text>7F1D1D">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#991B1B">
+    <text x="20" y="80" font-size="14" fill="# cloud-native-assess</text>7F1D1D">
+    <text x="20" y="100" font-size="14" fill="# security-assess...</text>7F1D1D">
+  </g>
+
+  <!-- Planning (Bottom Right - Teal) -->
+  <g transform="translate(290, 360)">
+    <rect width="220" height="100" rx="8" fill="#F0FDFA" stroke="#14B8A6" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="20" y="60" font-size="14" fill="# modernization-planner</text>134E4A">    <text x="20" y="30" font-size="18" font-weight="bold" fill="#134E4A">
+    <text x="20" y="80" font-size="14" fill="# cloud-native-planner...</text>134E4A">
+  </g>
+
+</svg>

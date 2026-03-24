@@ -43,34 +43,37 @@ State is committed to git after every action. This means:
 - **Full audit trail through git history** — `git log` shows every state transition with timestamps and context
 - **No external databases required** — Everything is version-controlled and reproducible
 
-## Agents & Prompts
-
-**10 Specialized Agents:**
-
-@spec2cloud (orchestrator), @pm, @devlead, @architect, @planner, @dev, @azure, @tech-analyst, @modernizer, @extender
-
-**12 Interactive Prompts:**
-
-/prd, /frd, /plan, /implement, /delegate, /deploy, /rev-eng, /modernize, /extend, /adr, /generate-agents, /bootstrap-agents
-
 ## Directory Structure
 
 ```
 .github/
 ├── skills/              — 43 agentskills.io skills (reusable workflow components)
-├── agents/              — 10 Copilot agents (specialized personalities)
-└── prompts/             — 12 workflow prompts (interactive entry points)
+└── copilot-instructions.md — Stack-specific coding conventions
 
-.spec2cloud/            — State persistence
-├── state.json          — Current workflow state
-├── audit.log           — Action history
-└── models.json         — Agent-to-model assignments
+.spec2cloud/             — State persistence
+├── state.json           — Current workflow state (phase, increment, track)
+├── audit.log            — Append-only action history
+├── models.json          — Agent-to-model assignments
+└── models-schema.json   — Model config schema
 
-specs/                  — Generated specifications
-├── prd.md              — Product requirements document
-├── frd.md              — Feature requirements documents
-├── increment-plan.md   — Phased delivery roadmap
-└── architecture/       — Technical design documents
+specs/                   — Generated specifications
+├── prd.md               — Product requirements document
+├── frd-{feature}.md     — Feature requirements (one per feature)
+├── features/            — Gherkin scenarios (.feature files)
+├── contracts/            — API contracts (OpenAPI YAML)
+│   └── api/
+├── adrs/                — Architecture Decision Records
+├── docs/                — Extraction outputs (brownfield)
+│   ├── technology/      — Stack, dependencies
+│   ├── architecture/    — Components, data models
+│   └── testing/         — Test inventory, coverage
+├── assessment/          — Assessment reports (brownfield)
+└── increment-plan.md    — Ordered delivery roadmap
+
+e2e/                     — Playwright end-to-end tests
+tests/                   — Cucumber BDD step definitions
+src/                     — Application source (structure varies by shell)
+infra/                   — Azure infrastructure (Bicep/Terraform)
 ```
 
-The skills and agents together form a library of reusable knowledge. Skills are tasks (test, build, deploy), while agents are conversational personalities (architect, developer, PM). Prompts orchestrate the workflow by invoking the right agents and skills at the right time.
+Skills are the framework's building blocks — each skill is a reusable procedure with a SKILL.md definition, optional references, scripts, and assets. The orchestrator discovers and invokes them through the Ralph Loop.

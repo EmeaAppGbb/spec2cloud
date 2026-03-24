@@ -1,243 +1,80 @@
-<svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <style>
-      @keyframes highlight-step-1 {
-        0% { opacity: 0.3; }
-        10%, 22% { opacity: 1; }
-        90%, 100% { opacity: 0.3; }
-      }
-      @keyframes highlight-step-2 {
-        0%, 22% { opacity: 0.3; }
-        32%, 44% { opacity: 1; }
-        100% { opacity: 0.3; }
-      }
-      @keyframes highlight-step-3 {
-        0%, 44% { opacity: 0.3; }
-        54%, 66% { opacity: 1; }
-        100% { opacity: 0.3; }
-      }
-      @keyframes highlight-step-4 {
-        0%, 66% { opacity: 0.3; }
-        76%, 88% { opacity: 1; }
-        100% { opacity: 0.3; }
-      }
-      @keyframes rotate-x-marks {
-        0%, 10% { opacity: 1; transform: rotate(0deg); }
-        22%, 44% { opacity: 1; transform: rotate(0deg); }
-        54% { opacity: 0; transform: rotate(45deg); }
-        55%, 100% { opacity: 0; transform: rotate(45deg); }
-      }
-      @keyframes appear-checkmarks {
-        0%, 53% { opacity: 0; transform: scale(0.5); }
-        54%, 100% { opacity: 1; transform: scale(1); }
-      }
-      @keyframes counter-1 {
-        0%, 32% { opacity: 1; }
-        33%, 65% { opacity: 0; }
-        66%, 98% { opacity: 0; }
-      }
-      @keyframes counter-2 {
-        0%, 32% { opacity: 0; }
-        33%, 65% { opacity: 1; }
-        66%, 98% { opacity: 0; }
-      }
-      @keyframes counter-3 {
-        0%, 65% { opacity: 0; }
-        66%, 98% { opacity: 1; }
-      }
-      @keyframes flow-particle-1 {
-        0% { offset-distance: 0%; opacity: 1; }
-        90% { offset-distance: 100%; opacity: 1; }
-        100% { offset-distance: 100%; opacity: 0; }
-      }
-      @keyframes flow-particle-2 {
-        0% { opacity: 0; offset-distance: 0%; }
-        10% { opacity: 1; }
-        80% { opacity: 1; offset-distance: 100%; }
-        100% { opacity: 0; offset-distance: 100%; }
-      }
-      @keyframes flow-particle-3 {
-        0% { opacity: 0; offset-distance: 0%; }
-        20% { opacity: 1; }
-        70% { opacity: 1; offset-distance: 100%; }
-        100% { opacity: 0; offset-distance: 100%; }
-      }
-      .step-group {
-        filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.5));
-      }
-      .step-1 { animation: highlight-step-1 10s infinite; }
-      .step-2 { animation: highlight-step-2 10s infinite; }
-      .step-3 { animation: highlight-step-3 10s infinite; }
-      .step-4 { animation: highlight-step-4 10s infinite; }
-      .x-marks { animation: rotate-x-marks 10s infinite; transform-origin: center; }
-      .checkmarks { animation: appear-checkmarks 10s infinite; transform-origin: center; }
-      .counter-text-1 { animation: counter-1 10s infinite; }
-      .counter-text-2 { animation: counter-2 10s infinite; }
-      .counter-text-3 { animation: counter-3 10s infinite; }
-      .particle-1 { animation: flow-particle-1 10s infinite; offset-path: path('M 200,150 L 650,150 L 650,350 L 200,350 Z'); }
-      .particle-2 { animation: flow-particle-2 10s infinite; offset-path: path('M 200,150 L 650,150 L 650,350 L 200,350 Z'); }
-      .particle-3 { animation: flow-particle-3 10s infinite; offset-path: path('M 200,150 L 650,150 L 650,350 L 200,350 Z'); }
-    </style>
-  </defs>
+<svg width="800" height="250" viewBox="0 0 800 250" xmlns="http://www.w3.org/2000/svg">
 
-  <!-- Background -->
-  <rect width="900" height="500" fill="#0d1117"/>
+<style>
+    text { font-family: -apple-system, system-ui, sans-serif; }
+    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
+    .label { font-size: 14px; fill: #334155; }
+    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
+    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .gate-icon { fill: #EF4444; font-size: 16px; }
+    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
+</style>
 
-  <!-- Title -->
-  <text x="450" y="30" font-size="28" font-weight="bold" text-anchor="middle" fill="#e6edf3">
-    Phase 2: Increment Delivery
-  </text>
+<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
 
-  <!-- Flow Particles -->
-  <circle class="particle-1" cx="0" cy="0" r="4" fill="#79c0ff" opacity="0.6"/>
-  <circle class="particle-2" cx="0" cy="0" r="4" fill="#7ee787" opacity="0.6"/>
-  <circle class="particle-3" cx="0" cy="0" r="4" fill="#f0883e" opacity="0.6"/>
-
-  <!-- Main Circuit Loop -->
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#a0afc8"/>
+<defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748B" />
     </marker>
-  </defs>
+</defs>
 
-  <!-- Step 1: Tests First (Top-Left) -->
-  <g class="step-1 step-group">
-    <rect x="80" y="120" width="200" height="140" rx="8" fill="#1c2128" stroke="#ff7b72" stroke-width="2"/>
+<!-- Steps -->
+<g transform="translate(50, 50)">
+    <!-- Step 1: Tests -->
+    <rect x="0" y="0" width="150" height="80" fill="#EF444410" stroke="#EF4444" class="box"/>
+    <text x="75" y="30" text-anchor="middle" class="title" fill="#EF4444">TESTS</text>
+    <text x="75" y="55" text-anchor="middle" class="label">Step 1</text>
+    
+    <text x="75" y="100" text-anchor="middle" class="label" font-size="12">E2E specs</text>
+    <text x="75" y="120" text-anchor="middle" class="label" font-size="12">Gherkin</text>
+    <text x="75" y="140" text-anchor="middle" class="label" font-size="12">Unit tests</text>
+    <text x="75" y="165" text-anchor="middle" class="label" fill="#EF4444" font-weight="bold">🔴 Red baseline</text>
 
-    <!-- Title -->
-    <text x="180" y="145" font-size="16" font-weight="bold" text-anchor="middle" fill="#ff7b72">
-      Tests First
-    </text>
+    <!-- Arrow 1 -->
+    <path d="M150 40 L190 40" class="connector" marker-end="url(#arrow)"/>
+    <text x="170" y="30" text-anchor="middle" font-size="20">🚦</text>
 
-    <!-- Icon: X marks -->
-    <g class="x-marks">
-      <line x1="110" y1="165" x2="140" y2="195" stroke="#ff7b72" stroke-width="3" stroke-linecap="round"/>
-      <line x1="140" y1="165" x2="110" y2="195" stroke="#ff7b72" stroke-width="3" stroke-linecap="round"/>
+    <!-- Step 2: Contracts -->
+    <g transform="translate(190, 0)">
+        <rect x="0" y="0" width="150" height="80" fill="#DBEAFE" stroke="#3B82F6" class="box"/>
+        <text x="75" y="30" text-anchor="middle" class="title">CONTRACTS</text>
+        <text x="75" y="55" text-anchor="middle" class="label">Step 2</text>
+        
+        <text x="75" y="100" text-anchor="middle" class="label" font-size="12">OpenAPI</text>
+        <text x="75" y="120" text-anchor="middle" class="label" font-size="12">TS types</text>
+        <text x="75" y="140" text-anchor="middle" class="label" font-size="12">Infra contracts</text>
     </g>
 
-    <!-- Checkmarks (appear later) -->
-    <g class="checkmarks">
-      <line x1="110" y1="180" x2="120" y2="190" stroke="#7ee787" stroke-width="3" stroke-linecap="round"/>
-      <line x1="120" y1="190" x2="140" y2="170" stroke="#7ee787" stroke-width="3" stroke-linecap="round"/>
+    <!-- Arrow 2 -->
+    <path d="M340 40 L380 40" class="connector" marker-end="url(#arrow)"/>
+
+    <!-- Step 3: Implement -->
+    <g transform="translate(380, 0)">
+        <rect x="0" y="0" width="150" height="80" fill="#FEF3C7" stroke="#F59E0B" class="box"/>
+        <text x="75" y="30" text-anchor="middle" class="title">IMPLEMENT</text>
+        <text x="75" y="55" text-anchor="middle" class="label">Step 3</text>
+        
+        <text x="75" y="100" text-anchor="middle" class="label" font-size="12">API slice</text>
+        <text x="75" y="120" text-anchor="middle" class="label" font-size="12">Web slice</text>
+        <text x="75" y="140" text-anchor="middle" class="label" font-size="12">Integration</text>
+        <text x="75" y="165" text-anchor="middle" class="label" fill="#10B981" font-weight="bold">🟢 Green baseline</text>
     </g>
 
-    <!-- Sub-items -->
-    <text x="160" y="225" font-size="13" fill="#e6edf3">E2E Specs (Playwright)</text>
-    <text x="160" y="245" font-size="13" fill="#e6edf3">Gherkin Scenarios</text>
-    <text x="160" y="265" font-size="13" fill="#e6edf3">Unit Tests (Vitest)</text>
-  </g>
+    <!-- Arrow 3 -->
+    <path d="M530 40 L570 40" class="connector" marker-end="url(#arrow)"/>
+    <text x="550" y="30" text-anchor="middle" font-size="20">🚦</text>
 
-  <!-- Step 2: Contracts (Top-Right) -->
-  <g class="step-2 step-group">
-    <rect x="620" y="120" width="200" height="140" rx="8" fill="#1c2128" stroke="#79c0ff" stroke-width="2"/>
-
-    <!-- Title -->
-    <text x="720" y="145" font-size="16" font-weight="bold" text-anchor="middle" fill="#79c0ff">
-      Contracts
-    </text>
-
-    <!-- Icon: Document/Handshake -->
-    <g transform="translate(710, 175)">
-      <rect x="-20" y="-10" width="15" height="20" rx="2" fill="none" stroke="#79c0ff" stroke-width="2"/>
-      <line x1="-12" y1="-5" x2="-5" y2="-5" stroke="#79c0ff" stroke-width="1.5"/>
-      <line x1="-12" y1="0" x2="5" y2="0" stroke="#79c0ff" stroke-width="1.5"/>
-      <line x1="-12" y1="5" x2="5" y2="5" stroke="#79c0ff" stroke-width="1.5"/>
-      <path d="M 5 0 Q 15 5 20 0" fill="none" stroke="#79c0ff" stroke-width="2"/>
+    <!-- Step 4: Deploy -->
+    <g transform="translate(570, 0)">
+        <rect x="0" y="0" width="150" height="80" fill="#D1FAE5" stroke="#10B981" class="box"/>
+        <text x="75" y="30" text-anchor="middle" class="title">DEPLOY</text>
+        <text x="75" y="55" text-anchor="middle" class="label">Step 4</text>
+        
+        <text x="75" y="100" text-anchor="middle" class="label" font-size="12">azd up</text>
+        <text x="75" y="120" text-anchor="middle" class="label" font-size="12">Smoke tests</text>
+        <text x="75" y="140" text-anchor="middle" class="label" font-size="12">Regression</text>
+        <text x="75" y="165" text-anchor="middle" class="label" fill="#10B981" font-weight="bold">✅ Live</text>
     </g>
+</g>
 
-    <!-- Sub-items -->
-    <text x="720" y="225" font-size="13" text-anchor="middle" fill="#e6edf3">OpenAPI (YAML)</text>
-    <text x="720" y="245" font-size="13" text-anchor="middle" fill="#e6edf3">TypeScript Types</text>
-    <text x="720" y="265" font-size="13" text-anchor="middle" fill="#e6edf3">Infrastructure (Bicep)</text>
-  </g>
-
-  <!-- Step 3: Implementation (Bottom-Right) -->
-  <g class="step-3 step-group">
-    <rect x="620" y="310" width="200" height="140" rx="8" fill="#1c2128" stroke="#7ee787" stroke-width="2"/>
-
-    <!-- Title -->
-    <text x="720" y="335" font-size="16" font-weight="bold" text-anchor="middle" fill="#7ee787">
-      Implementation
-    </text>
-
-    <!-- Icon: Code brackets -->
-    <g transform="translate(710, 365)">
-      <path d="M -15 -10 L -20 0 L -15 10" fill="none" stroke="#7ee787" stroke-width="2" stroke-linecap="round"/>
-      <path d="M 15 -10 L 20 0 L 15 10" fill="none" stroke="#7ee787" stroke-width="2" stroke-linecap="round"/>
-    </g>
-
-    <!-- Parallel tracks -->
-    <g transform="translate(680, 390)">
-      <line x1="0" y1="0" x2="35" y2="0" stroke="#7ee787" stroke-width="2"/>
-      <line x1="0" y1="8" x2="35" y2="8" stroke="#7ee787" stroke-width="2"/>
-      <line x1="0" y1="16" x2="35" y2="16" stroke="#7ee787" stroke-width="2"/>
-      <line x1="35" y1="8" x2="50" y2="8" stroke="#7ee787" stroke-width="2"/>
-    </g>
-
-    <!-- Sub-items -->
-    <text x="720" y="425" font-size="12" text-anchor="middle" fill="#e6edf3">API Slice (Express)</text>
-    <text x="720" y="442" font-size="12" text-anchor="middle" fill="#e6edf3">Web Slice (Next.js)</text>
-    <text x="720" y="459" font-size="12" text-anchor="middle" fill="#e6edf3">Integration Slice</text>
-  </g>
-
-  <!-- Step 4: Deploy and Verify (Bottom-Left) -->
-  <g class="step-4 step-group">
-    <rect x="80" y="310" width="200" height="140" rx="8" fill="#1c2128" stroke="#f0883e" stroke-width="2"/>
-
-    <!-- Title -->
-    <text x="180" y="335" font-size="16" font-weight="bold" text-anchor="middle" fill="#f0883e">
-      Deploy &amp; Verify
-    </text>
-
-    <!-- Icon: Rocket -->
-    <g transform="translate(165, 365)">
-      <path d="M 0 -15 L -5 5 L 0 0 L 5 5 Z" fill="#f0883e"/>
-      <circle cx="0" cy="8" r="4" fill="none" stroke="#f0883e" stroke-width="1.5"/>
-      <path d="M -3 15 L -2 25 M 3 15 L 2 25" stroke="#f0883e" stroke-width="1.5" stroke-linecap="round"/>
-    </g>
-
-    <!-- Sub-items -->
-    <text x="180" y="425" font-size="12" text-anchor="middle" fill="#e6edf3">Azure Deploy (azd)</text>
-    <text x="180" y="442" font-size="12" text-anchor="middle" fill="#e6edf3">Smoke Tests</text>
-    <text x="180" y="459" font-size="12" text-anchor="middle" fill="#e6edf3">Full Regression</text>
-  </g>
-
-  <!-- Connecting Arrows -->
-  <!-- Step 1 → Step 2 (top) -->
-  <path d="M 290 190 L 620 190" fill="none" stroke="#a0afc8" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-
-  <!-- Step 2 → Step 3 (right) -->
-  <path d="M 720 260 L 720 310" fill="none" stroke="#a0afc8" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-
-  <!-- Step 3 → Step 4 (bottom) -->
-  <path d="M 620 380 L 290 380" fill="none" stroke="#a0afc8" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-
-  <!-- Step 4 → Step 1 (left) -->
-  <path d="M 180 310 L 180 260" fill="none" stroke="#a0afc8" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
-
-  <!-- Loop back label -->
-  <text x="120" y="300" font-size="11" fill="#79c0ff" font-style="italic">Next Increment</text>
-
-  <!-- Center: Increment counter -->
-  <circle cx="450" cy="250" r="80" fill="#1c2128" stroke="#a0afc8" stroke-width="2"/>
-
-  <text x="450" y="235" font-size="14" fill="#a0afc8" text-anchor="middle">Increment</text>
-
-  <!-- Counter values -->
-  <text class="counter-text-1" x="450" y="260" font-size="48" font-weight="bold" text-anchor="middle" fill="#ff7b72">1</text>
-  <text class="counter-text-2" x="450" y="260" font-size="48" font-weight="bold" text-anchor="middle" fill="#7ee787">2</text>
-  <text class="counter-text-3" x="450" y="260" font-size="48" font-weight="bold" text-anchor="middle" fill="#f0883e">3</text>
-
-  <text x="450" y="285" font-size="11" text-anchor="middle" fill="#a0afc8" font-style="italic">
-    All tests pass
-  </text>
-  <text x="450" y="302" font-size="11" text-anchor="middle" fill="#a0afc8" font-style="italic">
-    main is always working
-  </text>
-
-  <!-- Repeat indicator -->
-  <g transform="translate(450, 140)">
-    <path d="M -40 0 A 40 40 0 0 1 40 0" fill="none" stroke="#a0afc8" stroke-width="2" stroke-dasharray="3,3" opacity="0.5"/>
-    <text y="-50" font-size="12" text-anchor="middle" fill="#a0afc8" font-style="italic">Repeating Cycle</text>
-  </g>
 </svg>

@@ -1,0 +1,71 @@
+<svg width="800" height="420" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+    text { font-family: -apple-system, system-ui, sans-serif; }
+    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
+    .label { font-size: 14px; fill: #334155; }
+    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
+    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .gate-icon { fill: #EF4444; font-size: 16px; }
+    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+
+<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
+
+<!-- Gate Diamond -->
+<path d="M400 20 L550 80 L400 140 L250 80 Z" fill="#FFF7ED" stroke="#F97316" stroke-width="2" filter="drop-shadow(2px 2px 2px rgba(0,0,0,0.1))"/>
+<text x="400" y="70" text-anchor="middle" class="title" fill="#EA580C" font-size="18">TESTABILITY GATE</text>
+<text x="400" y="95" text-anchor="middle" class="label">Can we test this?</text>
+
+<!-- Connectors -->
+<path d="M400 140 L400 180" class="connector"/> <!-- Center -->
+<path d="M325 110 C 250 110, 150 120, 150 180" class="connector" fill="none"/> <!-- Left -->
+<path d="M475 110 C 550 110, 650 120, 650 180" class="connector" fill="none"/> <!-- Right -->
+
+<!-- Track A -->
+<g transform="translate(50, 180)">
+    <rect x="0" y="0" width="200" height="220" fill="#D1FAE5" stroke="#10B981" class="box"/>
+    <text x="100" y="30" text-anchor="middle" class="title" fill="#10B981">TRACK A</text>
+    <text x="100" y="50" text-anchor="middle" class="label">Testable</text>
+    <line x1="20" y1="60" x2="180" y2="60" stroke="#10B981" stroke-width="1"/>
+    
+    <text x="30" y="90" class="label">✅ Build</text>
+    <text x="30" y="115" class="label">✅ Run</text>
+    <text x="30" y="140" class="label">✅ Test</text>
+    
+    <line x1="20" y1="155" x2="180" y2="155" stroke="#10B981" stroke-width="1"/>
+    <text x="30" y="180" class="label" font-size="12">Gherkin capture</text>
+    <text x="30" y="200" class="label" font-size="12">Green baseline</text>
+</g>
+
+<!-- Hybrid -->
+<g transform="translate(300, 180)">
+    <rect x="0" y="0" width="200" height="220" fill="#F1F5F9" stroke="#64748B" class="box"/>
+    <text x="100" y="30" text-anchor="middle" class="title" fill="#475569">HYBRID</text>
+    <text x="100" y="50" text-anchor="middle" class="label">Mix A+B</text>
+    <line x1="20" y1="60" x2="180" y2="60" stroke="#64748B" stroke-width="1"/>
+    
+    <text x="30" y="100" class="label">Per-feature</text>
+    <text x="30" y="125" class="label">decision</text>
+    
+    <line x1="20" y1="155" x2="180" y2="155" stroke="#64748B" stroke-width="1"/>
+    <text x="30" y="180" class="label" font-size="12">A: Gherkin</text>
+    <text x="30" y="200" class="label" font-size="12">B: Docs</text>
+</g>
+
+<!-- Track B -->
+<g transform="translate(550, 180)">
+    <rect x="0" y="0" width="200" height="220" fill="#FEF3C7" stroke="#F59E0B" class="box"/>
+    <text x="100" y="30" text-anchor="middle" class="title" fill="#F59E0B">TRACK B</text>
+    <text x="100" y="50" text-anchor="middle" class="label">Doc-Only</text>
+    <line x1="20" y1="60" x2="180" y2="60" stroke="#F59E0B" stroke-width="1"/>
+    
+    <text x="30" y="90" class="label">❌ Can't build</text>
+    <text x="30" y="115" class="label">❌ Deps missing</text>
+    
+    <line x1="20" y1="155" x2="180" y2="155" stroke="#F59E0B" stroke-width="1"/>
+    <text x="30" y="180" class="label" font-size="12">Gherkin-like prose</text>
+    <text x="30" y="200" class="label" font-size="12">Manual checklist</text>
+</g>
+
+</svg>

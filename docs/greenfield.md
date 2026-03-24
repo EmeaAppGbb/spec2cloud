@@ -1,12 +1,8 @@
 # Greenfield: Building New Applications
 
-Build production-ready applications from a product specification, deployed to Azure.
+Build production-ready applications from a product specification, deployed to Azure. Two phases: Discovery (understand what to build) and Delivery (build and ship it).
 
 ![Greenfield Pipeline — from specification to cloud](assets/greenfield-pipeline.svg)
-
-## The Journey
-
-spec2cloud's greenfield path transforms a product idea into a running application through two major phases: Discovery (understand what to build) and Delivery (build and ship it).
 
 ## Phase 0: Shell Setup
 
@@ -46,8 +42,6 @@ Every technology choice is researched, evaluated, and documented as an Architect
 ## Phase 2: Increment Delivery
 
 ![Increment Delivery Cycle](assets/increment-delivery.svg)
-
-This phase repeats for each increment. After every cycle, main is fully working—all tests pass, deployment is live.
 
 ### Step 1: Tests First
 

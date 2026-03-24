@@ -26,6 +26,40 @@ This file captures the current position:
 }
 ```
 
+### Brownfield State
+
+For brownfield projects, state.json includes additional tracking:
+
+```json
+{
+  "mode": "brownfield",
+  "phase": "B3",
+  "brownfield": {
+    "testability": "partial",
+    "track": "hybrid",
+    "testabilityChecklist": {
+      "canBuild": true,
+      "externalDepsReachable": false,
+      "apiExercisable": true,
+      "uiRenderable": true,
+      "devEnvExists": true,
+      "existingTestsRunnable": true
+    },
+    "featureTracks": {
+      "auth": "A",
+      "search": "A",
+      "reporting": "B"
+    },
+    "greenBaseline": {
+      "auth": { "scenarios": 12, "testsPass": true },
+      "search": { "scenarios": 8, "testsPass": true }
+    }
+  }
+}
+```
+
+The `featureTracks` map determines which delivery pipeline each feature uses in Phase 2.
+
 ### audit.log — The Timeline
 
 An append-only log of every action taken:
@@ -71,7 +105,13 @@ Nothing ships without explicit human approval. The orchestrator pauses at critic
 | Gherkin Review | After Phase 2 Step 1 | BDD test scenarios |
 | PR Review | After Phase 2 Step 3 | Implementation code |
 | Deploy Review | After Phase 2 Step 4 | Deployed application |
-| Brownfield Path | After Phase B2 | Which paths to pursue |
+| Extraction Review | After Phase B1 | Accuracy of extracted documentation |
+| PRD Review | After Phase B2a | Generated PRD matches codebase reality |
+| FRD Review | After Phase B2b | Generated FRDs with Current Implementation |
+| Testability Gate | After Phase B2 | Can this app be tested? Track A/B/Hybrid decision |
+| Green Baseline | After Track A per feature | Gherkin + tests pass against current app |
+| Track B Review | After Track B per feature | Behavioral docs + manual checklists |
+| Path Selection | Before Phase A | Which paths to pursue (modernize/rewrite/etc.) |
 | Assessment Review | After Phase A | Assessment findings |
 
 ### How Gates Work
@@ -82,3 +122,19 @@ When the orchestrator reaches a gate:
 3. You review the artifacts
 4. You approve, request changes, or reject
 5. The orchestrator records your decision and either proceeds or loops back
+
+### Testability Gate (Brownfield)
+
+The most important brownfield gate. After specs are generated, you assess testability:
+
+**Checklist:**
+- Can the app be built and started locally?
+- Are external dependencies reachable or mockable?
+- Can API endpoints be exercised?
+- Can the UI be rendered and interacted with?
+- Is there a working dev/test environment?
+
+**Outcomes:**
+- **Track A** — All/most checked → Green baseline (Gherkin + passing tests)
+- **Track B** — Few/none checked → Documentation-only (behavioral docs + manual checklists)
+- **Hybrid** — Mixed → Track A for testable features, Track B for the rest

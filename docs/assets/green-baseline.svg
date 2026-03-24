@@ -1,0 +1,56 @@
+<svg width="800" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+    text { font-family: -apple-system, system-ui, sans-serif; }
+    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
+    .label { font-size: 14px; fill: #334155; }
+    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
+    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
+    .gate-icon { fill: #EF4444; font-size: 16px; }
+    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+
+<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
+
+<defs>
+    <marker id="arrowBig" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,8 L12,4 z" fill="#3B82F6" />
+    </marker>
+</defs>
+
+<g transform="translate(20, 40)">
+    <!-- Box 1 -->
+    <rect x="0" y="0" width="220" height="200" fill="#F1F5F9" stroke="#94A3B8" class="box"/>
+    <text x="110" y="30" text-anchor="middle" class="title">Existing App</text>
+    <text x="20" y="70" class="label">🏗️ Running code</text>
+    <text x="20" y="100" class="label">with undocumented</text>
+    <text x="20" y="130" class="label">behavior</text>
+
+    <!-- Arrow 1 -->
+    <path d="M230 100 L260 100" class="connector" stroke="#3B82F6" stroke-width="4" marker-end="url(#arrowBig)"/>
+
+    <!-- Box 2 -->
+    <rect x="270" y="0" width="220" height="200" fill="#DBEAFE" stroke="#3B82F6" class="box"/>
+    <text x="110" y="30" transform="translate(270,0)" text-anchor="middle" class="title">Capture as Tests</text>
+    <text x="290" y="70" class="label">📝 Gherkin scenarios</text>
+    <text x="290" y="90" class="label" font-size="12" fill="#64748B">@existing-behavior</text>
+    <text x="290" y="120" class="label">🧪 Cucumber steps</text>
+    <text x="290" y="150" class="label">🎭 Playwright e2e</text>
+    <text x="290" y="180" class="label" font-weight="bold" fill="#10B981">🟢 Must PASS</text>
+
+    <!-- Arrow 2 -->
+    <path d="M500 100 L530 100" class="connector" stroke="#3B82F6" stroke-width="4" marker-end="url(#arrowBig)"/>
+
+    <!-- Box 3 -->
+    <rect x="540" y="0" width="220" height="200" fill="#D1FAE5" stroke="#10B981" class="box"/>
+    <text x="110" y="30" transform="translate(540,0)" text-anchor="middle" class="title">Safety Net Ready</text>
+    <text x="560" y="70" class="label">✅ All tests pass</text>
+    <text x="560" y="100" class="label">🛡️ Regression safety</text>
+    <text x="560" y="130" class="label">📋 Behavioral contract</text>
+    <text x="560" y="180" class="label" font-weight="bold" fill="#3B82F6">Ready for changes!</text>
+</g>
+
+<rect x="100" y="270" width="600" height="40" fill="#FEF2F2" stroke="#EF4444" rx="8"/>
+<text x="400" y="295" text-anchor="middle" class="label" fill="#B91C1C" font-weight="bold">If a test fails → fix the TEST (it's wrong about current behavior), not the app</text>
+
+</svg>

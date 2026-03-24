@@ -1,0 +1,57 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, system-ui, sans-serif">
+  <defs>
+    <filter id="handdrawn" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#64748B" />
+    </marker>
+  </defs>
+  <rect width="800" height="500" fill="#F8FAFC" />
+  
+  <text x="400" y="40" text-anchor="middle" font-size="28" font-weight="bold" fill="#334155">Increment Delivery Cycle</text>
+  <text x="400" y="480" text-anchor="middle" font-size="18" fill="#64748B" font-style="italic">Repeat per increment</text>
+
+  <!-- Step 1: Tests (Top - Red) -->
+  <g transform="translate(300, 80)">
+    <rect width="200" height="110" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#991B1B">Step 1: TESTS</text>
+    <text x="20" y="50" font-size="14" fill="# E2E specs</text>7F1D1D">
+    <text x="20" y="70" font-size="14" fill="# Gherkin scenarios</text>7F1D1D">
+  </g>    <text x="20" y="90" font-size="14" fill="# Red baseline 7F1D1D">
+
+  <!-- Step 2: Contracts (Right - Blue) -->
+  <g transform="translate(530, 200)">
+    <rect width="200" height="110" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#1E40AF">Step 2: CONTRACTS</text>
+    <text x="20" y="50" font-size="14" fill="# OpenAPI specs</text>1E3A8A">
+    <text x="20" y="70" font-size="14" fill="# TypeScript types</text>1E3A8A">
+    <text x="20" y="90" font-size="14" fill="# Infra contracts</text>1E3A8A">
+  </g>
+
+  <!-- Step 3: Implement (Bottom - Green) -->
+  <g transform="translate(300, 320)">
+    <rect width="200" height="120" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#166534">Step 3: IMPLEMENT</text>
+    <text x="20" y="50" font-size="14" fill="# API slice (parallel)</text>14532D">
+    <text x="20" y="70" font-size="14" fill="# Web slice (parallel)</text>14532D">
+    <text x="20" y="90" font-size="14" fill="# Integration (seq)</text>14532D">
+  </g>    <text x="20" y="110" font-size="14" fill="#14532D">
+
+  <!-- Step 4: Deploy (Left - Purple) -->
+  <g transform="translate(70, 200)">
+    <rect width="200" height="110" rx="8" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="2" filter="url(#handdrawn)"/>
+    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#5B21B6">Step 4: DEPLOY</text>
+    <text x="20" y="50" font-size="14" fill="# Azure provision</text>4C1D95">
+    <text x="20" y="70" font-size="14" fill="# Smoke tests</text>4C1D95">
+    <text x=20 y=90 font-size=14 fill=#4C1D95> Live on Azure</text>
+  </g>
+
+  <!-- Connecting Arrows -->
+  <path d="M 500 135 L 630 200" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
+  <path d="M 630 310 L 500 380" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
+  <path d="M 300 380 L 170 310" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
+  <path d="M 170 200 L 300 135" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
+
+</svg>

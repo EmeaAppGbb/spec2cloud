@@ -31,8 +31,8 @@ Execute the repeating increment cycle.
 | Skill | Purpose |
 |-------|---------|
 | e2e-generation | Generate Playwright e2e test specs from UI flows |
-| gherkin-generation | Convert FRDs into BDD scenarios (.feature files) |
-| test-generation | Create Cucumber step definitions + Vitest unit tests |
+| gherkin-generation | Convert FRDs into BDD scenarios (.feature files) | Modes: `new-feature` (default), `capture-existing` (brownfield Track A) |
+| test-generation | Create Cucumber step definitions + Vitest unit tests | Modes: `red-baseline` (default), `green-baseline` (brownfield Track A) |
 | contract-generation | Produce OpenAPI specs, TypeScript types, Bicep contracts |
 | implementation | Write code in parallel slices to make failing tests pass |
 | azure-deployment | Provision and deploy to Azure via azd + Bicep |
@@ -62,7 +62,7 @@ Support tools used throughout.
 | skill-creator | Package new reusable patterns as skills |
 | skill-discovery | Search skills.sh for community skills |
 
-## Brownfield Skills (20)
+## Brownfield Skills (21)
 
 ### Extraction Skills (Phase B1)
 Pure-fact scanners that document what exists.
@@ -81,7 +81,18 @@ Pure-fact scanners that document what exists.
 | Skill | Purpose |
 |-------|---------|
 | prd-generator | Reverse-engineer PRD from codebase |
-| frd-generator | Generate FRDs with "Current Implementation" sections |
+| frd-generator | Generate FRDs with "Current Implementation" sections + Track B behavioral docs |
+
+### Brownfield Track Skills (after Testability Gate)
+
+After extraction and spec generation, a **testability gate** determines which track each feature follows:
+
+| Track | Skill | Mode | Purpose |
+|-------|-------|------|---------|
+| A (Testable) | gherkin-generation | `capture-existing` | Gherkin scenarios describing current app behavior |
+| A (Testable) | test-generation | `green-baseline` | Tests that PASS against existing code |
+| A (Testable) | test-runner | verification | Verify green baseline — all tests pass |
+| B (Doc-Only) | frd-generator | behavioral-docs | Behavioral scenarios + manual verification checklists |
 
 ### Assessment Skills (Phase A)
 
@@ -102,6 +113,8 @@ Pure-fact scanners that document what exists.
 | cloud-native-planner | Plan cloud-native migration increments |
 | extension-planner | Plan new feature increments |
 | security-planner | Plan security remediation increments |
+
+> All planners now produce **behavioral deltas** alongside increments: Gherkin deltas for Track A features, behavioral documentation updates for Track B features.
 
 ### Cross-cutting Skills
 
