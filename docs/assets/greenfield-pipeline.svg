@@ -1,93 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+<svg width="1000" height="750" viewBox="0 0 1000 750" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style>
-      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
-      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes drawPath { from { stroke-dashoffset: 300; } to { stroke-dashoffset: 0; } }
-      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
-      .delay-100 { animation-delay: 0.1s; }
-      .delay-200 { animation-delay: 0.2s; }
-      .delay-300 { animation-delay: 0.3s; }
-      .delay-400 { animation-delay: 0.4s; }
-      .delay-500 { animation-delay: 0.5s; }
-      .delay-600 { animation-delay: 0.6s; }
-      .draw-path { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawPath 0.6s ease-out forwards; }
-    </style>
-    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
     </marker>
   </defs>
 
-  <rect width="800" height="600" fill="#F8FAFC" rx="0"/>
+  <rect width="1000" height="750" fill="#F8FAFC"/>
 
-  <!-- Start -->
-  <g class="fade-in">
-    <text x="400" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#1E293B">💡 Start with a Product Idea</text>
-  </g>
-  <line x1="400" y1="50" x2="400" y2="70" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-100"/>
+  <!-- Title -->
+  <text x="500" y="40" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#1E293B" text-anchor="middle">Start with a Product Idea</text>
+  <line x1="500" y1="55" x2="500" y2="80" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
 
   <!-- Phase 0 -->
-  <g class="fade-in delay-100" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="140" y="75" width="520" height="70" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
-    <text x="400" y="100" text-anchor="middle" font-size="17" font-weight="700" fill="#334155">Phase 0: Shell Setup</text>
-    <text x="400" y="120" text-anchor="middle" font-size="12" fill="#475569">Template: Next.js/.NET/Python · Structure · Tests · Azure Infra</text>
+  <g filter="url(#shadow)">
+    <rect x="180" y="85" width="640" height="75" rx="12" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5"/>
+    <text x="500" y="115" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#334155" text-anchor="middle">Phase 0: Shell Setup</text>
+    <text x="500" y="140" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#475569" text-anchor="middle">Pick template: Next.js / .NET / Python — Project structure, tests, Azure infra</text>
   </g>
-  <text x="680" y="115" font-size="16" class="fade-in delay-200">🚦</text>
-
-  <line x1="400" y1="145" x2="400" y2="165" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-200"/>
+  <circle cx="840" cy="122" r="6" fill="#D97706"/>
+  <line x1="500" y1="160" x2="500" y2="195" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
 
   <!-- Phase 1 -->
-  <g class="fade-in delay-200" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="140" y="170" width="520" height="180" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
-    <text x="400" y="195" text-anchor="middle" font-size="17" font-weight="700" fill="#1E40AF">Phase 1: Product Discovery</text>
-    
-    <!-- 1a -->
-    <g transform="translate(160, 210)">
-        <rect width="230" height="50" rx="6" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/>
-        <text x="115" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#1E40AF">1a: Spec Refinement</text>
-        <text x="115" y="38" text-anchor="middle" font-size="11" fill="#64748B">PRD → FRDs 🚦</text>
-    </g>
-    <!-- 1b -->
-    <g transform="translate(410, 210)">
-        <rect width="230" height="50" rx="6" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/>
-        <text x="115" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#1E40AF">1b: UI/UX Design</text>
-        <text x="115" y="38" text-anchor="middle" font-size="11" fill="#64748B">Prototypes 🚦</text>
-    </g>
-    <!-- 1c -->
-    <g transform="translate(160, 275)">
-        <rect width="230" height="50" rx="6" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/>
-        <text x="115" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#1E40AF">1c: Increment Planning</text>
-        <text x="115" y="38" text-anchor="middle" font-size="11" fill="#64748B">Walking Skeleton 🚦</text>
-    </g>
-    <!-- 1d -->
-    <g transform="translate(410, 275)">
-        <rect width="230" height="50" rx="6" fill="#FFFFFF" stroke="#93C5FD" stroke-width="1"/>
-        <text x="115" y="20" text-anchor="middle" font-size="12" font-weight="700" fill="#1E40AF">1d: Tech Stack</text>
-        <text x="115" y="38" text-anchor="middle" font-size="11" fill="#64748B">Research &amp; ADRs 🚦</text>
-    </g>
-  </g>
+  <g filter="url(#shadow)">
+    <rect x="140" y="200" width="720" height="260" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="500" y="230" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#1E40AF" text-anchor="middle">Phase 1: Product Discovery</text>
 
-  <line x1="400" y1="350" x2="400" y2="370" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-300"/>
+    <!-- 1a -->
+    <rect x="165" y="250" width="325" height="65" rx="8" fill="white" stroke="#93C5FD" stroke-width="1"/>
+    <text x="327" y="275" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">1a: Spec Refinement</text>
+    <text x="327" y="298" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="13" fill="#475569" text-anchor="middle">PRD → FRDs</text>
+    <circle cx="480" cy="282" r="5" fill="#D97706"/>
+
+    <!-- 1b -->
+    <rect x="510" y="250" width="325" height="65" rx="8" fill="white" stroke="#93C5FD" stroke-width="1"/>
+    <text x="672" y="275" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">1b: UI/UX Design</text>
+    <text x="672" y="298" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="13" fill="#475569" text-anchor="middle">HTML Prototypes</text>
+    <circle cx="825" cy="282" r="5" fill="#D97706"/>
+
+    <!-- 1c -->
+    <rect x="165" y="330" width="325" height="65" rx="8" fill="white" stroke="#93C5FD" stroke-width="1"/>
+    <text x="327" y="355" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">1c: Increment Planning</text>
+    <text x="327" y="378" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="13" fill="#475569" text-anchor="middle">Walking Skeleton First</text>
+    <circle cx="480" cy="362" r="5" fill="#D97706"/>
+
+    <!-- 1d -->
+    <rect x="510" y="330" width="325" height="65" rx="8" fill="white" stroke="#93C5FD" stroke-width="1"/>
+    <text x="672" y="355" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#1E40AF" text-anchor="middle">1d: Tech Stack</text>
+    <text x="672" y="378" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="13" fill="#475569" text-anchor="middle">Research + ADRs</text>
+    <circle cx="825" cy="362" r="5" fill="#D97706"/>
+
+    <text x="500" y="435" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="12" fill="#64748B" text-anchor="middle">Orange dots = Human Gates (approval required)</text>
+  </g>
+  <line x1="500" y1="460" x2="500" y2="500" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
 
   <!-- Phase 2 -->
-  <g class="fade-in delay-300" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="140" y="375" width="520" height="130" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
-    <text x="400" y="400" text-anchor="middle" font-size="17" font-weight="700" fill="#059669">Phase 2: Increment Delivery</text>
-    
-    <text x="400" y="430" text-anchor="middle" font-size="14" font-weight="600" fill="#065F46">Tests → Contracts → Implement → Deploy</text>
-    <text x="280" y="455" text-anchor="middle" font-size="20">🔴</text>
-    <text x="360" y="455" text-anchor="middle" font-size="20">📋</text>
-    <text x="440" y="455" text-anchor="middle" font-size="20">🟢</text>
-    <text x="520" y="455" text-anchor="middle" font-size="20">☁️✅</text>
+  <g filter="url(#shadow)">
+    <rect x="140" y="505" width="720" height="160" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+    <text x="500" y="535" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#059669" text-anchor="middle">Phase 2: Increment Delivery</text>
+    <text x="500" y="575" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#065F46" text-anchor="middle">Tests → Contracts → Implement → Deploy</text>
 
-    <text x="400" y="485" text-anchor="middle" font-size="12" fill="#047857">🔄 Repeat for each increment</text>
-    <text x="400" y="500" text-anchor="middle" font-size="11" fill="#064E3B" font-style="italic">Human gates: Gherkin review 🚦, PR review 🚦</text>
+    <!-- Step icons -->
+    <circle cx="330" cy="610" r="16" fill="white" stroke="#EF4444" stroke-width="2"/>
+    <text x="330" y="615" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#EF4444" text-anchor="middle" font-weight="bold">T</text>
+    <circle cx="410" cy="610" r="16" fill="white" stroke="#3B82F6" stroke-width="2"/>
+    <text x="410" y="615" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#3B82F6" text-anchor="middle" font-weight="bold">C</text>
+    <circle cx="490" cy="610" r="16" fill="white" stroke="#059669" stroke-width="2"/>
+    <text x="490" y="615" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#059669" text-anchor="middle" font-weight="bold">I</text>
+    <circle cx="570" cy="610" r="16" fill="white" stroke="#D97706" stroke-width="2"/>
+    <text x="570" y="615" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#D97706" text-anchor="middle" font-weight="bold">D</text>
+
+    <text x="500" y="650" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#047857" text-anchor="middle">Repeat for each increment — Human gates: Gherkin review, PR review</text>
   </g>
+  <line x1="500" y1="665" x2="500" y2="700" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <line x1="400" y1="505" x2="400" y2="535" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-400"/>
-
-  <!-- End -->
-  <g class="fade-in delay-500">
-    <text x="400" y="560" text-anchor="middle" font-size="20" font-weight="700" fill="#059669">☁️ Production on Azure</text>
-  </g>
+  <!-- Bottom -->
+  <text x="500" y="730" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#059669" text-anchor="middle">Production on Azure</text>
 </svg>

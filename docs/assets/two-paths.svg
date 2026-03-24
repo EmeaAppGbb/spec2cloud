@@ -1,130 +1,118 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
   <defs>
-    <style>
-      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes drawPath {
-        from { stroke-dashoffset: 300; }
-        to { stroke-dashoffset: 0; }
-      }
-      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
-      .delay-100 { animation-delay: 0.1s; }
-      .delay-200 { animation-delay: 0.2s; }
-      .delay-300 { animation-delay: 0.3s; }
-      .delay-400 { animation-delay: 0.4s; }
-      .delay-500 { animation-delay: 0.5s; }
-      .draw-path {
-        stroke-dasharray: 300;
-        stroke-dashoffset: 300;
-        animation: drawPath 0.6s ease-out forwards;
-      }
-      .shadow { filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1)); }
-    </style>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
     </marker>
   </defs>
-  <rect width="800" height="550" fill="#F8FAFC" rx="0"/>
+  <rect width="1000" height="700" fill="#F8FAFC"/>
 
   <!-- Left Column: Greenfield -->
-  <g class="fade-in delay-100">
-    <text x="30" y="30" font-size="18" font-weight="bold" fill="#059669">🌱 GREENFIELD — Build New</text>
-    <rect x="30" y="45" width="360" height="420" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="2" class="shadow"/>
+  <g filter="url(#shadow)">
+    <rect x="30" y="30" width="450" height="520" rx="8" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+    <text x="255" y="70" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="20" font-weight="bold" fill="#059669">GREENFIELD — Build New</text>
     
-    <!-- Steps -->
-    <g transform="translate(50, 65)">
-      <!-- Step 1 -->
-      <rect x="0" y="0" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
-      <text x="10" y="25" font-size="14" font-weight="bold" fill="#334155">Phase 1: Discovery</text>
-      <text x="10" y="45" font-size="12" fill="#64748B">PRD → FRD → UI/UX → Tech Stack</text>
-      
-      <!-- Arrow -->
-      <path d="M 160 60 L 160 80" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-200"/>
+    <!-- Step 1 -->
+    <g transform="translate(50, 90)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Phase 1: Discovery</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">PRD → FRD → UI/UX → Tech Stack</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 255 150 L 255 165" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-      <!-- Step 2 -->
-      <rect x="0" y="80" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
-      <text x="10" y="105" font-size="14" font-weight="bold" fill="#334155">Phase 2: Tests</text>
-      <text x="10" y="125" font-size="12" fill="#64748B">E2E, Gherkin, Unit stubs, Red baseline</text>
+    <!-- Step 2 -->
+    <g transform="translate(50, 170)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Phase 2: Tests</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">E2E, Gherkin, Unit stubs → Red baseline</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 255 230 L 255 245" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-      <!-- Arrow -->
-      <path d="M 160 140 L 160 160" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-300"/>
+    <!-- Step 3 -->
+    <g transform="translate(50, 250)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Phase 2: Implement</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">API + Web parallel → Integration</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 255 310 L 255 325" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-      <!-- Step 3 -->
-      <rect x="0" y="160" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
-      <text x="10" y="185" font-size="14" font-weight="bold" fill="#334155">Phase 2: Contracts + Implement</text>
-      <text x="10" y="205" font-size="12" fill="#64748B">OpenAPI, Types, API∥Web→Integration</text>
-
-      <!-- Arrow -->
-      <path d="M 160 220 L 160 240" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-400"/>
-
-      <!-- Step 4 -->
-      <rect x="0" y="240" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
-      <text x="10" y="265" font-size="14" font-weight="bold" fill="#334155">Phase 2: Deploy</text>
-      <text x="10" y="285" font-size="12" fill="#64748B">Azure provision, Smoke tests, ✅ Live</text>
+    <!-- Step 4 -->
+    <g transform="translate(50, 330)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Phase 2: Deploy</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">Azure provision, Smoke tests, Live</text>
     </g>
   </g>
 
   <!-- Right Column: Brownfield -->
-  <g class="fade-in delay-200">
-    <text x="410" y="30" font-size="18" font-weight="bold" fill="#D97706">🏗️ BROWNFIELD — Modernize Existing</text>
-    <rect x="410" y="45" width="360" height="420" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="2" class="shadow"/>
+  <g filter="url(#shadow)">
+    <rect x="520" y="30" width="450" height="520" rx="8" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>
+    <text x="745" y="70" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="20" font-weight="bold" fill="#D97706">BROWNFIELD — Modernize Existing</text>
+    
+    <!-- Step 1 -->
+    <g transform="translate(540, 90)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">B1: Extract</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">Scanner, Deps, Arch, API, Data, Tests</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 745 150 L 745 165" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-    <!-- Steps -->
-    <g transform="translate(430, 65)">
-      <!-- Step 1 -->
-      <rect x="0" y="0" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
-      <text x="10" y="20" font-size="14" font-weight="bold" fill="#334155">B1: Extract</text>
-      <text x="10" y="38" font-size="12" fill="#64748B">Scanner, Deps, Arch, API, Data, Tests</text>
-      
-      <!-- Arrow -->
-      <path d="M 160 50 L 160 65" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-300"/>
+    <!-- Step 2 -->
+    <g transform="translate(540, 170)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">B2: Spec-Enable</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">PRD, FRDs, Refinement</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 745 230 L 745 245" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-      <!-- Step 2 -->
-      <rect x="0" y="65" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
-      <text x="10" y="85" font-size="14" font-weight="bold" fill="#334155">B2: Spec-Enable</text>
-      <text x="10" y="103" font-size="12" fill="#64748B">PRD, FRDs, Refinement</text>
+    <!-- Step 3: Gate -->
+    <g transform="translate(540, 250)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Testability Gate</text>
+      <!-- Sub pills -->
+      <rect x="10" y="32" width="70" height="20" rx="4" fill="#D1FAE5" />
+      <text x="45" y="46" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="12" fill="#065F46">Track A</text>
+      <rect x="90" y="32" width="70" height="20" rx="4" fill="#DBEAFE" />
+      <text x="125" y="46" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="12" fill="#1E40AF">Hybrid</text>
+      <rect x="170" y="32" width="70" height="20" rx="4" fill="#FEE2E2" />
+      <text x="205" y="46" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="12" fill="#991B1B">Track B</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 745 310 L 745 325" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-      <!-- Arrow -->
-      <path d="M 160 115 L 160 130" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-400"/>
+    <!-- Step 4 -->
+    <g transform="translate(540, 330)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Assess → Plan</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">Targeted assessment + increments</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 745 390 L 745 405" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
-      <!-- Step 3: Testability Gate -->
-      <rect x="0" y="130" width="320" height="60" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
-      <text x="10" y="150" font-size="14" font-weight="bold" fill="#334155">⚖️ Testability Gate</text>
-      <!-- Track A/B sub-boxes -->
-      <rect x="10" y="160" width="145" height="20" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
-      <text x="45" y="174" font-size="11" fill="#059669" font-weight="bold">Track A</text>
-      <rect x="165" y="160" width="145" height="20" rx="4" fill="#FEF2F2" stroke="#DC2626" stroke-width="1"/>
-      <text x="200" y="174" font-size="11" fill="#DC2626" font-weight="bold">Track B</text>
-
-      <!-- Arrow -->
-      <path d="M 160 190 L 160 205" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-500"/>
-
-      <!-- Step 4 -->
-      <rect x="0" y="205" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
-      <text x="10" y="225" font-size="14" font-weight="bold" fill="#334155">Assess → Plan</text>
-      <text x="10" y="243" font-size="12" fill="#64748B">Targeted assessment + increments</text>
-
-      <!-- Arrow -->
-      <path d="M 160 255 L 160 270" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-500"/>
-
-      <!-- Step 5 -->
-      <rect x="0" y="270" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
-      <text x="10" y="290" font-size="14" font-weight="bold" fill="#334155">Phase 2: Deliver</text>
-      <text x="10" y="308" font-size="12" fill="#64748B">Track-aware pipeline</text>
+    <!-- Step 5 -->
+    <g transform="translate(540, 410)">
+      <rect width="410" height="60" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="10" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Phase 2: Deliver</text>
+      <text x="10" y="45" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">Track-aware pipeline</text>
     </g>
   </g>
 
-  <!-- Bottom Convergence -->
-  <g class="fade-in delay-500" transform="translate(100, 480)">
-    <rect x="0" y="0" width="600" height="50" rx="25" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2" class="shadow"/>
-    <text x="300" y="30" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">Same Delivery Pipeline — Tests → Contracts → Implement → Deploy</text>
-    
-    <!-- Connecting Arrows -->
-    <path d="M 110 -15 L 110 0" stroke="#1E40AF" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
-    <path d="M 490 -15 L 490 0" stroke="#1E40AF" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+  <!-- Convergence Pill -->
+  <g filter="url(#shadow)">
+    <rect x="150" y="580" width="700" height="80" rx="40" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="500" y="615" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#1E40AF">Same Delivery Pipeline</text>
+    <text x="500" y="640" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#1E40AF">Tests → Contracts → Implement → Deploy</text>
   </g>
+  
+  <!-- Connecting arrows from columns to pill -->
+  <path d="M 255 550 L 255 580" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M 745 550 L 745 580" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
 </svg>

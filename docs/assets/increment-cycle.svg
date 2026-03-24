@@ -1,66 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420">
+<svg width="1000" height="520" viewBox="0 0 1000 520" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <style>
-      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
-      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes drawPath { from { stroke-dashoffset: 300; } to { stroke-dashoffset: 0; } }
-      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
-      .delay-100 { animation-delay: 0.1s; }
-      .delay-200 { animation-delay: 0.2s; }
-      .delay-300 { animation-delay: 0.3s; }
-      .delay-400 { animation-delay: 0.4s; }
-      .draw-path { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawPath 0.6s ease-out forwards; }
-    </style>
-    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B" />
     </marker>
   </defs>
+  
+  <rect width="1000" height="520" fill="#F8FAFC"/>
 
-  <rect width="800" height="420" fill="#F8FAFC" rx="0"/>
-
-  <!-- Center Text -->
-  <text x="400" y="210" text-anchor="middle" font-size="16" font-weight="700" fill="#1E293B">Repeat per increment</text>
-
-  <!-- Top: Tests -->
-  <g class="fade-in delay-100" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="310" y="20" width="180" height="100" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
-    <text x="400" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#B91C1C">Step 1: TESTS</text>
-    <text x="400" y="75" text-anchor="middle" font-size="12" fill="#7F1D1D">Gherkin &amp; E2E Specs</text>
-    <text x="400" y="95" text-anchor="middle" font-size="11" font-weight="bold" fill="#EF4444">🔴 Red Baseline</text>
+  <!-- Step 1: TESTS (Top Center) -->
+  <g transform="translate(370, 30)">
+    <rect width="260" height="130" rx="12" fill="#FEE2E2" stroke="#EF4444" stroke-width="2" filter="url(#shadow)"/>
+    <text x="130" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#B91C1C" text-anchor="middle">Step 1: TESTS</text>
+    <line x1="20" y1="35" x2="240" y2="35" stroke="#EF4444" stroke-width="1"/>
+    <text x="130" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">E2E Playwright specs</text>
+    <text x="130" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">Gherkin scenarios</text>
+    <text x="130" y="100" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">Cucumber steps</text>
+    <text x="130" y="120" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#B91C1C" text-anchor="middle">Red baseline</text>
   </g>
 
-  <!-- Right: Contracts -->
-  <g class="fade-in delay-200" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="560" y="150" width="180" height="100" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1"/>
-    <text x="650" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="#1E40AF">Step 2: CONTRACTS</text>
-    <text x="650" y="205" text-anchor="middle" font-size="12" fill="#1E3A8A">OpenAPI &amp; Types</text>
-    <text x="650" y="225" text-anchor="middle" font-size="11" font-style="italic" fill="#3B82F6">Parallel Enablement</text>
+  <!-- Step 2: CONTRACTS (Right Center) -->
+  <g transform="translate(700, 190)">
+    <rect width="260" height="130" rx="12" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2" filter="url(#shadow)"/>
+    <text x="130" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#1E40AF" text-anchor="middle">Step 2: CONTRACTS</text>
+    <line x1="20" y1="35" x2="240" y2="35" stroke="#3B82F6" stroke-width="1"/>
+    <text x="130" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">OpenAPI specs</text>
+    <text x="130" y="85" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">TypeScript types</text>
+    <text x="130" y="110" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">Infra contracts</text>
   </g>
 
-  <!-- Bottom: Implement -->
-  <g class="fade-in delay-300" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="310" y="280" width="180" height="100" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1"/>
-    <text x="400" y="310" text-anchor="middle" font-size="14" font-weight="700" fill="#065F46">Step 3: IMPLEMENT</text>
-    <text x="400" y="335" text-anchor="middle" font-size="12" fill="#064E3B">API &amp; Web Slices</text>
-    <text x="400" y="355" text-anchor="middle" font-size="11" font-weight="bold" fill="#059669">🟢 Green</text>
+  <!-- Step 3: IMPLEMENT (Bottom Center) -->
+  <g transform="translate(370, 350)">
+    <rect width="260" height="130" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2" filter="url(#shadow)"/>
+    <text x="130" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#047857" text-anchor="middle">Step 3: IMPLEMENT</text>
+    <line x1="20" y1="35" x2="240" y2="35" stroke="#059669" stroke-width="1"/>
+    <text x="130" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">API slice (Express)</text>
+    <text x="130" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">Web slice (Next.js)</text>
+    <text x="130" y="100" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">Integration wiring</text>
+    <text x="130" y="120" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#047857" text-anchor="middle">All tests pass</text>
   </g>
 
-  <!-- Left: Deploy -->
-  <g class="fade-in delay-400" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
-    <rect x="60" y="150" width="180" height="100" rx="8" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1"/>
-    <text x="150" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="#92400E">Step 4: DEPLOY</text>
-    <text x="150" y="205" text-anchor="middle" font-size="12" fill="#78350F">Provision &amp; Deploy</text>
-    <text x="150" y="225" text-anchor="middle" font-size="11" font-weight="bold" fill="#D97706">✅ Live</text>
+  <!-- Step 4: DEPLOY (Left Center) -->
+  <g transform="translate(40, 190)">
+    <rect width="260" height="130" rx="12" fill="#FEF3C7" stroke="#D97706" stroke-width="2" filter="url(#shadow)"/>
+    <text x="130" y="25" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#B45309" text-anchor="middle">Step 4: DEPLOY</text>
+    <line x1="20" y1="35" x2="240" y2="35" stroke="#D97706" stroke-width="1"/>
+    <text x="130" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">azd provision</text>
+    <text x="130" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">azd deploy</text>
+    <text x="130" y="100" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#1E293B" text-anchor="middle">Smoke tests</text>
+    <text x="130" y="120" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#B45309" text-anchor="middle">Live on Azure</text>
   </g>
 
   <!-- Arrows -->
-  <!-- Top to Right -->
-  <path d="M 500 70 Q 550 70 590 140" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-100"/>
-  <!-- Right to Bottom -->
-  <path d="M 650 260 Q 650 330 500 330" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-200"/>
-  <!-- Bottom to Left -->
-  <path d="M 300 330 Q 200 330 150 260" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-300"/>
-  <!-- Left to Top -->
-  <path d="M 150 140 Q 150 70 300 70" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-400"/>
+  <path d="M640 95 Q 830 95 830 180" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M830 330 Q 830 415 640 415" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M360 415 Q 170 415 170 330" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M170 180 Q 170 95 360 95" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
 
+  <!-- Center Text -->
+  <text x="500" y="265" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="18" font-weight="bold" fill="#1E293B" text-anchor="middle">Repeat per increment</text>
 </svg>

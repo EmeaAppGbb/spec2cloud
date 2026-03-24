@@ -1,89 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 550" width="1000" height="550">
   <defs>
-    <style>
-      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
-      .shadow { filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1)); }
-      .card-title { font-size: 14px; font-weight: bold; }
-      .card-body { font-size: 11px; fill: #475569; }
-    </style>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
   </defs>
-  <rect width="800" height="450" fill="#F8FAFC" rx="0"/>
-  
-  <text x="400" y="30" font-size="22" font-weight="bold" fill="#1E293B" text-anchor="middle">43 Skills</text>
+  <rect width="1000" height="550" fill="#F8FAFC"/>
 
-  <!-- Row 1 Left: Phase Skills (Green) -->
-  <g class="fade-in" transform="translate(30, 50)">
-    <rect width="360" height="110" rx="8" fill="white" class="shadow"/>
-    <path d="M 0 8 Q 0 0 8 0 L 4 0 L 4 110 L 8 110 Q 0 110 0 102 Z" fill="#22C55E"/> <!-- Left Border -->
-    <rect x="0" y="0" width="4" height="110" fill="#22C55E" rx="0"/> <!-- Left strip fix -->
-    <text x="15" y="25" class="card-title" fill="#15803D">🟢 Phase Skills (3)</text>
-    <text x="15" y="50" class="card-body">
-      <tspan x="15" dy="0">spec-refinement, ui-ux-design,</tspan>
-      <tspan x="15" dy="16">tech-stack-resolution</tspan>
-    </text>
+  <text x="500" y="40" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="24" font-weight="bold" fill="#1E293B">43 Specialized Skills</text>
+  <text x="500" y="65" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">Built on agentskills.io standard</text>
+
+  <!-- Row 1 -->
+  <!-- Phase Skills -->
+  <g transform="translate(30, 90)" filter="url(#shadow)">
+    <rect width="460" height="130" rx="4" fill="#FFFFFF"/>
+    <path d="M 0 4 L 0 126" stroke="#059669" stroke-width="4" fill="none" transform="translate(0, 0)"/>
+    <text x="15" y="30" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Phase Skills (3)</text>
+    <text x="15" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">spec-refinement, ui-ux-design,</text>
+    <text x="15" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">tech-stack-resolution</text>
   </g>
 
-  <!-- Row 1 Right: Protocol Skills (Blue) -->
-  <g class="fade-in" transform="translate(410, 50)">
-    <rect width="360" height="110" rx="8" fill="white" class="shadow"/>
-    <rect x="0" y="0" width="4" height="110" fill="#3B82F6" rx="0"/>
-    <text x="15" y="25" class="card-title" fill="#1D4ED8">🔵 Protocol Skills (6)</text>
-    <text x="15" y="50" class="card-body">
-      <tspan x="15" dy="0">state-management, commit-protocol, audit-log,</tspan>
-      <tspan x="15" dy="16">human-gate, resume, error-handling</tspan>
-    </text>
+  <!-- Protocol Skills -->
+  <g transform="translate(510, 90)" filter="url(#shadow)">
+    <rect width="460" height="130" rx="4" fill="#FFFFFF"/>
+    <path d="M 0 4 L 0 126" stroke="#1E40AF" stroke-width="4" fill="none"/>
+    <text x="15" y="30" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Protocol Skills (6)</text>
+    <text x="15" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">state-management, commit-protocol, audit-log,</text>
+    <text x="15" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">human-gate, resume, error-handling</text>
   </g>
 
-  <!-- Row 2 Left: Delivery Skills (Amber) -->
-  <g class="fade-in" transform="translate(30, 180)">
-    <rect width="360" height="110" rx="8" fill="white" class="shadow"/>
-    <rect x="0" y="0" width="4" height="110" fill="#F59E0B" rx="0"/>
-    <text x="15" y="25" class="card-title" fill="#B45309">🟡 Delivery Skills (6)</text>
-    <text x="15" y="50" class="card-body">
-      <tspan x="15" dy="0">e2e-generation, gherkin-generation,</tspan>
-      <tspan x="15" dy="16">test-generation, contract-generation,</tspan>
-      <tspan x="15" dy="16">implementation, azure-deployment</tspan>
-    </text>
+  <!-- Row 2 -->
+  <!-- Delivery Skills -->
+  <g transform="translate(30, 240)" filter="url(#shadow)">
+    <rect width="460" height="130" rx="4" fill="#FFFFFF"/>
+    <path d="M 0 4 L 0 126" stroke="#D97706" stroke-width="4" fill="none"/>
+    <text x="15" y="30" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Delivery Skills (6)</text>
+    <text x="15" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">e2e-generation, gherkin-generation, test-generation,</text>
+    <text x="15" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">contract-generation, implementation, azure-deployment</text>
   </g>
 
-  <!-- Row 2 Right: Utility Skills (Purple) -->
-  <g class="fade-in" transform="translate(410, 180)">
-    <rect width="360" height="110" rx="8" fill="white" class="shadow"/>
-    <rect x="0" y="0" width="4" height="110" fill="#A855F7" rx="0"/>
-    <text x="15" y="25" class="card-title" fill="#7E22CE">🟣 Utility Skills (8)</text>
-    <text x="15" y="50" class="card-body">
-      <tspan x="15" dy="0">spec-validator, test-runner, build-check,</tspan>
-      <tspan x="15" dy="16">deploy-diagnostics, research, skill-creator,</tspan>
-      <tspan x="15" dy="16">skill-discovery, find-skills</tspan>
-    </text>
+  <!-- Utility Skills -->
+  <g transform="translate(510, 240)" filter="url(#shadow)">
+    <rect width="460" height="130" rx="4" fill="#FFFFFF"/>
+    <path d="M 0 4 L 0 126" stroke="#4338CA" stroke-width="4" fill="none"/>
+    <text x="15" y="30" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Utility Skills (8)</text>
+    <text x="15" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">spec-validator, test-runner, build-check,</text>
+    <text x="15" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">deploy-diagnostics, research, skill-creator,</text>
+    <text x="15" y="100" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">skill-discovery, find-skills</text>
   </g>
 
-  <!-- Row 3 Left: Extraction + Spec (Brown) -->
-  <g class="fade-in" transform="translate(30, 310)">
-    <rect width="360" height="110" rx="8" fill="white" class="shadow"/>
-    <rect x="0" y="0" width="4" height="110" fill="#78350F" rx="0"/>
-    <text x="15" y="25" class="card-title" fill="#451A03">🟤 Extraction (6) + Spec Gen (2)</text>
-    <text x="15" y="50" class="card-body">
-      <tspan x="15" dy="0">codebase-scanner, dependency-inventory,</tspan>
-      <tspan x="15" dy="16">architecture-mapper, api-extractor, data-model-extractor,</tspan>
-      <tspan x="15" dy="16">test-discovery, prd-generator, frd-generator</tspan>
-    </text>
+  <!-- Row 3 -->
+  <!-- Extraction + Specs -->
+  <g transform="translate(30, 390)" filter="url(#shadow)">
+    <rect width="460" height="130" rx="4" fill="#FFFFFF"/>
+    <path d="M 0 4 L 0 126" stroke="#78350F" stroke-width="4" fill="none"/>
+    <text x="15" y="30" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Extraction + Specs (8)</text>
+    <text x="15" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">codebase-scanner, dependency-inventory,</text>
+    <text x="15" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">architecture-mapper, api-extractor, data-model-extractor,</text>
+    <text x="15" y="100" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">test-discovery, prd-generator, frd-generator</text>
   </g>
 
-  <!-- Row 3 Right: Assessment + Planning (Red) -->
-  <g class="fade-in" transform="translate(410, 310)">
-    <rect width="360" height="110" rx="8" fill="white" class="shadow"/>
-    <rect x="0" y="0" width="4" height="110" fill="#EF4444" rx="0"/>
-    <text x="15" y="25" class="card-title" fill="#B91C1C">🔴 Assessment (5) + Planning (5)</text>
-    <text x="15" y="50" class="card-body">
-      <tspan x="15" dy="0">modernize, rewrite, cloud-native,</tspan>
-      <tspan x="15" dy="16">security, performance (+ planners)</tspan>
-    </text>
+  <!-- Assessment + Planning -->
+  <g transform="translate(510, 390)" filter="url(#shadow)">
+    <rect width="460" height="130" rx="4" fill="#FFFFFF"/>
+    <path d="M 0 4 L 0 126" stroke="#EF4444" stroke-width="4" fill="none"/>
+    <text x="15" y="30" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#1E293B">Assessment + Planning (10)</text>
+    <text x="15" y="60" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">Modernize, Rewrite, Cloud-Native, Security, Performance</text>
+    <text x="15" y="80" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">(Assessment + Planner pairs)</text>
   </g>
 
 </svg>

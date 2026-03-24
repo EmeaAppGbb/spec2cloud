@@ -1,62 +1,44 @@
-<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 350" width="1000" height="350">
   <defs>
-    <style>
-      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
-      .box { fill: #F8FAFC; stroke-width: 3; rx: 12; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.1)); }
-      .arrow { fill: none; stroke: #64748B; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2s ease-out forwards; }
-      .fade-in-1 { opacity: 0; animation: fadeIn 0.5s ease-out 0.2s forwards; }
-      .fade-in-2 { opacity: 0; animation: fadeIn 0.5s ease-out 0.8s forwards; }
-      .fade-in-3 { opacity: 0; animation: fadeIn 0.5s ease-out 1.4s forwards; }
-      
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes draw {
-        to { stroke-dashoffset: 0; }
-      }
-    </style>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
+    </marker>
   </defs>
-
-  <!-- Background -->
-  <rect width="800" height="300" fill="#F8FAFC" />
-
-  <!-- Box 1: Specs (Blue) -->
-  <g class="fade-in-1">
-    <rect x="50" y="80" width="180" height="120" class="box" stroke="#3B82F6" />
-    <text x="140" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#1E40AF">📝 Specs</text>
-    <text x="140" y="170" text-anchor="middle" font-size="14" fill="#64748B">PRD, FRDs, Gherkin</text>
+  <rect width="1000" height="350" fill="#F8FAFC"/>
+  
+  <!-- Box 1: Specs -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="95" width="240" height="160" rx="8" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="200" y="145" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#1E40AF">Specs</text>
+    <text x="200" y="180" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#1E40AF">PRD, FRDs</text>
+    <text x="200" y="205" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#1E40AF">Gherkin Scenarios</text>
   </g>
 
-  <!-- Arrow 1 -->
-  <path d="M240 140 H 290" class="arrow" style="animation-delay: 0.6s" marker-end="url(#arrowhead)" />
+  <!-- Arrow 1 to 2 -->
+  <path d="M 320 175 L 370 175" stroke="#94A3B8" stroke-width="4" marker-end="url(#arrow)" fill="none"/>
 
-  <!-- Box 2: Tests (Green) -->
-  <g class="fade-in-2">
-    <rect x="310" y="80" width="180" height="120" class="box" stroke="#10B981" />
-    <text x="400" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#065F46">🧪 Tests</text>
-    <text x="400" y="170" text-anchor="middle" font-size="14" fill="#64748B">Generated &amp; Drivers</text>
+  <!-- Box 2: Tests -->
+  <g filter="url(#shadow)">
+    <rect x="380" y="95" width="240" height="160" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+    <text x="500" y="145" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#059669">Tests</text>
+    <text x="500" y="180" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#059669">Generated from specs</text>
+    <text x="500" y="205" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#059669">Drive implementation</text>
   </g>
 
-  <!-- Arrow 2 -->
-  <path d="M500 140 H 550" class="arrow" style="animation-delay: 1.2s" marker-end="url(#arrowhead)" />
+  <!-- Arrow 2 to 3 -->
+  <path d="M 620 175 L 670 175" stroke="#94A3B8" stroke-width="4" marker-end="url(#arrow)" fill="none"/>
 
-  <!-- Box 3: Cloud (Orange) -->
-  <g class="fade-in-3">
-    <rect x="570" y="80" width="180" height="120" class="box" stroke="#F59E0B" />
-    <text x="660" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#92400E">☁️ Cloud</text>
-    <text x="660" y="170" text-anchor="middle" font-size="14" fill="#64748B">Deployed &amp; Live</text>
+  <!-- Box 3: Cloud -->
+  <g filter="url(#shadow)">
+    <rect x="680" y="95" width="240" height="160" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+    <text x="800" y="145" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="22" font-weight="bold" fill="#D97706">Cloud</text>
+    <text x="800" y="180" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#D97706">Deployed on Azure</text>
+    <text x="800" y="205" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" fill="#D97706">Live &amp; verified</text>
   </g>
 
   <!-- Subtitle -->
-  <text x="400" y="260" text-anchor="middle" font-size="16" fill="#475569" font-style="italic" opacity="0" style="animation: fadeIn 1s ease-out 2s forwards;">
-    AI-Powered • Human-Approved • Spec-Driven
-  </text>
-
-  <!-- Arrow Marker -->
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B" />
-    </marker>
-  </defs>
+  <text x="500" y="320" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-style="italic" fill="#64748B">AI-Powered · Human-Approved · Spec-Driven</text>
 </svg>

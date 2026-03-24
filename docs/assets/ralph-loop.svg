@@ -1,108 +1,100 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
   <defs>
-    <style>
-      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes drawPath {
-        from { stroke-dashoffset: 600; }
-        to { stroke-dashoffset: 0; }
-      }
-      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
-      .delay-1 { animation-delay: 0.1s; }
-      .delay-2 { animation-delay: 0.2s; }
-      .delay-3 { animation-delay: 0.3s; }
-      .delay-4 { animation-delay: 0.4s; }
-      .delay-5 { animation-delay: 0.5s; }
-      .delay-6 { animation-delay: 0.6s; }
-      .delay-7 { animation-delay: 0.7s; }
-      .delay-8 { animation-delay: 0.8s; }
-      .delay-9 { animation-delay: 0.9s; }
-      .delay-10 { animation-delay: 1.0s; }
-      .delay-11 { animation-delay: 1.1s; }
-      .draw-path {
-        stroke-dasharray: 600;
-        stroke-dashoffset: 600;
-        animation: drawPath 1.5s ease-out forwards;
-      }
-      .shadow { filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1)); }
-    </style>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#00000020"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
     </marker>
   </defs>
-  <rect width="800" height="550" fill="#F8FAFC" rx="0"/>
-  
-  <text x="400" y="275" font-size="24" font-weight="bold" fill="#334155" text-anchor="middle">The Ralph Loop</text>
-  <text x="400" y="305" font-size="32" text-anchor="middle">♻️</text>
+  <rect width="1000" height="600" fill="#F8FAFC"/>
 
-  <!-- Connection Path -->
-  <!-- Top Row: 50,60 -> 230,60 -> 410,60 -> 590,60 -->
-  <!-- Right Col: 590,60 -> 590,180 -> 590,300 -->
-  <!-- Bottom Row: 590,300 -> 590,440 -> 410,440 -> 230,440 -> 50,440 -->
-  <!-- Left Col: 50,440 -> 50,300 -> 50,180 -> 50,60 -->
-  <path d="M 125 82 L 230 82 M 305 82 L 410 82 M 485 82 L 590 82 
-           M 665 105 L 665 180 M 665 225 L 665 300 
-           M 665 355 L 665 440 L 485 462 
-           M 410 462 L 305 462 M 230 462 L 125 462
-           M 50 440 L 50 355 M 50 245 L 50 180 L 50 105" 
-           fill="none" stroke="#CBD5E1" stroke-width="2" class="draw-path" marker-end="url(#arrow)"/>
+  <!-- Center Text -->
+  <text x="500" y="300" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="24" font-weight="bold" fill="#1E293B">The Ralph Loop</text>
+  <text x="500" y="325" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" fill="#64748B">11-step orchestration cycle</text>
 
   <!-- Top Row -->
-  <g class="fade-in delay-1">
-    <rect x="50" y="60" width="150" height="45" rx="22.5" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1" class="shadow"/>
-    <text x="125" y="87" font-size="13" font-weight="bold" fill="#1E40AF" text-anchor="middle">1. Read State</text>
+  <!-- 1. Read State -->
+  <g transform="translate(30, 60)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E40AF">1. Read State</text>
   </g>
-  <g class="fade-in delay-2">
-    <rect x="230" y="60" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="305" y="87" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">2. Determine Task</text>
+  <path d="M 210 87.5 L 260 87.5" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 2. Determine Task -->
+  <g transform="translate(260, 60)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">2. Determine Task</text>
   </g>
-  <g class="fade-in delay-3">
-    <rect x="410" y="60" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="485" y="87" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">3. Check Skills</text>
+  <path d="M 440 87.5 L 490 87.5" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 3. Check Skills -->
+  <g transform="translate(490, 60)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">3. Check Skills</text>
   </g>
-  <g class="fade-in delay-4">
-    <rect x="590" y="60" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="665" y="87" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">4. Search Community</text>
+  <path d="M 670 87.5 L 720 87.5" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 4. Search Community -->
+  <g transform="translate(720, 60)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">4. Search Community</text>
   </g>
 
   <!-- Right Column -->
-  <g class="fade-in delay-5">
-    <rect x="590" y="180" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="665" y="207" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">5. Research</text>
+  <path d="M 810 115 L 810 160" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 5. Research -->
+  <g transform="translate(720, 160)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">5. Research</text>
   </g>
-  <g class="fade-in delay-6">
-    <rect x="585" y="300" width="160" height="55" rx="27.5" fill="#D1FAE5" stroke="#059669" stroke-width="2" class="shadow"/>
-    <text x="665" y="332" font-size="14" font-weight="bold" fill="#065F46" text-anchor="middle">6. Execute</text>
+  <path d="M 810 215 L 810 260" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 6. Execute (Bigger) -->
+  <g transform="translate(710, 260)" filter="url(#shadow)">
+    <rect width="200" height="65" rx="32.5" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+    <text x="100" y="38" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#065F46">6. Execute</text>
   </g>
+  <path d="M 810 325 L 810 460" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/> <!-- Long path down -->
 
   <!-- Bottom Row (Right to Left) -->
-  <g class="fade-in delay-7">
-    <rect x="410" y="440" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="485" y="467" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">7. Verify</text>
+  
+  <!-- 7. Verify -->
+  <g transform="translate(720, 460)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">7. Verify</text>
   </g>
-  <g class="fade-in delay-8">
-    <rect x="230" y="440" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="305" y="467" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">8. Create Skill?</text>
+  <path d="M 720 487.5 L 670 487.5" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 8. Create Skill? -->
+  <g transform="translate(490, 460)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">8. Create Skill?</text>
   </g>
-  <g class="fade-in delay-9">
-    <rect x="50" y="440" width="150" height="45" rx="22.5" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1" class="shadow"/>
-    <text x="125" y="467" font-size="13" font-weight="bold" fill="#1E40AF" text-anchor="middle">9. Update State</text>
+  <path d="M 490 487.5 L 440 487.5" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 9. Update State -->
+  <g transform="translate(260, 460)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E40AF">9. Update State</text>
   </g>
+  <path d="M 260 487.5 L 120 487.5 L 120 455" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
   <!-- Left Column (Bottom to Top) -->
-  <g class="fade-in delay-10">
-    <rect x="50" y="300" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
-    <text x="125" y="327" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">10. Phase Done?</text>
-  </g>
-  <g class="fade-in delay-11">
-    <rect x="45" y="180" width="160" height="65" rx="32.5" fill="#FEF3C7" stroke="#D97706" stroke-width="2" class="shadow"/>
-    <text x="125" y="217" font-size="14" font-weight="bold" fill="#92400E" text-anchor="middle">11. Human Gate</text>
-  </g>
   
-  <!-- Closing loop arrow manual fix for alignment -->
-  <path d="M 125 180 L 125 105" stroke="#CBD5E1" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-11"/>
+  <!-- 10. Phase Done? -->
+  <g transform="translate(30, 400)" filter="url(#shadow)">
+    <rect width="180" height="55" rx="27.5" fill="#F1F5F9" stroke="#64748B" stroke-width="1"/>
+    <text x="90" y="33" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">10. Phase Done?</text>
+  </g>
+  <path d="M 120 400 L 120 345" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- 11. Human Gate (Bigger) -->
+  <g transform="translate(20, 280)" filter="url(#shadow)">
+    <rect width="200" height="65" rx="32.5" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+    <text x="100" y="38" text-anchor="middle" font-family="-apple-system, system-ui, Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#92400E">11. Human Gate</text>
+  </g>
+  <path d="M 120 280 L 120 115" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
 
 </svg>
