@@ -230,7 +230,101 @@ disabled features, and workarounds visible in the code.}
 | PostgreSQL | TCP/SQL | User data store | `config/database.ts` |
 | SendGrid API | HTTPS | Email notifications | `.env` / `SENDGRID_KEY` |
 | Redis | TCP | Session cache | `config/cache.ts` |
+
+---
+
+## Expected Behavior Scenarios
+
+> Track B only — documentation-only Gherkin scenarios for non-testable features.
+> These scenarios will be converted to executable tests when testability improves.
+
+## Manual Verification Checklist
+
+> Track B only — manual steps to verify feature behavior after changes.
+
+## Testability Roadmap
+
+> Track B only — what's needed to make this feature testable.
 ```
+
+## Track B: Behavioral Documentation
+
+When the orchestrator state indicates `testability: 'none'` or a feature is
+assigned to **Track B** (non-testable apps — unreachable dependencies, no dev
+environment, etc.), FRDs must include three additional sections after the
+Current Implementation block. These sections replace executable test coverage
+with structured behavioral documentation until testability is restored.
+
+If the feature is **not** in Track B, omit these sections entirely.
+
+### Expected Behavior Scenarios
+
+Add Gherkin-like Given/When/Then prose to each FRD. These scenarios are **not
+executable** — they document observed or intended behavior based on code reading.
+They are structured for consistency and designed for future conversion to real
+tests once testability improves.
+
+Tag every scenario with `@documentation-only` and a feature tag. Example:
+
+```gherkin
+# Documentation-only scenarios (not executable)
+# Describe observed/intended behavior based on code reading
+
+@documentation-only @feature-auth
+Scenario: User logs in with valid credentials
+  Given a registered user with email "user@example.com"
+  When the user submits the login form with valid credentials
+  Then the user receives a session token
+  And the user is redirected to the dashboard
+
+@documentation-only @feature-auth
+Scenario: User login fails with invalid password
+  Given a registered user with email "user@example.com"
+  When the user submits the login form with an incorrect password
+  Then the system returns a 401 Unauthorized response
+  And no session token is issued
+```
+
+Cover the same ground that executable Gherkin would — happy paths, error paths,
+edge cases, and authorization checks — so that conversion to real tests later
+requires minimal rewriting.
+
+### Manual Verification Checklist
+
+Produce a per-feature checklist of behaviors that must be manually verified
+after any changes to the feature. Each item pairs a testable action with its
+expected outcome:
+
+```markdown
+## Manual Verification — {Feature Name}
+
+- [ ] Submit login form with valid credentials → user is redirected to dashboard
+- [ ] Submit login form with invalid password → 401 error displayed, no session created
+- [ ] Access protected route without session → redirected to login page
+- [ ] Session expires after configured timeout → user must re-authenticate
+- [ ] Concurrent login from two devices → both sessions active (or policy-defined behavior)
+```
+
+The checklist must be comprehensive enough to serve as a manual regression suite.
+
+### Testability Roadmap
+
+Document what would need to change to make the feature testable. Structure as:
+
+| Blocker | Category | What's Needed | Effort |
+|---------|----------|---------------|--------|
+| External payment API with no sandbox | External dependency | Mock/fake service or sandbox account | Medium |
+| Database only accessible in production | Environment | Dev/test database provisioning | High |
+| No test framework installed | Infrastructure | Install and configure test runner | Low |
+| Hardcoded credentials in config | Environment | Externalize to env vars + secrets manager | Low |
+
+**Effort categories:**
+- **Low** — achievable in a single increment, no external coordination
+- **Medium** — requires some infrastructure work or external coordination
+- **High** — significant effort, may span multiple increments or require org-level changes
+
+The testability roadmap feeds into the increment planner so that Track B
+features can be promoted to Track A incrementally.
 
 ## Naming Convention
 
@@ -270,6 +364,12 @@ FRD files use kebab-case slugs derived from the feature name:
 
 6. **Trace everything.** Every requirement should be traceable to a code
    location. The Current Implementation section provides this traceability.
+
+7. **Track B sections are conditional.** If the orchestrator state indicates
+   `testability: 'none'` or the feature is in Track B, include the Expected
+   Behavior Scenarios, Manual Verification Checklist, and Testability Roadmap
+   sections. Otherwise, omit them entirely. Never mix Track A executable tests
+   with Track B documentation-only scenarios in the same FRD.
 
 ## State Tracking
 
@@ -326,4 +426,8 @@ Before presenting FRDs for human review:
 - [ ] Test coverage table is populated (even if coverage is 0%)
 - [ ] Integration points list all external systems
 - [ ] Format matches greenfield FRD template for standard sections
+- [ ] **Track B only:** Expected Behavior Scenarios use `@documentation-only` tag
+- [ ] **Track B only:** Manual Verification Checklist covers all happy/error paths
+- [ ] **Track B only:** Testability Roadmap lists all blockers with effort estimates
+- [ ] **Track B only:** Track B sections are omitted if feature is testable (Track A)
 - [ ] State JSON is updated with all generated FRDs

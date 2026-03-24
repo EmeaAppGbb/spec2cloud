@@ -133,6 +133,7 @@ Each increment in `specs/increment-plan.md` follows this template:
   - Add boundary test: verify legitimate special characters still work
   - Run full regression suite
   - Re-run SAST scanner to confirm finding cleared
+- **Behavioral Deltas:** (Track-dependent — see Behavioral Deltas section)
 - **Dependencies:** none
 - **Rollback Plan:** Revert SearchService.search() to previous implementation
 - **Risk:** Low — isolated change to one method
@@ -160,6 +161,44 @@ Append to `.spec2cloud/audit.log`:
 [ISO-timestamp] step=security-planning action=increments-generated count={N} tier-1={N} tier-2={N} tier-3={N} tier-4={N} result=done
 ```
 
+## Behavioral Deltas
+
+Each increment must include behavioral change specifications that feed into Phase 2 test generation. The format depends on the project's testability track (from `.spec2cloud/state.json`).
+
+### Track A (Testable) — Gherkin Deltas
+
+For each increment, specify which Gherkin scenarios are affected:
+
+- **New scenarios:** Scenarios for behavior that doesn't exist yet (will be red in Phase 2)
+- **Modified scenarios:** Existing `@existing-behavior` scenarios that change (update expected outcomes)
+- **Unchanged scenarios:** Existing scenarios that must still pass (regression safety net)
+
+Include Gherkin deltas in the increment format:
+
+```
+- **Gherkin Deltas:**
+  - New: `Scenario: {description}` — {why this is needed}
+  - Modified: `Scenario: {existing scenario name}` — Then step changes from X to Y
+  - Regression: N existing scenarios must still pass unchanged
+```
+
+### Track B (Non-Testable) — Documentation Deltas
+
+For each increment, specify behavioral documentation updates:
+
+- **Updated scenarios:** Which documentation-only scenarios change
+- **New scenarios:** New behavioral expectations to document
+- **Manual checklist updates:** New or modified manual verification items
+
+Include documentation deltas in the increment format:
+
+```
+- **Behavioral Doc Updates:**
+  - Updated: `Scenario: {name}` — expected behavior changes from X to Y
+  - New: `Scenario: {name}` — documents new expected behavior
+  - Manual verification: {new checklist items}
+```
+
 ## Self-Review Checklist
 
 Before finalizing, verify:
@@ -174,6 +213,9 @@ Before finalizing, verify:
 - [ ] Acceptance criteria are specific: "input X no longer produces behavior Y".
 - [ ] No security fix introduces a new vulnerability (e.g., fixing XSS by
   disabling output encoding entirely).
+- [ ] Every increment includes behavioral deltas (Gherkin for Track A, docs for Track B)
+- [ ] Modified existing behavior has both old and new expectations documented
+- [ ] Regression scope is identified (which existing tests/scenarios must still pass)
 
 ## Constraints
 

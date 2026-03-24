@@ -1,20 +1,22 @@
 #!/usr/bin/env node
 
-// spec2cloud CLI — selective installer
+// spec2cloud CLI — selective installer with interactive flow selection
 // Downloads only the files needed from GitHub (not the entire repo).
+// Supports greenfield (flow-only or flow+shell) and brownfield workflows.
 // Falls back to archive download if the GitHub API is unavailable.
 
 import {
   existsSync, mkdirSync, writeFileSync, readFileSync, readdirSync, statSync,
-  rmSync, copyFileSync,
+  rmSync,
 } from 'node:fs';
 import { join, resolve, dirname, basename } from 'node:path';
 import { execSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
+import { createInterface } from 'node:readline';
 
 const REPO = 'EmeaAppGbb/spec2cloud';
 const DEFAULT_REF = 'vNext';
-const PKG_VERSION = '2.0.0';
+const PKG_VERSION = '2.1.0';
 const MAX_CONCURRENT = 15;
 
 // ---------------------------------------------------------------------------
@@ -24,7 +26,8 @@ const tty = process.stdout.isTTY && !process.env.NO_COLOR;
 const esc = (code, s) => tty ? `\x1b[${code}m${s}\x1b[0m` : s;
 const c = {
   red: s => esc('31', s), green: s => esc('32', s),
-  yellow: s => esc('33', s), blue: s => esc('34', s), bold: s => esc('1', s),
+  yellow: s => esc('33', s), blue: s => esc('34', s),
+  cyan: s => esc('36', s), dim: s => esc('2', s), bold: s => esc('1', s),
 };
 const log = {
   info:    msg => console.log(`${c.blue('ℹ')} ${msg}`),
@@ -34,7 +37,37 @@ const log = {
 };
 
 // ---------------------------------------------------------------------------
-// Manifest — what to download and where to put it
+// Shell registry — available project scaffolds
+// ---------------------------------------------------------------------------
+const SHELLS = [
+  {
+    id: 'nextjs-typescript',
+    name: 'Next.js + TypeScript',
+    desc: 'Next.js, Express, Playwright, Cucumber, Vitest',
+    repo: 'EmeaAppGbb/spec2cloud-shell-nextjs-typescript',
+  },
+  {
+    id: 'dotnet',
+    name: '.NET',
+    desc: 'ASP.NET Core, Blazor, .NET testing',
+    repo: 'EmeaAppGbb/shell-dotnet',
+  },
+  {
+    id: 'agentic-dotnet',
+    name: 'Agentic .NET',
+    desc: '.NET + AI Agents (LangGraph)',
+    repo: 'EmeaAppGbb/agentic-shell-dotnet',
+  },
+  {
+    id: 'agentic-python',
+    name: 'Agentic Python',
+    desc: 'Python + AI Agents (LangGraph)',
+    repo: 'EmeaAppGbb/agentic-shell-python',
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Manifest — what to download from the spec2cloud core repo
 // ---------------------------------------------------------------------------
 const SOURCES = [
   // Always installed
@@ -53,6 +86,97 @@ const SCAFFOLD_DIRS = [
   '.github/skills',
   'specs/features', 'specs/tasks', 'specs/docs', '.spec2cloud',
 ];
+
+// ---------------------------------------------------------------------------
+// Interactive prompts (zero dependencies — raw stdin/stdout)
+// ---------------------------------------------------------------------------
+
+function promptSelect(question, choices) {
+  return new Promise((resolvePromise, reject) => {
+    if (!process.stdin.isTTY) {
+      reject(new Error('Interactive prompts require a TTY. Use --flow and --shell flags instead.'));
+      return;
+    }
+
+    let selected = 0;
+
+    function render() {
+      // Move cursor up to overwrite previous render (except first)
+      if (render._rendered) {
+        process.stdout.write(`\x1b[${choices.length}A`);
+      }
+      for (let i = 0; i < choices.length; i++) {
+        const prefix = i === selected ? c.cyan('  ❯ ') : '    ';
+        const label = i === selected ? c.bold(choices[i].name) : choices[i].name;
+        const desc = choices[i].desc ? c.dim(` — ${choices[i].desc}`) : '';
+        process.stdout.write(`\x1b[2K${prefix}${label}${desc}\n`);
+      }
+      render._rendered = true;
+    }
+
+    console.log();
+    console.log(c.bold(`? ${question}`));
+    console.log();
+    render();
+
+    const wasRaw = process.stdin.isRaw;
+    process.stdin.setRawMode(true);
+    process.stdin.resume();
+    process.stdin.setEncoding('utf8');
+
+    function onData(key) {
+      // Ctrl+C
+      if (key === '\x03') {
+        process.stdin.setRawMode(wasRaw ?? false);
+        process.stdin.pause();
+        process.stdin.removeListener('data', onData);
+        console.log();
+        log.info('Cancelled.');
+        process.exit(0);
+      }
+
+      // Up arrow or k
+      if (key === '\x1b[A' || key === 'k') {
+        selected = (selected - 1 + choices.length) % choices.length;
+        render();
+        return;
+      }
+      // Down arrow or j
+      if (key === '\x1b[B' || key === 'j') {
+        selected = (selected + 1) % choices.length;
+        render();
+        return;
+      }
+
+      // Enter
+      if (key === '\r' || key === '\n') {
+        process.stdin.setRawMode(wasRaw ?? false);
+        process.stdin.pause();
+        process.stdin.removeListener('data', onData);
+        // Show final selection
+        process.stdout.write(`\x1b[${choices.length}A`);
+        for (let i = 0; i < choices.length; i++) {
+          process.stdout.write(`\x1b[2K`);
+          if (i === selected) {
+            process.stdout.write(`  ${c.green('✓')} ${c.bold(choices[i].name)}\n`);
+          } else {
+            process.stdout.write('\n');
+          }
+        }
+        // Clean up blank lines
+        process.stdout.write(`\x1b[${choices.length - 1}A`);
+        for (let i = 0; i < choices.length - 1; i++) {
+          process.stdout.write(`\x1b[1B\x1b[2K`);
+        }
+        process.stdout.write(`\x1b[${choices.length - 1}A\n`);
+        console.log();
+        resolvePromise(choices[selected]);
+      }
+    }
+
+    process.stdin.on('data', onData);
+  });
+}
 
 // ---------------------------------------------------------------------------
 // CLI chrome
@@ -80,37 +204,77 @@ ${c.bold('OPTIONS')}
   --ref <ref>       Branch or tag to install from (default: ${DEFAULT_REF})
   --target <dir>    Target directory (default: current directory)
   --force           Overwrite existing files without prompting
+  --flow <type>     Skip flow prompt: greenfield or brownfield
+  --shell <id>      Install a shell template (implies --flow greenfield)
+  --list-shells     List available shell templates and exit
   --help, -h        Show this help message
   --version, -v     Show version
 
+${c.bold('FLOW MODES')}
+  ${c.cyan('brownfield')}        Add spec2cloud to an existing codebase
+  ${c.cyan('greenfield')}        Start fresh — installs skills & orchestrator (you provide code)
+  ${c.cyan('greenfield+shell')}  Start fresh with a complete project scaffold
+
+${c.bold('AVAILABLE SHELLS')}
+${SHELLS.map(s => `  ${c.bold(s.id.padEnd(22))} ${s.name} — ${s.desc}`).join('\n')}
+
 ${c.bold('EXAMPLES')}
-  npx spec2cloud init
-  npx spec2cloud init --minimal
-  npx spec2cloud init --ref main
-  npx spec2cloud init --target ./my-project
-  npx spec2cloud init --ref feature/new-skills --force
+  npx spec2cloud init                           # Interactive mode
+  npx spec2cloud init --flow brownfield          # Skip prompts — brownfield
+  npx spec2cloud init --flow greenfield          # Skip prompts — greenfield (flow only)
+  npx spec2cloud init --shell nextjs-typescript  # Greenfield with Next.js shell
+  npx spec2cloud init --minimal                  # Skills & AGENTS.md only
+  npx spec2cloud init --ref main --force         # From main branch, overwrite
 `);
 }
 
-function printNextSteps() {
+function printShellList() {
+  console.log(c.bold('Available shell templates:\n'));
+  for (const s of SHELLS) {
+    console.log(`  ${c.bold(s.id.padEnd(22))} ${s.name}`);
+    console.log(`  ${''.padEnd(22)} ${c.dim(s.desc)}`);
+    console.log(`  ${''.padEnd(22)} ${c.dim(s.repo)}`);
+    console.log();
+  }
+}
+
+function printNextSteps(flow, shell) {
   console.log();
   console.log(c.green(c.bold('✨ Spec2Cloud installation complete!')));
-  console.log(`
-${c.bold('Next steps:')}
+
+  if (shell) {
+    console.log(`
+${c.bold('Shell installed:')} ${shell.name} ${c.dim(`(${shell.repo})`)}
+`);
+  }
+
+  console.log(`${c.bold('Next steps:')}
 
 1. Open your project in VS Code with GitHub Copilot
-2. The spec2cloud orchestrator (AGENTS.md) and 43 skills are now active
-3. Start a conversation with Copilot to begin:
+2. The spec2cloud orchestrator (AGENTS.md) and skills are now active
+3. Start a conversation with Copilot to begin:`);
 
+  if (flow === 'greenfield') {
+    console.log(`
+   ${c.cyan('•')} "Create a PRD for [your app idea]"
+   ${c.cyan('•')} "Start the spec2cloud greenfield workflow"
+`);
+  } else if (flow === 'brownfield') {
+    console.log(`
+   ${c.cyan('•')} "Analyze this codebase and generate specs"
+   ${c.cyan('•')} "Start the spec2cloud brownfield workflow"
+`);
+  } else {
+    console.log(`
    ${c.blue('Greenfield (New Project):')}
      • "Create a PRD for [your app idea]"
-     • "Start the spec2cloud greenfield workflow"
 
    ${c.blue('Brownfield (Existing Code):')}
      • "Analyze this codebase and generate specs"
-     • "Start the spec2cloud brownfield workflow"
+`);
+  }
 
-4. ${c.bold('Learn more:')} https://github.com/${REPO}
+  console.log(`4. ${c.bold('Learn more:')} https://github.com/${REPO}
 `);
 }
 
@@ -118,7 +282,10 @@ ${c.bold('Next steps:')}
 // Argument parsing
 // ---------------------------------------------------------------------------
 function parseArgs(argv) {
-  const opts = { command: null, mode: 'full', ref: DEFAULT_REF, target: '.', force: false };
+  const opts = {
+    command: null, mode: 'full', ref: DEFAULT_REF, target: '.',
+    force: false, flow: null, shell: null, listShells: false,
+  };
   let i = 0;
 
   while (i < argv.length) {
@@ -140,10 +307,36 @@ function parseArgs(argv) {
       case '--force':
         opts.force = true;
         break;
+      case '--flow': {
+        if (!argv[i + 1]) { log.error('--flow requires a value (greenfield or brownfield)'); process.exit(1); }
+        const val = argv[++i].toLowerCase();
+        if (val !== 'greenfield' && val !== 'brownfield') {
+          log.error(`Invalid flow: "${val}". Must be "greenfield" or "brownfield".`);
+          process.exit(1);
+        }
+        opts.flow = val;
+        break;
+      }
+      case '--shell': {
+        if (!argv[i + 1]) { log.error('--shell requires a shell id'); process.exit(1); }
+        const id = argv[++i].toLowerCase();
+        const match = SHELLS.find(s => s.id === id);
+        if (!match) {
+          log.error(`Unknown shell: "${id}"`);
+          log.info(`Available shells: ${SHELLS.map(s => s.id).join(', ')}`);
+          process.exit(1);
+        }
+        opts.shell = match;
+        opts.flow = 'greenfield';
+        break;
+      }
+      case '--list-shells':
+        opts.listShells = true;
+        break;
       case '--help': case '-h':
         printHelp();
         process.exit(0);
-        break; // unreachable but explicit
+        break;
       case '--version': case '-v':
         console.log(PKG_VERSION);
         process.exit(0);
@@ -159,11 +352,58 @@ function parseArgs(argv) {
 }
 
 // ---------------------------------------------------------------------------
+// Interactive flow selection
+// ---------------------------------------------------------------------------
+
+async function selectFlow(opts) {
+  // Already set via flags
+  if (opts.flow && opts.shell) return { flow: opts.flow, shell: opts.shell };
+  if (opts.flow === 'brownfield') return { flow: 'brownfield', shell: null };
+  if (opts.flow === 'greenfield' && !opts.shell) return { flow: 'greenfield', shell: null };
+
+  // Non-interactive — default to brownfield-style install
+  if (!process.stdin.isTTY) {
+    log.info('Non-interactive mode detected. Installing core spec2cloud (brownfield-compatible).');
+    log.info('Use --flow and --shell flags for non-interactive flow selection.');
+    return { flow: null, shell: null };
+  }
+
+  // Step 1: Greenfield vs Brownfield
+  const flowChoice = await promptSelect('What would you like to do?', [
+    { name: 'Greenfield', desc: 'Start a new project from scratch', value: 'greenfield' },
+    { name: 'Brownfield', desc: 'Add spec2cloud to an existing codebase', value: 'brownfield' },
+  ]);
+
+  if (flowChoice.value === 'brownfield') {
+    return { flow: 'brownfield', shell: null };
+  }
+
+  // Step 2: Greenfield — Flow only vs Flow + Shell
+  const setupChoice = await promptSelect('How would you like to set up your greenfield project?', [
+    { name: 'Flow only', desc: 'Install spec2cloud skills & orchestrator (you provide the code)', value: 'flow-only' },
+    { name: 'Flow + Shell', desc: 'Install skills + a complete project scaffold for your stack', value: 'flow-shell' },
+  ]);
+
+  if (setupChoice.value === 'flow-only') {
+    return { flow: 'greenfield', shell: null };
+  }
+
+  // Step 3: Pick a shell
+  const shellChoice = await promptSelect('Select a shell template:', SHELLS.map(s => ({
+    name: s.name,
+    desc: s.desc,
+    value: s,
+  })));
+
+  return { flow: 'greenfield', shell: shellChoice.value };
+}
+
+// ---------------------------------------------------------------------------
 // Primary path: selective download via GitHub API + raw.githubusercontent.com
 // ---------------------------------------------------------------------------
 
-async function fetchTree(ref) {
-  const url = `https://api.github.com/repos/${REPO}/git/trees/${ref}?recursive=1`;
+async function fetchTree(repo, ref) {
+  const url = `https://api.github.com/repos/${repo}/git/trees/${ref}?recursive=1`;
   const res = await fetch(url, {
     headers: { 'User-Agent': 'spec2cloud-cli', Accept: 'application/vnd.github+json' },
   });
@@ -176,7 +416,7 @@ async function fetchTree(ref) {
   return data.tree.filter(e => e.type === 'blob');
 }
 
-function buildFileList(tree, mode) {
+function buildCoreFileList(tree, mode) {
   const sources = SOURCES.filter(s => !s.fullOnly || mode === 'full');
   const files = [];
 
@@ -198,14 +438,19 @@ function buildFileList(tree, mode) {
   return files;
 }
 
-async function downloadFilesSelective(ref, files) {
+function buildShellFileList(tree) {
+  // Download everything in the shell repo except .git internals
+  return tree.map(t => ({ src: t.path, dest: t.path, merge: false }));
+}
+
+async function downloadFilesSelective(repo, ref, files) {
   const contents = new Map();
   const queue = [...files];
 
   async function worker() {
     while (queue.length > 0) {
       const file = queue.shift();
-      const url = `https://raw.githubusercontent.com/${REPO}/${ref}/${file.src}`;
+      const url = `https://raw.githubusercontent.com/${repo}/${ref}/${file.src}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to download ${file.src} (HTTP ${res.status})`);
       contents.set(file.src, Buffer.from(await res.arrayBuffer()));
@@ -222,8 +467,8 @@ async function downloadFilesSelective(ref, files) {
 // Fallback path: archive download (when API is unavailable)
 // ---------------------------------------------------------------------------
 
-function downloadArchive(ref) {
-  const url = `https://github.com/${REPO}/archive/${ref}.tar.gz`;
+function downloadArchive(repo, ref) {
+  const url = `https://github.com/${repo}/archive/${ref}.tar.gz`;
   const tempDir = join(tmpdir(), `spec2cloud-${Date.now()}`);
   mkdirSync(tempDir, { recursive: true });
   const archive = join(tempDir, 'spec2cloud.tar.gz');
@@ -232,7 +477,7 @@ function downloadArchive(ref) {
     execSync(`curl -fsSL "${url}" -o "${archive}"`, { stdio: 'pipe' });
   } catch {
     log.error(`Failed to download archive from: ${url}`);
-    log.info(`Check that ref '${ref}' exists at: https://github.com/${REPO}`);
+    log.info(`Check that ref '${ref}' exists at: https://github.com/${repo}`);
     cleanup(tempDir);
     process.exit(1);
   }
@@ -253,7 +498,7 @@ function downloadArchive(ref) {
   return { tempDir, pkgRoot: join(tempDir, dirs[0]) };
 }
 
-function buildFileListFromDisk(pkgRoot, mode) {
+function buildCoreFileListFromDisk(pkgRoot, mode) {
   const sources = SOURCES.filter(s => !s.fullOnly || mode === 'full');
   const files = [];
 
@@ -271,10 +516,17 @@ function buildFileListFromDisk(pkgRoot, mode) {
   return files;
 }
 
+function buildShellFileListFromDisk(pkgRoot) {
+  const files = [];
+  walkDir(pkgRoot, '', null, files);
+  // Trim leading '/' from dest paths
+  return files.map(f => ({ ...f, src: f.src.replace(/^\//, ''), dest: f.dest.replace(/^\//, '') }));
+}
+
 function walkDir(absDir, relDir, suffix, out) {
   for (const entry of readdirSync(absDir)) {
     const absPath = join(absDir, entry);
-    const relPath = relDir + '/' + entry;
+    const relPath = relDir ? relDir + '/' + entry : entry;
     if (statSync(absPath).isDirectory()) {
       walkDir(absPath, relPath, suffix, out);
     } else {
@@ -293,6 +545,62 @@ function readFilesFromDisk(pkgRoot, files) {
     }
   }
   return contents;
+}
+
+// ---------------------------------------------------------------------------
+// Download orchestration — core and shell
+// ---------------------------------------------------------------------------
+
+async function downloadCore(opts) {
+  try {
+    log.info('Fetching spec2cloud file tree from GitHub...');
+    const tree = await fetchTree(REPO, opts.ref);
+    const files = buildCoreFileList(tree, opts.mode);
+    log.success(`Resolved ${c.bold(String(files.length))} core files`);
+
+    log.info('Downloading core files...');
+    const contents = await downloadFilesSelective(REPO, opts.ref, files);
+    log.success(`Downloaded ${c.bold(String(contents.size))} core files`);
+    return { files, contents };
+  } catch (err) {
+    log.warn(`Selective download unavailable: ${err.message}`);
+    log.info('Falling back to archive download...');
+
+    const { tempDir, pkgRoot } = downloadArchive(REPO, opts.ref);
+    log.success('Downloaded and extracted core archive');
+
+    const files = buildCoreFileListFromDisk(pkgRoot, opts.mode);
+    const contents = readFilesFromDisk(pkgRoot, files);
+    cleanup(tempDir);
+    return { files, contents };
+  }
+}
+
+async function downloadShell(shell, ref) {
+  const shellRef = ref === DEFAULT_REF ? 'main' : ref;
+
+  try {
+    log.info(`Fetching shell template: ${c.bold(shell.name)}...`);
+    const tree = await fetchTree(shell.repo, shellRef);
+    const files = buildShellFileList(tree);
+    log.success(`Resolved ${c.bold(String(files.length))} shell files`);
+
+    log.info('Downloading shell files...');
+    const contents = await downloadFilesSelective(shell.repo, shellRef, files);
+    log.success(`Downloaded ${c.bold(String(contents.size))} shell files`);
+    return { files, contents };
+  } catch (err) {
+    log.warn(`Selective download unavailable: ${err.message}`);
+    log.info('Falling back to archive download for shell...');
+
+    const { tempDir, pkgRoot } = downloadArchive(shell.repo, shellRef);
+    log.success('Downloaded and extracted shell archive');
+
+    const files = buildShellFileListFromDisk(pkgRoot);
+    const contents = readFilesFromDisk(pkgRoot, files);
+    cleanup(tempDir);
+    return { files, contents };
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -335,13 +643,16 @@ function installFiles(files, contents, targetDir, force) {
   return mergeBackups;
 }
 
-function printStats(files, mergeBackups) {
-  const skills  = new Set(
-    files.filter(f => f.dest.startsWith('.github/skills/'))
+function printStats(coreFiles, shellFiles, mergeBackups) {
+  const skills = new Set(
+    coreFiles.filter(f => f.dest.startsWith('.github/skills/'))
       .map(f => f.dest.split('/').slice(0, 3).join('/')),
   ).size;
 
   log.success(`Installed ${c.bold(String(skills))} skills`);
+  if (shellFiles.length > 0) {
+    log.success(`Installed ${c.bold(String(shellFiles.length))} shell template files`);
+  }
 
   if (mergeBackups.length > 0) {
     console.log();
@@ -363,6 +674,12 @@ async function main() {
 
   const opts = parseArgs(args);
 
+  // Handle --list-shells
+  if (opts.listShells) {
+    printShellList();
+    process.exit(0);
+  }
+
   if (opts.command !== 'init') {
     log.error(opts.command ? `Unknown command: ${opts.command}` : 'No command specified.');
     console.log('Usage: npx spec2cloud init [options]');
@@ -370,42 +687,35 @@ async function main() {
   }
 
   printHeader();
+
+  // Interactive flow selection
+  const { flow, shell } = await selectFlow(opts);
+
   log.info(`Mode: ${c.bold(opts.mode)}`);
+  log.info(`Flow: ${c.bold(flow || 'default')}`);
+  if (shell) log.info(`Shell: ${c.bold(shell.name)} ${c.dim(`(${shell.repo})`)}`);
   log.info(`Ref: ${c.bold(opts.ref)}`);
   log.info(`Target: ${c.bold(resolve(opts.target))}`);
   console.log();
 
-  let files, contents;
-
-  try {
-    // Primary path: selective download
-    log.info('Fetching file tree from GitHub...');
-    const tree = await fetchTree(opts.ref);
-    files = buildFileList(tree, opts.mode);
-    log.success(`Resolved ${c.bold(String(files.length))} files to download`);
-
-    log.info('Downloading...');
-    contents = await downloadFilesSelective(opts.ref, files);
-    log.success(`Downloaded ${c.bold(String(contents.size))} files`);
-  } catch (err) {
-    // Fallback: archive download
-    log.warn(`Selective download unavailable: ${err.message}`);
-    log.info('Falling back to full archive download...');
-
-    const { tempDir, pkgRoot } = downloadArchive(opts.ref);
-    log.success('Downloaded and extracted archive');
-
-    files = buildFileListFromDisk(pkgRoot, opts.mode);
-    contents = readFilesFromDisk(pkgRoot, files);
-
-    cleanup(tempDir);
+  // Download shell first (if selected), then layer core on top
+  let shellFiles = [];
+  if (shell) {
+    const shellResult = await downloadShell(shell, opts.ref);
+    shellFiles = shellResult.files;
+    console.log();
+    log.info(`Installing shell to ${c.bold(resolve(opts.target))} ...`);
+    installFiles(shellResult.files, shellResult.contents, opts.target, opts.force);
+    console.log();
   }
 
-  log.info(`Installing to ${c.bold(resolve(opts.target))} ...`);
-  const mergeBackups = installFiles(files, contents, opts.target, opts.force);
+  // Download and install core spec2cloud files
+  const coreResult = await downloadCore(opts);
+  log.info(`Installing spec2cloud core to ${c.bold(resolve(opts.target))} ...`);
+  const mergeBackups = installFiles(coreResult.files, coreResult.contents, opts.target, opts.force);
 
-  printStats(files, mergeBackups);
-  printNextSteps();
+  printStats(coreResult.files, shellFiles, mergeBackups);
+  printNextSteps(flow, shell);
 }
 
 main().catch(err => {

@@ -15,6 +15,20 @@ You are the Gherkin Generation Agent. You read approved FRDs and produce compreh
 
 You operate during **Phase 2, Step 1b: Gherkin Generation** of each increment. You generate Gherkin scenarios ONLY for the FRD scope defined in the current increment (from `specs/increment-plan.md`). Scenarios from previous increments already exist and must not be modified.
 
+## Modes
+
+This skill operates in two modes depending on the project context:
+
+### `new-feature` (default)
+
+The standard mode. Generates Gherkin scenarios for **new features** described in FRDs. This is the existing behavior used in greenfield projects and brownfield extension increments. All process sections below apply to this mode unless stated otherwise.
+
+### `capture-existing` (brownfield Track A)
+
+Generates Gherkin scenarios that describe the **current behavior** of an existing application. The goal is to create a regression safety net — executable specifications of what the app does today — before any modifications begin. Scenarios produced in this mode document reality, not aspirations. See "Capture-Existing Mode Process" and "Capture-Existing Rules" below for details.
+
+The orchestrator sets the mode via context. If no mode is specified, default to `new-feature`.
+
 ## Inputs
 
 Before generating Gherkin, read:
@@ -35,6 +49,27 @@ Follow these steps in order:
 4. **Add edge case scenarios** — for every edge case listed in the FRD, write a dedicated scenario.
 5. **Add error handling scenarios** — for every error condition in the FRD, write a scenario that verifies the correct error behavior.
 6. **Group related scenarios into Feature files** — organize scenarios into `.feature` files, one per FRD.
+
+### Capture-Existing Mode Process
+
+When operating in `capture-existing` mode, follow these steps instead of the standard mapping process above:
+
+1. **Read the FRD's "Current Implementation" section** — this is the primary input. Understand what the feature does today, including its endpoints, UI flows, data handling, and known limitations.
+2. **Read extracted API contracts** (`specs/contracts/api/*.yaml`) — use the extracted OpenAPI specs to understand exact endpoint behavior: request/response shapes, status codes, and error responses.
+3. **Observe actual behavior (if app is running)** — if the application is available (e.g., via `aspire run`), make requests or walk through flows to verify your understanding. Resolve any discrepancies between docs and actual behavior in favor of actual behavior.
+4. **Generate happy-path scenarios** — write scenarios for the primary success paths of each feature area as it works today.
+5. **Generate known edge-case scenarios** — document edge cases that the current implementation handles (or mishandles). Only include edge cases you can confirm exist.
+6. **Generate error-handling scenarios** — document how the app currently responds to invalid input, unauthorized access, missing resources, etc.
+7. **Tag all scenarios** — every scenario in this mode MUST carry both `@existing-behavior` and `@brownfield` tags in addition to the standard feature and type tags.
+8. **Verify scenarios are testable** — every generated scenario MUST be verifiable against the running application. Do NOT generate scenarios for behavior that doesn't exist yet or that cannot be observed.
+
+### Capture-Existing Rules
+
+- **Document what IS, not what SHOULD BE.** Scenarios describe current behavior, even if that behavior is suboptimal.
+- **If behavior is ambiguous, mark it.** Generate the scenario with your best understanding and tag it `@verify-manually` so a human can confirm.
+- **Never add aspirational scenarios.** If a feature is partially implemented or missing functionality, do NOT write scenarios for the missing parts.
+- **Include known bugs as scenarios.** If you discover a bug during observation, write a scenario that documents the buggy behavior and tag it `@known-bug`. This captures the bug without attempting to fix it.
+- **One feature file per FRD feature area.** Same file organization as `new-feature` mode — one `.feature` file per FRD.
 
 ## Gherkin Writing Conventions
 
@@ -76,6 +111,11 @@ Apply tags consistently:
 | `@edge-case` | Edge case scenarios |
 | `@error` | Error handling scenarios |
 | `@a11y` | Accessibility scenarios |
+| `@existing-behavior` | Scenario documents current app behavior (capture-existing mode) |
+| `@brownfield` | Scenario generated during brownfield capture (capture-existing mode) |
+| `@verify-manually` | Ambiguous behavior — requires human verification |
+| `@known-bug` | Scenario documents a known bug in current behavior |
+| `@flaky-behavior` | Non-deterministic behavior — test may be skipped by test-generation |
 
 ## Self-Review Checklist
 
@@ -118,6 +158,8 @@ specs/features/
 ```
 
 Each file must be a valid Gherkin document parseable by any standard Cucumber/Gherkin parser.
+
+In **capture-existing mode**, the same file structure is used. Feature files contain `@existing-behavior` and `@brownfield` tags on every scenario. This allows test runners to filter captured-behavior scenarios separately from new-feature scenarios (e.g., `--tags @existing-behavior` to run only the regression safety net).
 
 ## Example
 

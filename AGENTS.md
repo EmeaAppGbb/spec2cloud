@@ -72,7 +72,7 @@ All specialized logic lives in `.github/skills/` following the [agentskills.io](
 | `adr` | Generate and manage Architecture Decision Records |
 | `bug-fix` | Lightweight bug fix with FRD traceability |
 
-### Brownfield Extraction Skills (Phase B1-B2)
+### Brownfield Common Trunk Skills (Phase B0-B2 — always run)
 
 | Phase | Skill | Purpose |
 |-------|-------|---------|
@@ -83,7 +83,17 @@ All specialized logic lives in `.github/skills/` following the [agentskills.io](
 | B1e | `data-model-extractor` | Extract schemas, data models, ERD diagrams |
 | B1f | `test-discovery` | Catalog existing tests, coverage, framework detection |
 | B2a | `prd-generator` | Generate PRD from extraction data |
-| B2b | `frd-generator` | Generate FRDs with "Current Implementation" section |
+| B2b | `frd-generator` | Generate FRDs with "Current Implementation" section + behavioral scenarios |
+| B2c | `spec-refinement` | Review FRDs through product + technical lenses |
+
+### Brownfield Track Skills (Phase B3 — after testability gate)
+
+| Track | Skill | Mode | Purpose |
+|-------|-------|------|---------|
+| A | `gherkin-generation` | `capture-existing` | Gherkin scenarios describing current app behavior |
+| A | `test-generation` | `green-baseline` | Tests that PASS against existing code (regression safety net) |
+| A | `test-runner` | verification | Verify green baseline — all generated tests pass |
+| B | `frd-generator` | behavioral-docs | Enhanced behavioral scenarios + manual verification checklists |
 
 ### Assessment Skills (Phase A — user-activated)
 
@@ -189,38 +199,247 @@ Full test suite, verify production, final docs. **Commit:** `[release] All incre
 
 ## 3a. Brownfield Flow
 
-When the orchestrator detects an existing codebase (source files present but no specs/prd.md), it enters brownfield mode.
+When the orchestrator detects an existing codebase (source files present but no specs/prd.md), it enters brownfield mode. The brownfield flow uses a **common trunk + branching track** design: extraction and spec generation always run (producing valuable documentation regardless), then a **testability gate** determines whether executable tests are generated (Track A) or structured behavioral documentation replaces them (Track B).
 
 ```
-Phase B0: Onboarding           (one-time)
-Phase B1: Extract               (pure extraction — facts only)
+Phase B0: Onboarding                     (one-time)
+Phase B1: Extract                         (pure extraction — facts only)
   B1a-f: 6 extraction skills run in sequence
-Phase B2: Spec-Enable           (generate specs)
-  B2a: PRD generation (human gate)
-  B2b: FRD generation (human gate)
----USER CHOICE POINT---
+Phase B2: Spec-Enable                     (generate specs — always runs)
+  B2a: PRD generation                     (human gate)
+  B2b: FRD generation per feature         (human gate)
+  B2c: Spec refinement                    (human gate)
+─── TESTABILITY GATE (human decision) ───
+  Track A: Green Baseline (testable)
+    Per feature: Gherkin capture → test scaffold → green verification → human gate
+  Track B: Doc-Only (non-testable)
+    Per feature: Behavioral docs → manual checklists → human gate
+  Track Hybrid: Track A for testable features, Track B for the rest
+─── PATH SELECTION (human gate) ───
 User selects one or more paths:
   Modernize | Rewrite | Cloud-Native | Extend | Fix Bugs | Security | Performance
-Phase A: Assess                 (targeted — only selected paths)
+Phase A: Assess                           (targeted — only selected paths)
   Each path runs its assessment skill + generates ADRs
-Phase P: Plan                   (per selected path)
+Phase P: Plan                             (per selected path — produces FRD/Gherkin deltas)
   Each path generates increments for Phase 2
-Phase 2: Increment Delivery     (same as greenfield)
+Phase 2: Increment Delivery               (track-aware — adapts per feature)
+  Track A: full greenfield pipeline (tests → contracts → impl → deploy)
+  Track B: reduced pipeline (contracts → impl → manual verification → deploy)
 ```
 
-### Extraction Rules (Phase B1)
+### Phase B0: Onboarding
+
+**Goal:** Detect brownfield mode and initialize state.
+**Detection:** Source files present, no `specs/prd.md`.
+**Tasks:** Initialize `.spec2cloud/state.json` with `mode: brownfield`. Scaffold `specs/` directory structure.
+**Exit:** State initialized. **Human gate:** No.
+
+### Phase B1: Extraction (Common Trunk)
+
+Six extraction skills run in sequence. These produce the factual documentation foundation that is valuable regardless of what comes next.
+
+1. `codebase-scanner` → `specs/docs/technology/stack.md`
+2. `dependency-inventory` → `specs/docs/technology/dependencies.md`
+3. `architecture-mapper` → `specs/docs/architecture/overview.md`, `components.md`
+4. `api-extractor` → `specs/contracts/api/*.yaml`
+5. `data-model-extractor` → `specs/docs/architecture/data-models.md`
+6. `test-discovery` → `specs/docs/testing/coverage.md`
+
+**Extraction Rules:**
 - Pure extraction: document ONLY what exists
 - Zero judgment: no opinions, no recommendations, no "should be"
 - Facts win: if docs and code disagree, code is the source of truth
 
-### User Choice Point
-After extraction and spec generation, the orchestrator presents a menu of available paths. The user selects one or more. Only selected paths trigger their assessment and planning skills. This is a human gate.
+**Exit:** All extraction outputs complete. **Human gate:** Yes — review extraction accuracy.
+**Commit:** `[brownfield] B1 extraction complete`
 
-### Assessment with ADRs
-Each assessment skill produces findings AND triggers ADR generation for significant decisions. ADRs capture the context, options considered, decision made, and consequences.
+### Phase B2: Spec-Enable (Common Trunk)
+
+Generate specifications from extraction data. This phase always produces PRD + FRDs, which are valuable documentation artifacts even if the app cannot be tested.
+
+#### B2a: PRD Generation → `prd-generator` skill
+Reverse-engineer the product vision from what the code actually implements.
+**Output:** `specs/prd.md`
+**Exit:** Human approves PRD. **Human gate:** Yes.
+
+#### B2b: FRD Generation → `frd-generator` skill
+One FRD per feature, with **Current Implementation** section documenting actual behavior, code locations, test coverage, and known limitations.
+**Output:** `specs/frd-{feature}.md`
+**Exit:** Human approves all FRDs. **Human gate:** Yes.
+
+#### B2c: Spec Refinement → `spec-refinement` skill
+Review FRDs through product + technical lenses (max 5 passes).
+**Exit:** Human approves refined FRDs. **Human gate:** Yes.
+
+**Commit:** `[brownfield] B2 spec-enable complete — PRD + N FRDs`
+
+At this point the project ALWAYS has: PRD, FRDs, tech stack, architecture docs, data models, API contracts, dependency inventory, and test inventory.
+
+### Testability Gate (Human Decision)
+
+The orchestrator presents a testability checklist. The human assesses and decides:
+
+**Testability Checklist:**
+- Can the application be built and started locally (or in a dev environment)?
+- Are external dependencies reachable, mockable, or fakeable?
+- Can API endpoints be exercised (HTTP calls return responses)?
+- Can the UI be rendered and interacted with (browser automation possible)?
+- Is there a working dev/test environment configuration?
+- Can the existing test suite (if any) be executed?
+
+**Decision outcomes:**
+
+| Outcome | Track | State value | Description |
+|---------|-------|-------------|-------------|
+| All/most checked | **Track A** | `testability: "full"` | Full green baseline with executable tests |
+| Some checked | **Track Hybrid** | `testability: "partial"` | Track A for testable features, Track B for the rest |
+| Few/none checked | **Track B** | `testability: "none"` | Behavioral documentation only |
+
+For hybrid mode, the human also identifies which features are testable:
+`featureTracks: { "auth": "A", "search": "A", "reporting": "B" }` stored in state.json.
+
+**Human gate:** Yes — this is a critical decision point.
+
+### Track A: Green Baseline (Testable Apps)
+
+**Goal:** Capture existing behavior as executable Gherkin + e2e tests that PASS against the current codebase. This creates a regression safety net before any changes.
+
+For each feature area (iterative, one at a time):
+
+#### A1: Gherkin Capture → `gherkin-generation` skill (mode: `capture-existing`)
+Generate Gherkin scenarios that describe what the app **does today**, not what it should do.
+- Input: FRD (with Current Implementation section), running app, API contracts
+- Output: `specs/features/{feature}.feature` with `@existing-behavior` tag
+- Scenarios cover happy paths, known edge cases, and documented error handling
+- Scenarios must be verifiable against the running application
+
+#### A2: Test Scaffolding → `test-generation` skill (mode: `green-baseline`)
+Generate tests that **PASS** against the current code (opposite of greenfield's red baseline).
+- Cucumber step definitions from Gherkin scenarios
+- Playwright e2e specs from FRD user flows
+- Unit tests for critical business logic paths
+- All tests target current behavior — they are a snapshot, not an aspiration
+
+#### A3: Green Verification → `test-runner` skill
+Run the scaffolded tests against the current application.
+- **All tests MUST pass.** They describe current behavior.
+- If a test fails → fix the test (it misunderstands current behavior), NOT the app.
+- Iterate until green baseline is achieved.
+
+**Human gate:** Yes — per feature. Review Gherkin accuracy and test results.
+**Commit:** `[brownfield] green-baseline/{feature} — N scenarios, all green`
+
+**Result:** A complete regression safety net covering existing behavior. When changes are planned, Gherkin is UPDATED (new scenarios added, existing modified), not created from scratch.
+
+### Track B: Documentation-Only (Non-Testable Apps)
+
+**Goal:** Produce structured behavioral documentation in a Gherkin-compatible format, even when executable tests are not possible. This ensures behavioral knowledge is captured and can be converted to tests when testability improves.
+
+For each feature area (iterative, one at a time):
+
+#### B1: Behavioral Documentation → `frd-generator` skill (enhanced)
+Add **Expected Behavior Scenarios** section to each FRD using Gherkin-like syntax:
+
+```gherkin
+# These scenarios are documentation-only (not executable)
+# They describe observed/intended behavior based on code reading
+
+@documentation-only @feature-auth
+Scenario: User logs in with valid credentials
+  Given a registered user with email "user@example.com"
+  When the user submits the login form with valid credentials
+  Then the user receives a session token
+  And the user is redirected to the dashboard
+```
+
+#### B2: Manual Verification Checklist
+Per-feature checklist of behaviors that must be manually verified after any changes:
+
+```markdown
+## Manual Verification — Authentication
+- [ ] Login with valid credentials → redirects to dashboard
+- [ ] Login with invalid credentials → shows error message
+- [ ] Session expires after configured timeout
+- [ ] Password reset email is sent
+```
+
+#### B3: Testability Roadmap Notes
+Document what would need to change to make each feature testable:
+- Which external dependencies need mocking/faking
+- What test infrastructure is missing
+- What environment configuration is needed
+- Estimated effort to achieve testability
+
+**Human gate:** Yes — per feature. Review behavioral docs and checklists.
+**Commit:** `[brownfield] behavioral-docs/{feature} — N scenarios documented`
+
+### Track Hybrid: Mixed Testability
+
+When testability is partial, features are assigned to tracks individually:
+- Features in `featureTracks` mapped to "A" → Track A process
+- Remaining features → Track B process
+- State tracks per-feature assignment: `featureTracks: { "auth": "A", "reporting": "B" }`
+- Phase 2 delivery adapts per-feature based on track assignment
+
+### Path Selection (Human Gate)
+
+After Track A/B/Hybrid completes, the orchestrator presents available paths:
+
+| Path | Assessment Skill | Planning Skill | Description |
+|------|-----------------|----------------|-------------|
+| Modernize | `modernization-assessment` | `modernization-planner` | Upgrade deps, fix patterns, reduce debt |
+| Rewrite | `rewrite-assessment` | `rewrite-planner` | Component-by-component stack migration |
+| Cloud-Native | `cloud-native-assessment` | `cloud-native-planner` | Containerize, externalize config, IaC |
+| Extend | *(none)* | `extension-planner` | Add new features |
+| Fix Bugs | *(none)* | `bug-fix` skill | Fix specific bugs with traceability |
+| Security | `security-assessment` | `security-planner` | Vulnerability remediation |
+| Performance | `performance-assessment` | *(orchestrator)* | Optimization targets |
+
+User selects one or more. Only selected paths trigger assessment and planning.
+
+**Human gate:** Yes — path selection is a major decision point.
+
+### Phase A: Assessment (Per Selected Path)
+
+Each assessment skill runs against the extraction outputs and produces findings + ADRs. No change from current behavior except: assessments are now informed by the behavioral specs (Track A Gherkin or Track B documentation) in addition to extraction data.
+
+### Phase P: Planning (Per Selected Path — Enhanced)
+
+Each planning skill produces increments in the standard format. **Key enhancement:** planners now also produce behavioral deltas alongside each increment:
+
+| Track | Planner Output |
+|-------|---------------|
+| Track A | Increment plan + **Gherkin deltas** (new/modified scenarios) + **FRD deltas** |
+| Track B | Increment plan + **Behavioral doc updates** (updated scenarios) + **Manual checklist updates** |
+
+This ensures that when Phase 2 delivery begins, the test/verification artifacts are already scoped per increment — mirroring how greenfield generates Gherkin before implementation.
+
+### Phase 2: Increment Delivery (Track-Aware)
+
+Phase 2 adapts based on the feature's track assignment:
+
+**Track A features (testable) — full greenfield pipeline:**
+```
+Update Gherkin (from deltas) → Update/add tests → Contracts → Implementation → Deploy → Verify
+```
+- Existing green baseline tests provide regression safety
+- New/modified Gherkin scenarios define the increment's target behavior
+- Red-green cycle: new tests fail, implementation makes them pass, baseline tests still pass
+
+**Track B features (non-testable) — reduced pipeline:**
+```
+Update behavioral docs → Contracts → Implementation → Manual verification checklist → Deploy
+```
+- Unit tests are written where possible (isolated logic with no external deps)
+- Integration/e2e tests are deferred until testability improves
+- Manual verification checklist replaces automated verification at gates
+- If testability improves during the project, a feature can be promoted from Track B → Track A
+
+**Human gates remain the same** — PR review after implementation, deployment verification after deploy.
 
 ### Convergence
-After planning, all paths produce increments in the same format. Phase 2 (increment delivery) handles modernization, rewrites, extensions, and bug fixes identically — they're all just increments.
+
+After planning, all paths (modernize, rewrite, extend, security, etc.) produce increments in the same format with the same track-aware delivery pipeline. The only difference is whether verification is automated (Track A) or manual (Track B).
 
 ---
 
@@ -230,6 +449,7 @@ Architecture Decision Records are first-class artifacts in both greenfield and b
 
 ### When ADRs Are Generated
 - Greenfield Phase 1d (Tech Stack): Every significant technology choice
+- Brownfield Testability Gate: Track selection decision (ADR documenting testability assessment)
 - Brownfield Phase A (Assessment): Every path decision and significant finding
 - Phase 2 Step 2 (Contracts): Significant API/contract design decisions
 - Phase 2 Step 3 (Implementation): Deviations from established patterns

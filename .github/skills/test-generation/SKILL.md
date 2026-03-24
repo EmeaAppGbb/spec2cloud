@@ -20,6 +20,24 @@ You do not write application code. You do not make tests pass. You DO write full
 
 ---
 
+## Modes
+
+This skill operates in two modes depending on whether you are generating tests for new features (greenfield) or capturing existing behavior (brownfield).
+
+### `red-baseline` (default)
+
+The standard mode for greenfield development and brownfield extensions. Tests are generated that **FAIL** because no application code exists yet. This is the test-driven contract that the Implementation Agent must satisfy. All existing behavior in the skill (Execution Procedure, Red Baseline Verification, etc.) describes this mode.
+
+**When to use:** Greenfield projects, new feature increments, brownfield Track B (untestable apps where new code is written first).
+
+### `green-baseline` (brownfield Track A)
+
+Used when a brownfield application is testable — the app runs, serves requests, and has verifiable behavior. Tests are generated that **PASS** against the current codebase. These tests create a regression safety net: before any modernization, rewrite, or extension work begins, the existing behavior is locked down by passing tests. Any future change that breaks these tests is a regression.
+
+**When to use:** Brownfield Track A (testable apps), after Phase B1 extraction is complete and the app is confirmed runnable. Check `.spec2cloud/state.json` for `mode: "green-baseline"` or `track: "A"`.
+
+---
+
 ## Inputs
 
 Before you begin, read and understand:
@@ -201,6 +219,89 @@ If not already present, create or update:
 
 - `cucumber.js` configuration (Cucumber.js profile)
 - `src/api/vitest.config.ts` (Vitest configuration for backend tests)
+
+---
+
+### Green-Baseline Mode Process
+
+When operating in `green-baseline` mode (brownfield Track A), the process inverts: you generate tests that **pass** against the existing application. Follow this sequence:
+
+#### Step 1: Read Existing-Behavior Inputs
+
+- Read Gherkin scenarios tagged `@existing-behavior` from `specs/features/`. These describe the current app's behavior as captured during Track A (after the testability gate).
+- Read FRDs (`specs/frd-*.md`) that contain a "Current Implementation" section — this section describes what the app actually does today.
+- Read API contracts extracted by the `api-extractor` skill (`specs/contracts/`) for endpoint signatures and response shapes.
+- **Tag handling:** Scenarios tagged `@verify-manually` should generate tests with a `// @verify-manually` comment for human review. Scenarios tagged `@known-bug` should generate tests that assert the current (buggy) behavior. Scenarios tagged `@flaky-behavior` should generate skipped tests with an explanatory comment.
+
+#### Step 2: Generate Cucumber Step Definitions for Current Behavior
+
+- Generate step definitions in `tests/features/step-definitions/` that exercise the **existing** endpoints, pages, and flows.
+- Use real HTTP calls against the running app's actual routes (not hypothetical future routes).
+- Use Playwright interactions against the app's actual UI elements and page structure.
+- Assert on the app's actual response codes, response shapes, and UI states.
+
+#### Step 3: Generate Playwright E2E Specs for Current User Flows
+
+- Generate `e2e/*.spec.ts` specs that verify the current user journeys end-to-end.
+- Use Page Object Models that reflect the app's current page structure.
+- Test navigation paths, form submissions, and data display as they work today.
+
+#### Step 4: Generate Unit Tests for Critical Business Logic
+
+- Generate `src/api/tests/unit/*.test.ts` and `src/api/tests/integration/*.test.ts` for critical business logic paths.
+- Focus on core domain logic, validation rules, and data transformation that the app performs today.
+- Use Supertest against the real Express app to verify actual endpoint behavior.
+
+#### Step 5: Verify Green Baseline
+
+- Run all generated tests against the current codebase.
+- **All tests MUST pass.** If a generated test fails, the TEST is wrong — fix the test, not the app. The app's current behavior is the source of truth.
+- Iterate: adjust assertions, selectors, or request payloads until the test matches reality.
+- Continue until the entire green baseline passes: `0 failing, N passing`.
+
+```bash
+# Verify green baseline
+npx cucumber-js                    # All scenarios PASS
+cd src/api && npm test             # All backend tests PASS
+npx playwright test                # All e2e specs PASS
+```
+
+### Green-Baseline Output
+
+Green-baseline tests use the **same file locations** as red-baseline:
+
+| Layer | Location |
+|---|---|
+| Cucumber step definitions | `tests/features/step-definitions/{feature-name}.steps.ts` |
+| Playwright e2e specs | `e2e/{feature-name}.spec.ts` |
+| Vitest unit tests | `src/api/tests/unit/{feature-name}.test.ts` |
+| Vitest integration tests | `src/api/tests/integration/{feature-name}.test.ts` |
+
+**Tagging and annotation:**
+
+- All green-baseline tests include the comment: `// green-baseline: captures existing behavior`
+- Cucumber step definition files include a header comment:
+  ```typescript
+  // green-baseline: captures existing behavior
+  // These tests verify the app's current behavior as a regression safety net.
+  // Do NOT modify these tests to match new feature requirements — create new tests instead.
+  ```
+- Test names use descriptive language indicating they test current behavior:
+  - Vitest: `it('currently returns 200 with user profile when authenticated', ...)`
+  - Playwright: `test('existing flow: user can navigate from dashboard to settings', ...)`
+- Gherkin scenarios use the `@existing-behavior` tag (already present from Phase B2)
+
+### Green-Baseline Rules
+
+1. **Tests describe behavior that EXISTS, not behavior that SHOULD exist.** If the app returns a 302 redirect instead of a 200, assert on the 302. If the UI shows "Welcome back" instead of "Dashboard", assert on "Welcome back". Document the current reality.
+2. **If behavior is inconsistent, tag and skip.** When a test intermittently fails due to race conditions, timing, or non-deterministic behavior in the existing app, add a `@flaky-behavior` tag to the Gherkin scenario and `test.skip()` the generated test with a comment explaining the inconsistency:
+   ```typescript
+   // @flaky-behavior: Login endpoint intermittently returns 503 under load
+   test.skip('existing flow: concurrent login sessions', ...);
+   ```
+3. **Never assert on unverified behavior.** Every assertion must be validated against the running application. Do not guess what the app does — run it, observe it, test it.
+4. **Mock external services at the boundary.** Stub third-party APIs, payment gateways, email services, and other external dependencies. Test the app's handling of responses from these services, not the services themselves. Use realistic response patterns observed in the existing app.
+5. **Test data should use realistic patterns.** Use data shapes, field lengths, and value ranges that reflect the existing app's actual usage. If the app stores emails as lowercase, use lowercase emails in tests. If IDs are UUIDs, use UUIDs.
 
 ---
 

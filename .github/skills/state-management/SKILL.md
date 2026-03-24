@@ -51,6 +51,33 @@ api + web → integration  (integration requires both slices done)
 integration → verification  (verify requires all slices green)
 ```
 
+## Brownfield State Fields
+
+When operating in brownfield mode, the state includes additional fields for testability tracking and per-feature track assignment.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `brownfield.testability` | `"full"` \| `"partial"` \| `"none"` | Overall testability verdict after the testability gate. |
+| `brownfield.track` | `"A"` \| `"B"` \| `"hybrid"` | Delivery track: A (testable, green baseline), B (doc-only), or hybrid (mix per feature). |
+| `brownfield.testabilityChecklist` | object | Six binary checks: `canBuild`, `externalDepsReachable`, `apiExercisable`, `uiRenderable`, `devEnvExists`, `existingTestsRunnable`. |
+| `brownfield.featureTracks` | object | Map of `featureId → "A" \| "B"`. Only present when `track` is `"hybrid"`. |
+| `brownfield.greenBaseline` | object | Track A metrics: per-feature `scenarios` count, `testsPass` boolean, `lastVerified` ISO timestamp. |
+| `brownfield.behavioralDocs` | object | Track B metrics: per-feature `scenarios` count and `manualChecklist` item count. |
+
+## Brownfield State Transitions
+
+| Trigger | Phase | State Updates |
+|---------|-------|---------------|
+| Extraction complete | `"B1"` | `currentPhase: "B1"`, extraction output paths recorded in `brownfield.extraction` |
+| Spec-Enable complete | `"B2"` | `currentPhase: "B2"`, `brownfield.prdGenerated: true`, `brownfield.frdCount: N` |
+| Testability gate complete | `"B3"` | `currentPhase: "B3"`, `brownfield.testability`, `brownfield.track`, `brownfield.testabilityChecklist` recorded |
+| Track A baseline green | *(still B3)* | `brownfield.greenBaseline.features` populated with per-feature test results |
+| Track B docs complete | *(still B3)* | `brownfield.behavioralDocs.features` populated with per-feature scenario/checklist counts |
+| Path selection (human gate) | `"assessment"` | `brownfield.selectedPaths` array recorded (e.g., `["modernize", "security"]`) |
+| Assessment + planning done | `"increment-delivery"` | Increments generated, `incrementPlan` populated, delivery proceeds track-aware |
+
+When `track` is `"hybrid"`, each increment in Phase 2 inherits its track from `featureTracks`. Track A increments follow the full test → contract → implement → verify cycle. Track B increments follow a doc-only path (behavioral docs + manual checklists instead of automated green baselines).
+
 ## On Resume
 
 1. Read `.spec2cloud/state.json`

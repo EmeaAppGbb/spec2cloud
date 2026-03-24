@@ -165,12 +165,17 @@ After installation, open VS Code and start a conversation with GitHub Copilot. T
 
 ### Brownfield Workflow
 
-1. **Phase B1: Extract** — Scan codebase, extract architecture, APIs, data models
-2. **Phase B2: Spec-Enable** — Generate PRD and FRDs from code
-3. **Choose Path(s)** — Modernize, Rewrite, Cloud-Native, Extend, Security, Performance
-4. **Phase A: Assess** — Targeted assessment for chosen paths
-5. **Phase P: Plan** — Generate increments
-6. **Phase 2: Deliver** — Same delivery pipeline as greenfield
+1. **Phase B0: Onboarding** — Detect brownfield mode, initialize state
+2. **Phase B1: Extract** — Scan codebase, extract architecture, APIs, data models, test inventory
+3. **Phase B2: Spec-Enable** — Generate PRD and FRDs from code
+4. **Testability Gate** — Assess whether the app can be tested:
+   - **Track A (Testable)** — Generate Gherkin + tests that pass on current code (green baseline)
+   - **Track B (Non-Testable)** — Generate behavioral documentation + manual verification checklists
+   - **Hybrid** — Track A for testable features, Track B for the rest
+5. **Choose Path(s)** — Modernize, Rewrite, Cloud-Native, Extend, Security, Performance
+6. **Phase A: Assess** — Targeted assessment for chosen paths
+7. **Phase P: Plan** — Generate increments with behavioral deltas (Gherkin or doc updates)
+8. **Phase 2: Deliver** — Track-aware delivery: full pipeline (Track A) or reduced pipeline (Track B)
 
 ## Troubleshooting
 

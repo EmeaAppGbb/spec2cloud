@@ -141,6 +141,7 @@ Each increment in `specs/increment-plan.md` follows this template:
   - Component tests for preferences UI
   - E2e test for full preference update flow
   - Regression: all existing user profile tests pass
+- **Behavioral Deltas:** (Track-dependent — see Behavioral Deltas section)
 - **Integration Points:**
   - Extends User model with `preferences` field
   - Adds route to existing user router
@@ -171,6 +172,44 @@ Append to `.spec2cloud/audit.log`:
 [ISO-timestamp] step=extension-planning action=increments-generated count={N} result=done
 ```
 
+## Behavioral Deltas
+
+Each increment must include behavioral change specifications that feed into Phase 2 test generation. The format depends on the project's testability track (from `.spec2cloud/state.json`).
+
+### Track A (Testable) — Gherkin Deltas
+
+For each increment, specify which Gherkin scenarios are affected:
+
+- **New scenarios:** Scenarios for behavior that doesn't exist yet (will be red in Phase 2)
+- **Modified scenarios:** Existing `@existing-behavior` scenarios that change (update expected outcomes)
+- **Unchanged scenarios:** Existing scenarios that must still pass (regression safety net)
+
+Include Gherkin deltas in the increment format:
+
+```
+- **Gherkin Deltas:**
+  - New: `Scenario: {description}` — {why this is needed}
+  - Modified: `Scenario: {existing scenario name}` — Then step changes from X to Y
+  - Regression: N existing scenarios must still pass unchanged
+```
+
+### Track B (Non-Testable) — Documentation Deltas
+
+For each increment, specify behavioral documentation updates:
+
+- **Updated scenarios:** Which documentation-only scenarios change
+- **New scenarios:** New behavioral expectations to document
+- **Manual checklist updates:** New or modified manual verification items
+
+Include documentation deltas in the increment format:
+
+```
+- **Behavioral Doc Updates:**
+  - Updated: `Scenario: {name}` — expected behavior changes from X to Y
+  - New: `Scenario: {name}` — documents new expected behavior
+  - Manual verification: {new checklist items}
+```
+
 ## Self-Review Checklist
 
 Before finalizing, verify:
@@ -184,6 +223,9 @@ Before finalizing, verify:
 - [ ] All increments include regression test requirements (existing tests must pass).
 - [ ] No increment modifies existing behavior without explicit acceptance criteria
   for both old and new behavior.
+- [ ] Every increment includes behavioral deltas (Gherkin for Track A, docs for Track B)
+- [ ] Modified existing behavior has both old and new expectations documented
+- [ ] Regression scope is identified (which existing tests/scenarios must still pass)
 
 ## Constraints
 

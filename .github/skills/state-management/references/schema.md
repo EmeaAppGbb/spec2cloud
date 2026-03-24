@@ -104,6 +104,47 @@
       }
     }
   },
+  "brownfield": {
+    "testability": "partial",
+    "track": "hybrid",
+    "testabilityChecklist": {
+      "canBuild": true,
+      "externalDepsReachable": false,
+      "apiExercisable": true,
+      "uiRenderable": true,
+      "devEnvExists": true,
+      "existingTestsRunnable": true
+    },
+    "featureTracks": {
+      "auth": "A",
+      "search": "A",
+      "reporting": "B",
+      "legacy-import": "B"
+    },
+    "greenBaseline": {
+      "features": {
+        "auth": { "scenarios": 12, "testsPass": true, "lastVerified": "2026-02-08T10:00:00Z" },
+        "search": { "scenarios": 8, "testsPass": true, "lastVerified": "2026-02-08T10:05:00Z" }
+      }
+    },
+    "behavioralDocs": {
+      "features": {
+        "reporting": { "scenarios": 6, "manualChecklist": 10 },
+        "legacy-import": { "scenarios": 3, "manualChecklist": 5 }
+      }
+    },
+    "extraction": {
+      "codebaseScanner": "specs/docs/technology/stack.md",
+      "dependencyInventory": "specs/docs/technology/dependencies.md",
+      "architectureMapper": "specs/docs/architecture/overview.md",
+      "apiExtractor": "specs/contracts/api/",
+      "dataModelExtractor": "specs/docs/architecture/data-models.md",
+      "testDiscovery": "specs/docs/testing/coverage.md"
+    },
+    "prdGenerated": true,
+    "frdCount": 4,
+    "selectedPaths": ["modernize", "security"]
+  },
   "humanGates": {
     "phase0-approved": true,
     "discovery-specs-approved": true,
@@ -125,6 +166,21 @@
   "lastUpdated": "2026-02-09T14:30:00Z"
 }
 ```
+
+## Brownfield Object Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `testability` | `"full"` \| `"partial"` \| `"none"` | Overall testability verdict set after the B3 testability gate. `"full"` = all features exercisable, `"partial"` = some features exercisable, `"none"` = no automated testing possible. |
+| `track` | `"A"` \| `"B"` \| `"hybrid"` | Delivery track. `"A"` = all features follow test-first with green baseline. `"B"` = all features follow doc-only behavioral documentation. `"hybrid"` = per-feature assignment via `featureTracks`. |
+| `testabilityChecklist` | object | Six boolean checks evaluated during the testability gate. All `true` → `testability: "full"`. Mix → `"partial"`. All `false` → `"none"`. |
+| `featureTracks` | object | Map of feature ID → `"A"` or `"B"`. Present only when `track` is `"hybrid"`. Each feature inherits its delivery path from this map during Phase 2. |
+| `greenBaseline` | object | Track A results. `features` maps feature ID → `{ scenarios, testsPass, lastVerified }`. Populated after green baseline tests pass. |
+| `behavioralDocs` | object | Track B results. `features` maps feature ID → `{ scenarios, manualChecklist }`. Populated after behavioral documentation is complete. |
+| `extraction` | object | Paths to extraction outputs from Phase B1 skills. |
+| `prdGenerated` | boolean | Whether the PRD was generated during Phase B2. |
+| `frdCount` | number | Number of FRDs generated during Phase B2. |
+| `selectedPaths` | array | Paths chosen by the user at the path-selection human gate (e.g., `["modernize", "security"]`). |
 
 ## Increment Object Fields
 

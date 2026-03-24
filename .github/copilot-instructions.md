@@ -96,16 +96,23 @@ When the project requires AI agents, agentic workflows, or human-in-the-loop AI 
 ## Brownfield Rules
 - **Extraction is not assessment** — Phase B1 documents what exists. No opinions, no recommendations.
 - **User chooses the path** — Never run assessment or planning without the user selecting which path(s) to pursue.
-- **ADRs for all decisions** — Every significant technical decision (brownfield or greenfield) gets an ADR in specs/adrs/.
+- **Testability is a human decision** — After B2 (Spec-Enable), the testability gate determines Track A (testable), Track B (doc-only), or Hybrid. Never assume testability.
+- **Green baseline before changes** — Track A: capture existing behavior as passing tests before any modifications. Tests describe what IS, not what SHOULD BE.
+- **Behavioral docs when untestable** — Track B: produce Gherkin-like documentation and manual verification checklists. Structured for future conversion to executable tests.
+- **ADRs for all decisions** — Every significant technical decision (brownfield or greenfield) gets an ADR in specs/adrs/. The testability gate decision also gets an ADR.
 - **Existing code is truth** — When docs, comments, and code disagree, code wins. Document reality, not intent.
 - **Existing tests are sacred** — Never modify or delete existing tests. New tests are added alongside.
 - **Incremental always** — Every change must leave the application in a working state. No big-bang transformations.
+- **Track promotion** — Features can be promoted from Track B → Track A when testability improves. Never demote from A → B.
 
 ## Brownfield File Organization
 ```
 specs/
   prd.md                    # Product Requirements (generated from code in brownfield)
   frd-{feature}.md          # Feature Requirements (with Current Implementation section)
+  features/                 # Gherkin scenarios
+    {feature}.feature       # Track A: @existing-behavior tagged scenarios
+                            # Track B: none (behavioral docs in FRDs instead)
   adrs/                     # Architecture Decision Records
     adr-001-{slug}.md
     adr-002-{slug}.md
@@ -123,6 +130,9 @@ specs/
       data-models.md
     testing/
       coverage.md
+  contracts/                # Extracted + generated API contracts
+    api/
+      {feature-id}.yaml
   increment-plan.md         # Unified increment plan (all paths)
 ```
 
