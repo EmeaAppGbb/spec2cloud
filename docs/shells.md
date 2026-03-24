@@ -6,7 +6,7 @@ Shells are pre-configured project scaffolds that give you a running start. Each 
 
 | Shell | Tech Stack | Repository |
 |-------|-----------|-----------|
-| **Next.js + TypeScript** | Next.js, Express, Playwright, Cucumber, Vitest | [spec2cloud-shell-nextjs-typescript](https://github.com/EmeaAppGbb/spec2cloud-shell-nextjs-typescript) |
+| **Next.js + TypeScript** | Next.js, Express, Playwright, Cucumber, Vitest | [shell-typescript](https://github.com/EmeaAppGbb/shell-typescript) |
 | **.NET** | ASP.NET Core, Blazor, .NET testing | [shell-dotnet](https://github.com/EmeaAppGbb/shell-dotnet) |
 | **Agentic .NET** | .NET + AI Agents (LangGraph) | [agentic-shell-dotnet](https://github.com/EmeaAppGbb/agentic-shell-dotnet) |
 | **Agentic Python** | Python + AI Agents (LangGraph) | [agentic-shell-python](https://github.com/EmeaAppGbb/agentic-shell-python) |

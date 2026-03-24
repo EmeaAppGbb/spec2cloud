@@ -6,7 +6,7 @@ A team wants to build a task management application with boards, lists, cards, a
 A one-page PRD describing a task management app.
 
 ## Phase 0: Shell Setup
-Clone `spec2cloud-shell-nextjs-typescript`. Get a scaffold with Next.js, Express, Playwright, Cucumber, Vitest, and Bicep pre-configured.
+Clone `shell-typescript`. Get a scaffold with Next.js, Express, Playwright, Cucumber, Vitest, and Bicep pre-configured.
 
 ## Phase 1a: Spec Refinement
 The orchestrator reviews the PRD. After 3 passes:

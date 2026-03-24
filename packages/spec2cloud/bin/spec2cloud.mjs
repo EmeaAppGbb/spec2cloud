@@ -44,7 +44,7 @@ const SHELLS = [
     id: 'nextjs-typescript',
     name: 'Next.js + TypeScript',
     desc: 'Next.js, Express, Playwright, Cucumber, Vitest',
-    repo: 'EmeaAppGbb/spec2cloud-shell-nextjs-typescript',
+    repo: 'EmeaAppGbb/shell-typescript',
   },
   {
     id: 'dotnet',

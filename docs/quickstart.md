@@ -25,7 +25,7 @@ curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts
 
 Use a pre-configured shell:
 
-- **Next.js + TypeScript**: `spec2cloud-shell-nextjs-typescript`
+- **Next.js + TypeScript**: `shell-typescript`
 - **.NET**: `shell-dotnet`
 - **Agentic .NET**: `agentic-shell-dotnet`
 - **Agentic Python**: `agentic-shell-python`
