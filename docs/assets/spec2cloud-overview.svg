@@ -1,85 +1,62 @@
-<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style="background-color: #F8FAFC;">
+<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Hand-drawn filter effect -->
-    <filter id="sketch" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-    
-    <!-- Drop shadow -->
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
-      <feOffset dx="2" dy="2" result="offsetblur"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="0.3"/>
-      </feComponentTransfer>
-      <feMerge> 
-        <feMergeNode/>
-        <feMergeNode in="SourceGraphic"/> 
-      </feMerge>
-    </filter>
-
-    <!-- Arrow marker -->
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#1E40AF" filter="url(#sketch)"/>
-    </marker>
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      .box { fill: #F8FAFC; stroke-width: 3; rx: 12; filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.1)); }
+      .arrow { fill: none; stroke: #64748B; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 2s ease-out forwards; }
+      .fade-in-1 { opacity: 0; animation: fadeIn 0.5s ease-out 0.2s forwards; }
+      .fade-in-2 { opacity: 0; animation: fadeIn 0.5s ease-out 0.8s forwards; }
+      .fade-in-3 { opacity: 0; animation: fadeIn 0.5s ease-out 1.4s forwards; }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes draw {
+        to { stroke-dashoffset: 0; }
+      }
+    </style>
   </defs>
 
-  <style>
-    .box { fill: white; stroke-width: 3; stroke-linecap: round; filter: url(#sketch); }
-    .label-title { font-family: -apple-system, system-ui, sans-serif; font-size: 24px; font-weight: bold; fill: #1E40AF; text-anchor: middle; }
-    .label-text { font-family: -apple-system, system-ui, sans-serif; font-size: 14px; fill: #475569; text-anchor: middle; }
-    .arrow { stroke: #1E40AF; stroke-width: 3; fill: none; stroke-linecap: round; marker-end: url(#arrowhead); filter: url(#sketch); }
-    .subtitle { font-family: -apple-system, system-ui, sans-serif; font-size: 18px; font-weight: 500; fill: #64748B; text-anchor: middle; letter-spacing: 1px; }
-    
-    /* Box specific colors */
-    .stroke-blue { stroke: #3B82F6; }
-    .stroke-green { stroke: #10B981; }
-    .stroke-orange { stroke: #F59E0B; }
-    
-    .icon { font-size: 40px; text-anchor: middle; dominant-baseline: middle; filter: url(#sketch); }
-  </style>
+  <!-- Background -->
+  <rect width="800" height="300" fill="#F8FAFC" />
 
-  <!-- Flow Arrows -->
-  <path d="M 230 180 Q 265 170, 300 180" class="arrow" />
-  <path d="M 500 180 Q 535 190, 570 180" class="arrow" />
-
-  <!-- Box 1: Specs -->
-  <g transform="translate(50, 80)">
-    <!-- Shadow box -->
-    <rect x="5" y="5" width="180" height="200" rx="8" fill="#E2E8F0" opacity="0.5" filter="url(#sketch)" />
-    <!-- Main box -->
-    <rect x="0" y="0" width="180" height="200" rx="8" class="box stroke-blue" />
-    <text x="90" y="50" class="icon">📝</text>
-    <text x="90" y="90" class="label-title">Specs</text>
-    <text x="90" y="125" class="label-text">PRD</text>
-    <text x="90" y="145" class="label-text">FRDs</text>
-    <text x="90" y="165" class="label-text">Gherkin</text>
+  <!-- Box 1: Specs (Blue) -->
+  <g class="fade-in-1">
+    <rect x="50" y="80" width="180" height="120" class="box" stroke="#3B82F6" />
+    <text x="140" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#1E40AF">📝 Specs</text>
+    <text x="140" y="170" text-anchor="middle" font-size="14" fill="#64748B">PRD, FRDs, Gherkin</text>
   </g>
 
-  <!-- Box 2: Tests -->
-  <g transform="translate(320, 80)">
-    <rect x="5" y="5" width="180" height="200" rx="8" fill="#E2E8F0" opacity="0.5" filter="url(#sketch)" />
-    <rect x="0" y="0" width="180" height="200" rx="8" class="box stroke-green" />
-    <text x="90" y="50" class="icon">🧪</text>
-    <text x="90" y="90" class="label-title" style="fill: #059669;">Tests</text>
-    <text x="90" y="125" class="label-text">Generated</text>
-    <text x="90" y="145" class="label-text">from specs</text>
-    <text x="90" y="165" class="label-text">Drive impl</text>
+  <!-- Arrow 1 -->
+  <path d="M240 140 H 290" class="arrow" style="animation-delay: 0.6s" marker-end="url(#arrowhead)" />
+
+  <!-- Box 2: Tests (Green) -->
+  <g class="fade-in-2">
+    <rect x="310" y="80" width="180" height="120" class="box" stroke="#10B981" />
+    <text x="400" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#065F46">🧪 Tests</text>
+    <text x="400" y="170" text-anchor="middle" font-size="14" fill="#64748B">Generated &amp; Drivers</text>
   </g>
 
-  <!-- Box 3: Cloud -->
-  <g transform="translate(590, 80)">
-    <rect x="5" y="5" width="180" height="200" rx="8" fill="#E2E8F0" opacity="0.5" filter="url(#sketch)" />
-    <rect x="0" y="0" width="180" height="200" rx="8" class="box stroke-orange" />
-    <text x="90" y="50" class="icon">☁️</text>
-    <text x="90" y="90" class="label-title" style="fill: #D97706;">Cloud</text>
-    <text x="90" y="125" class="label-text">Deployed on</text>
-    <text x="90" y="145" class="label-text">Azure</text>
-    <text x="90" y="165" class="label-text">Live + Verified</text>
+  <!-- Arrow 2 -->
+  <path d="M500 140 H 550" class="arrow" style="animation-delay: 1.2s" marker-end="url(#arrowhead)" />
+
+  <!-- Box 3: Cloud (Orange) -->
+  <g class="fade-in-3">
+    <rect x="570" y="80" width="180" height="120" class="box" stroke="#F59E0B" />
+    <text x="660" y="140" text-anchor="middle" font-size="24" font-weight="bold" fill="#92400E">☁️ Cloud</text>
+    <text x="660" y="170" text-anchor="middle" font-size="14" fill="#64748B">Deployed &amp; Live</text>
   </g>
 
-  <!-- Footer -->
-  <text x="400" y="360" class="subtitle">AI-Powered • Human-Approved • Spec-Driven</text>
+  <!-- Subtitle -->
+  <text x="400" y="260" text-anchor="middle" font-size="16" fill="#475569" font-style="italic" opacity="0" style="animation: fadeIn 1s ease-out 2s forwards;">
+    AI-Powered • Human-Approved • Spec-Driven
+  </text>
 
+  <!-- Arrow Marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748B" />
+    </marker>
+  </defs>
 </svg>

@@ -1,56 +1,98 @@
-<svg width="800" height="350" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" width="800" height="350">
+  <defs>
+    
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes drawPath {
+        from { stroke-dashoffset: 300; }
+        to { stroke-dashoffset: 0; }
+      }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+      .delay-600 { animation-delay: 0.6s; }
+      .delay-700 { animation-delay: 0.7s; }
+      .delay-800 { animation-delay: 0.8s; }
+      .delay-900 { animation-delay: 0.9s; }
+      .delay-1000 { animation-delay: 1.0s; }
+      .draw-path {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+        animation: drawPath 0.6s ease-out forwards;
+      }
+    </style>
 
-<style>
-    text { font-family: -apple-system, system-ui, sans-serif; }
-    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
-    .label { font-size: 14px; fill: #334155; }
-    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
-    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
-    .gate-icon { fill: #EF4444; font-size: 16px; }
-    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
-</style>
-
-<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
-
-<defs>
-    <marker id="arrowBig" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,8 L12,4 z" fill="#3B82F6" />
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1E40AF"/>
     </marker>
-</defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
 
-<g transform="translate(20, 40)">
-    <!-- Box 1 -->
-    <rect x="0" y="0" width="220" height="200" fill="#F1F5F9" stroke="#94A3B8" class="box"/>
-    <text x="110" y="30" text-anchor="middle" class="title">Existing App</text>
-    <text x="20" y="70" class="label">🏗️ Running code</text>
-    <text x="20" y="100" class="label">with undocumented</text>
-    <text x="20" y="130" class="label">behavior</text>
+  <!-- Background -->
+  <rect width="800" height="350" fill="#F8FAFC" rx="0"/>
 
-    <!-- Arrow 1 -->
-    <path d="M230 100 L260 100" class="connector" stroke="#3B82F6" stroke-width="4" marker-end="url(#arrowBig)"/>
+  <!-- Box 1 – Existing App (Gray) -->
+  <g class="fade-in" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="30" y="50" width="200" height="170" rx="12" fill="#F3F4F6" stroke="#4B5563" stroke-width="2"/>
+    <text x="130" y="85" text-anchor="middle" font-size="16" font-weight="700" fill="#4B5563">Existing App</text>
+    <line x1="50" y1="98" x2="210" y2="98" stroke="#4B5563" stroke-width="1" opacity="0.3"/>
+    <text x="130" y="128" text-anchor="middle" font-size="26">🏗️</text>
+    <text x="130" y="158" text-anchor="middle" font-size="12" fill="#4B5563">Running code</text>
+    <text x="130" y="178" text-anchor="middle" font-size="12" fill="#4B5563">Undocumented behavior</text>
+    <text x="130" y="198" text-anchor="middle" font-size="12" fill="#9CA3AF" font-style="italic">What does it do?</text>
+  </g>
 
-    <!-- Box 2 -->
-    <rect x="270" y="0" width="220" height="200" fill="#DBEAFE" stroke="#3B82F6" class="box"/>
-    <text x="110" y="30" transform="translate(270,0)" text-anchor="middle" class="title">Capture as Tests</text>
-    <text x="290" y="70" class="label">📝 Gherkin scenarios</text>
-    <text x="290" y="90" class="label" font-size="12" fill="#64748B">@existing-behavior</text>
-    <text x="290" y="120" class="label">🧪 Cucumber steps</text>
-    <text x="290" y="150" class="label">🎭 Playwright e2e</text>
-    <text x="290" y="180" class="label" font-weight="bold" fill="#10B981">🟢 Must PASS</text>
+  <!-- Arrow 1 (Animated) -->
+  <line x1="235" y1="135" x2="290" y2="135" stroke="#1E40AF" stroke-width="2.5" marker-end="url(#arrowBlue)" class="draw-path delay-200"/>
 
-    <!-- Arrow 2 -->
-    <path d="M500 100 L530 100" class="connector" stroke="#3B82F6" stroke-width="4" marker-end="url(#arrowBig)"/>
+  <!-- Box 2 – Capture as Tests (Blue) -->
+  <g class="fade-in delay-300" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="295" y="50" width="210" height="170" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="400" y="85" text-anchor="middle" font-size="16" font-weight="700" fill="#1E40AF">Capture as Tests</text>
+    <line x1="315" y1="98" x2="485" y2="98" stroke="#1E40AF" stroke-width="1" opacity="0.3"/>
+    <text x="400" y="128" text-anchor="middle" font-size="26">📝</text>
+    <text x="400" y="158" text-anchor="middle" font-size="12" fill="#1E40AF">Gherkin @existing-behavior</text>
+    <text x="400" y="178" text-anchor="middle" font-size="12" fill="#1E40AF">🧪 Cucumber · 🎭 Playwright</text>
+    <text x="400" y="198" text-anchor="middle" font-size="12" fill="#64748B" font-style="italic">Snapshot current behavior</text>
+  </g>
 
-    <!-- Box 3 -->
-    <rect x="540" y="0" width="220" height="200" fill="#D1FAE5" stroke="#10B981" class="box"/>
-    <text x="110" y="30" transform="translate(540,0)" text-anchor="middle" class="title">Safety Net Ready</text>
-    <text x="560" y="70" class="label">✅ All tests pass</text>
-    <text x="560" y="100" class="label">🛡️ Regression safety</text>
-    <text x="560" y="130" class="label">📋 Behavioral contract</text>
-    <text x="560" y="180" class="label" font-weight="bold" fill="#3B82F6">Ready for changes!</text>
-</g>
+  <!-- Arrow 2 (Animated) -->
+  <line x1="510" y1="135" x2="565" y2="135" stroke="#059669" stroke-width="2.5" marker-end="url(#arrowGreen)" class="draw-path delay-500"/>
 
-<rect x="100" y="270" width="600" height="40" fill="#FEF2F2" stroke="#EF4444" rx="8"/>
-<text x="400" y="295" text-anchor="middle" class="label" fill="#B91C1C" font-weight="bold">If a test fails → fix the TEST (it's wrong about current behavior), not the app</text>
+  <!-- Box 3 – Safety Net Ready (Green, Glowing) -->
+  <g class="fade-in delay-600" filter="url(#glow)" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="570" y="50" width="200" height="170" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2.5"/>
+    <text x="670" y="85" text-anchor="middle" font-size="16" font-weight="700" fill="#059669">Safety Net Ready</text>
+    <line x1="590" y1="98" x2="750" y2="98" stroke="#059669" stroke-width="1" opacity="0.3"/>
+    <text x="670" y="128" text-anchor="middle" font-size="26">🛡️</text>
+    <text x="670" y="158" text-anchor="middle" font-size="12" fill="#059669">✅ All tests pass</text>
+    <text x="670" y="178" text-anchor="middle" font-size="12" fill="#059669">🛡️ Regression protected</text>
+    <text x="670" y="198" text-anchor="middle" font-size="12" fill="#059669" font-weight="600">📋 Ready for changes!</text>
+  </g>
 
+  <!-- Bottom callout -->
+  <g class="fade-in delay-800">
+    <rect x="170" y="268" width="460" height="48" rx="12" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+    <text x="400" y="297" text-anchor="middle" font-size="14" font-weight="700" fill="#D97706">⚠️ If a test fails → fix the TEST, not the app</text>
+  </g>
+
+  <!-- Green arrow marker -->
+  <defs>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+  </defs>
 </svg>

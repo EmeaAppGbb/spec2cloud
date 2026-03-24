@@ -1,87 +1,108 @@
-<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
   <defs>
-    <filter id="handdrawn" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
-    </filter>
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes drawPath {
+        from { stroke-dashoffset: 600; }
+        to { stroke-dashoffset: 0; }
+      }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-1 { animation-delay: 0.1s; }
+      .delay-2 { animation-delay: 0.2s; }
+      .delay-3 { animation-delay: 0.3s; }
+      .delay-4 { animation-delay: 0.4s; }
+      .delay-5 { animation-delay: 0.5s; }
+      .delay-6 { animation-delay: 0.6s; }
+      .delay-7 { animation-delay: 0.7s; }
+      .delay-8 { animation-delay: 0.8s; }
+      .delay-9 { animation-delay: 0.9s; }
+      .delay-10 { animation-delay: 1.0s; }
+      .delay-11 { animation-delay: 1.1s; }
+      .draw-path {
+        stroke-dasharray: 600;
+        stroke-dashoffset: 600;
+        animation: drawPath 1.5s ease-out forwards;
+      }
+      .shadow { filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1)); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
+    </marker>
   </defs>
-  <rect width="800" height="500" fill="#F8FAFC" />
+  <rect width="800" height="550" fill="#F8FAFC" rx="0"/>
   
-  <!-- Loop Path -->
-  <path d="M 400 60 C 650 60 750 150 750 250 C 750 350 650 440 400 440 C 150 440 50 350 50 250 C 50 150 150 60 400 60 Z" 
-        fill="none" stroke="#CBD5E1" stroke-width="4" stroke-dasharray="10,5" filter="url(#handdrawn)" />
+  <text x="400" y="275" font-size="24" font-weight="bold" fill="#334155" text-anchor="middle">The Ralph Loop</text>
+  <text x="400" y="305" font-size="32" text-anchor="middle">♻️</text>
 
-  <!-- Center -->
-  <g transform="translate(400, 250)" text-anchor="middle">
-    <text y="-10" font-size="28" font-weight="bold" fill="#334155" filter="url(#handdrawn)">The Ralph Loop</text>
-    <text y="30" font-size="echo</text>40">
+  <!-- Connection Path -->
+  <!-- Top Row: 50,60 -> 230,60 -> 410,60 -> 590,60 -->
+  <!-- Right Col: 590,60 -> 590,180 -> 590,300 -->
+  <!-- Bottom Row: 590,300 -> 590,440 -> 410,440 -> 230,440 -> 50,440 -->
+  <!-- Left Col: 50,440 -> 50,300 -> 50,180 -> 50,60 -->
+  <path d="M 125 82 L 230 82 M 305 82 L 410 82 M 485 82 L 590 82 
+           M 665 105 L 665 180 M 665 225 L 665 300 
+           M 665 355 L 665 440 L 485 462 
+           M 410 462 L 305 462 M 230 462 L 125 462
+           M 50 440 L 50 355 M 50 245 L 50 180 L 50 105" 
+           fill="none" stroke="#CBD5E1" stroke-width="2" class="draw-path" marker-end="url(#arrow)"/>
+
+  <!-- Top Row -->
+  <g class="fade-in delay-1">
+    <rect x="50" y="60" width="150" height="45" rx="22.5" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1" class="shadow"/>
+    <text x="125" y="87" font-size="13" font-weight="bold" fill="#1E40AF" text-anchor="middle">1. Read State</text>
+  </g>
+  <g class="fade-in delay-2">
+    <rect x="230" y="60" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="305" y="87" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">2. Determine Task</text>
+  </g>
+  <g class="fade-in delay-3">
+    <rect x="410" y="60" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="485" y="87" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">3. Check Skills</text>
+  </g>
+  <g class="fade-in delay-4">
+    <rect x="590" y="60" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="665" y="87" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">4. Search Community</text>
   </g>
 
-  <!-- Steps -->
-  <!-- 1. Read State (Top Center) -->
-  <g transform="translate(400, 60)">
-    <rect x="-70" y="-20" width="140" height="40" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#1E40AF" font-weight="bold">1. Read State</text>
+  <!-- Right Column -->
+  <g class="fade-in delay-5">
+    <rect x="590" y="180" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="665" y="207" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">5. Research</text>
+  </g>
+  <g class="fade-in delay-6">
+    <rect x="585" y="300" width="160" height="55" rx="27.5" fill="#D1FAE5" stroke="#059669" stroke-width="2" class="shadow"/>
+    <text x="665" y="332" font-size="14" font-weight="bold" fill="#065F46" text-anchor="middle">6. Execute</text>
   </g>
 
-  <!-- 2. Determine Task (Top Right) -->
-  <g transform="translate(600, 90)">
-    <rect x="-75" y="-20" width="150" height="40" rx="8" fill="white" stroke="#64748B" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#334155">2. Determine Task</text>
+  <!-- Bottom Row (Right to Left) -->
+  <g class="fade-in delay-7">
+    <rect x="410" y="440" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="485" y="467" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">7. Verify</text>
+  </g>
+  <g class="fade-in delay-8">
+    <rect x="230" y="440" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="305" y="467" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">8. Create Skill?</text>
+  </g>
+  <g class="fade-in delay-9">
+    <rect x="50" y="440" width="150" height="45" rx="22.5" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1" class="shadow"/>
+    <text x="125" y="467" font-size="13" font-weight="bold" fill="#1E40AF" text-anchor="middle">9. Update State</text>
   </g>
 
-  <!-- 3. Check Skills (Right) -->
-  <g transform="translate(720, 180)">
-    <rect x="-60" y="-20" width="120" height="40" rx="8" fill="white" stroke="#64748B" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#334155">3. Check Skills</text>
+  <!-- Left Column (Bottom to Top) -->
+  <g class="fade-in delay-10">
+    <rect x="50" y="300" width="150" height="45" rx="22.5" fill="white" stroke="#94A3B8" stroke-width="1" class="shadow"/>
+    <text x="125" y="327" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">10. Phase Done?</text>
   </g>
+  <g class="fade-in delay-11">
+    <rect x="45" y="180" width="160" height="65" rx="32.5" fill="#FEF3C7" stroke="#D97706" stroke-width="2" class="shadow"/>
+    <text x="125" y="217" font-size="14" font-weight="bold" fill="#92400E" text-anchor="middle">11. Human Gate</text>
+  </g>
+  
+  <!-- Closing loop arrow manual fix for alignment -->
+  <path d="M 125 180 L 125 105" stroke="#CBD5E1" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-11"/>
 
-  <!-- 4. Search Community (Right Low) -->
-  <g transform="translate(720, 320)">
-    <rect x="-75" y="-20" width="150" height="40" rx="8" fill="white" stroke="#64748B" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#334155">4. Search Community</text>
-  </g>
-
-  <!-- 5. Research (Bottom Right) -->
-  <g transform="translate(600, 410)">
-    <rect x="-50" y="-20" width="100" height="40" rx="8" fill="white" stroke="#64748B" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#334155">5. Research</text>
-  </g>
-
-  <!-- 6. Execute (Bottom Center - Green) -->
-  <g transform="translate(400, 440)">
-    <rect x="-60" y="-25" width="120" height="50" rx="8" fill="#D1FAE5" stroke="#10B981" stroke-width="3" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="16" fill="#065F46" font-weight="bold">6. Execute</text>
-  </g>
-
-  <!-- 7. Verify (Bottom Left) -->
-  <g transform="translate(200, 410)">
-    <rect x="-50" y="-20" width="100" height="40" rx="8" fill="white" stroke="#64748B" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#334155">7. Verify</text>
-  </g>
-
-  <!-- 8. Create Skill? (Left Low) -->
-  <g transform="translate(80, 320)">
-    <rect x="-60" y="-20" width="120" height="40" rx="8" fill="#F3E8FF" stroke="#8B5CF6" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#5B21B6">8. Create Skill?</text>
-  </g>
-
-  <!-- 9. Update State (Left - Blue) -->
-  <g transform="translate(80, 180)">
-    <rect x="-70" y="-20" width="140" height="40" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#1E40AF" font-weight="bold">9. Update State</text>
-  </g>
-
-  <!-- 10. Phase Done? (Left High) -->
-  <g transform="translate(140, 110)">
-    <rect x="-60" y="-20" width="120" height="40" rx="8" fill="white" stroke="#64748B" stroke-width="2" filter="url(#handdrawn)"/>
-    <text y="5" text-anchor="middle" font-size="14" fill="#334155">10. Phase Done?</text>
-  </g>
-
-  <!-- 11. Human Gate (Top Left - Orange) -->
-  <g transform="translate(260, 80)">
-    <rect x="-70" y="-25" width="140" height="50" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3" filter="url(#handdrawn)"/>
-    <text y="-5" text-anchor="middle" font-size="14" fill="#92400E" font-weight="bold">11. Human Gate</text>
-    <text y="15" text-anchor="middle" font-size="12" fill="#92400E">or Advance</text>
-  </g>
 </svg>

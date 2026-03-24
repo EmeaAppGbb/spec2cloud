@@ -1,419 +1,55 @@
-<svg viewBox="0 0 900 350" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
   <defs>
     <style>
-      @keyframes flow-particle {
-        0% {
-          transform: translateX(-50px);
-          opacity: 0;
-        }
-        5% {
-          opacity: 1;
-        }
-        95% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(850px);
-          opacity: 0;
-        }
-      }
-
-      @keyframes pause-at-gate-1 {
-        0%, 14% { animation-play-state: running; }
-        15%, 38% { animation-play-state: paused; }
-        39%, 100% { animation-play-state: running; }
-      }
-
-      @keyframes pause-at-gate-2 {
-        0%, 38% { animation-play-state: running; }
-        39%, 62% { animation-play-state: paused; }
-        63%, 100% { animation-play-state: running; }
-      }
-
-      @keyframes pause-at-gate-3 {
-        0%, 62% { animation-play-state: running; }
-        63%, 86% { animation-play-state: paused; }
-        87%, 100% { animation-play-state: running; }
-      }
-
-      @keyframes pause-at-gate-4 {
-        0%, 86% { animation-play-state: running; }
-        87%, 100% { animation-play-state: paused; }
-      }
-
-      @keyframes gate-pulse {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 1; }
-      }
-
-      @keyframes approved-stamp {
-        0%, 80% { opacity: 0; transform: scale(0.5) rotate(-15deg); }
-        85%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-      }
-
-      @keyframes approved-stamp-2 {
-        0%, 54% { opacity: 0; transform: scale(0.5) rotate(-15deg); }
-        59%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-      }
-
-      @keyframes approved-stamp-3 {
-        0%, 69% { opacity: 0; transform: scale(0.5) rotate(-15deg); }
-        74%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-      }
-
-      @keyframes approved-stamp-4 {
-        0%, 84% { opacity: 0; transform: scale(0.5) rotate(-15deg); }
-        89%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-      }
-
-      @keyframes human-appear {
-        0%, 75% { opacity: 0; }
-        78%, 90% { opacity: 1; }
-        95%, 100% { opacity: 0; }
-      }
-
-      @keyframes human-appear-2 {
-        0%, 49% { opacity: 0; }
-        52%, 64% { opacity: 1; }
-        69%, 100% { opacity: 0; }
-      }
-
-      @keyframes human-appear-3 {
-        0%, 63% { opacity: 0; }
-        66%, 78% { opacity: 1; }
-        83%, 100% { opacity: 0; }
-      }
-
-      @keyframes human-appear-4 {
-        0%, 80% { opacity: 0; }
-        83%, 95% { opacity: 1; }
-        100%, 100% { opacity: 0; }
-      }
-
-      @keyframes robot-spin {
-        0%, 100% { transform: rotate(0deg); }
-        50% { transform: rotate(360deg); }
-      }
-
-      .bg {
-        fill: #0d1117;
-      }
-
-      .text-primary {
-        fill: #e6edf3;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      }
-
-      .text-secondary {
-        fill: #8b949e;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      }
-
-      .gate-shield {
-        filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
-      }
-
-      .particle {
-        animation: flow-particle 13s linear infinite;
-      }
-
-      .particle-1 { animation-delay: 0s; }
-      .particle-2 { animation-delay: 0.5s; }
-      .particle-3 { animation-delay: 1s; }
-      .particle-4 { animation-delay: 1.5s; }
-      .particle-5 { animation-delay: 2s; }
-
-      .gate-1-pulse {
-        animation: gate-pulse 2s ease-in-out;
-        animation-delay: 2s;
-        animation-iteration-count: infinite;
-      }
-
-      .gate-2-pulse {
-        animation: gate-pulse 2s ease-in-out;
-        animation-delay: 5s;
-        animation-iteration-count: infinite;
-      }
-
-      .gate-3-pulse {
-        animation: gate-pulse 2s ease-in-out;
-        animation-delay: 8s;
-        animation-iteration-count: infinite;
-      }
-
-      .gate-4-pulse {
-        animation: gate-pulse 2s ease-in-out;
-        animation-delay: 11s;
-        animation-iteration-count: infinite;
-      }
-
-      .approved-1 {
-        animation: approved-stamp 2s ease-out;
-        animation-delay: 2s;
-        animation-iteration-count: infinite;
-      }
-
-      .approved-2 {
-        animation: approved-stamp-2 2s ease-out;
-        animation-delay: 5s;
-        animation-iteration-count: infinite;
-      }
-
-      .approved-3 {
-        animation: approved-stamp-3 2s ease-out;
-        animation-delay: 8s;
-        animation-iteration-count: infinite;
-      }
-
-      .approved-4 {
-        animation: approved-stamp-4 2s ease-out;
-        animation-delay: 11s;
-        animation-iteration-count: infinite;
-      }
-
-      .human-icon-1 {
-        animation: human-appear 3s ease-in-out;
-        animation-delay: 2s;
-        animation-iteration-count: infinite;
-      }
-
-      .human-icon-2 {
-        animation: human-appear-2 3s ease-in-out;
-        animation-delay: 5s;
-        animation-iteration-count: infinite;
-      }
-
-      .human-icon-3 {
-        animation: human-appear-3 3s ease-in-out;
-        animation-delay: 8s;
-        animation-iteration-count: infinite;
-      }
-
-      .human-icon-4 {
-        animation: human-appear-4 3s ease-in-out;
-        animation-delay: 11s;
-        animation-iteration-count: infinite;
-      }
-
-      .robot-icon {
-        animation: robot-spin 4s linear infinite;
-      }
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
     </style>
-
-    <!-- Gate Shield with Person -->
-    <g id="gate-shield">
-      <path d="M 0 0 Q -20 -20 -20 -40 L 20 -40 Q 20 -20 0 0" fill="currentColor" stroke="currentColor" stroke-width="2"/>
-      <!-- Person inside -->
-      <circle cx="0" cy="-35" r="6" fill="white"/>
-      <path d="M -4 -27 L 4 -27 L 2 -20 L -2 -20 Z" fill="white"/>
-      <path d="M -6 -18 L -2 -10 M 6 -18 L 2 -10" stroke="white" stroke-width="2" fill="none"/>
-    </g>
-
-    <!-- Robot/Gear Icon -->
-    <g id="robot-gear">
-      <circle cx="0" cy="0" r="12" fill="none" stroke="currentColor" stroke-width="2"/>
-      <circle cx="0" cy="0" r="6" fill="currentColor"/>
-      <path d="M 0 -15 L 0 -18 M 8 8 L 10 10 M 15 0 L 18 0 M 8 -8 L 10 -10" stroke="currentColor" stroke-width="2"/>
-    </g>
-
-    <!-- Particle dot -->
-    <circle id="particle-dot" r="3" fill="#58a6ff"/>
   </defs>
 
-  <!-- Background -->
-  <rect class="bg" width="900" height="350"/>
+  <rect width="800" height="500" fill="#F8FAFC" rx="0"/>
 
   <!-- Title -->
-  <text x="450" y="30" class="text-primary" font-size="24" font-weight="bold" text-anchor="middle">
-    Human Gates: AI Safety Checkpoints
-  </text>
-  <text x="450" y="50" class="text-secondary" font-size="12" text-anchor="middle">
-    Automated AI workflows with mandatory human approval at critical gates
-  </text>
+  <text x="400" y="40" text-anchor="middle" font-size="20" font-weight="700" fill="#1E293B">🚦 Human Approval Gates</text>
+  <text x="400" y="65" text-anchor="middle" font-size="14" fill="#64748B">Nothing ships without your sign-off</text>
 
-  <!-- Timeline base line -->
-  <line x1="40" y1="150" x2="860" y2="150" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
-
-  <!-- ============ GATE 1: Spec Review ============ -->
-  <!-- AI Zone 1 -->
-  <g id="ai-zone-1">
-    <rect x="40" y="130" width="150" height="40" fill="none" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3,3" rx="4" opacity="0.5"/>
-    <text x="117" y="148" class="text-secondary" font-size="11" text-anchor="middle">AI Works</text>
-    <text x="117" y="160" class="text-secondary" font-size="9" text-anchor="middle">Phase 1a</text>
-
-    <!-- Robot icon with rotation -->
-    <g class="robot-icon" transform="translate(75, 135)">
-      <use href="#robot-gear" color="#58a6ff"/>
+  <!-- Columns -->
+  <!-- Greenfield -->
+  <g class="fade-in delay-100">
+    <rect x="50" y="90" width="340" height="350" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));"/>
+    <text x="220" y="120" text-anchor="middle" font-size="16" font-weight="700" fill="#1E40AF">Greenfield Gates</text>
+    
+    <g transform="translate(80, 150)">
+      <text x="0" y="0" font-size="12" fill="#1E3A8A">🚦 Phase 0: Shell Setup</text>
+      <text x="0" y="30" font-size="12" fill="#1E3A8A">🚦 Phase 1a: PRD + FRDs</text>
+      <text x="0" y="60" font-size="12" fill="#1E3A8A">🚦 Phase 1b: UI/UX Prototypes</text>
+      <text x="0" y="90" font-size="12" fill="#1E3A8A">🚦 Phase 1c: Increment Plan</text>
+      <text x="0" y="120" font-size="12" fill="#1E3A8A">🚦 Phase 1d: Tech Stack + ADRs</text>
+      <text x="0" y="150" font-size="12" fill="#1E3A8A">🚦 Step 1: Gherkin Scenarios</text>
+      <text x="0" y="180" font-size="12" fill="#1E3A8A">🚦 Step 3: PR Code Review</text>
+      <text x="0" y="210" font-size="12" fill="#1E3A8A">🚦 Step 4: Deployment Verified</text>
     </g>
-
-    <!-- Particles -->
-    <use href="#particle-dot" class="particle particle-1" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-2" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-3" transform="translate(0, 150)"/>
   </g>
 
-  <!-- Gate 1 Shield -->
-  <g class="gate-1-pulse" transform="translate(210, 150)">
-    <use href="#gate-shield" color="#58a6ff"/>
-  </g>
-
-  <!-- Gate 1 Label -->
-  <text x="210" y="185" class="text-primary" font-size="12" font-weight="bold" text-anchor="middle">Spec Review</text>
-  <text x="210" y="198" class="text-secondary" font-size="10" text-anchor="middle">PRD &amp; FRDs approved?</text>
-
-  <!-- Gate 1 Human Icon -->
-  <g class="human-icon-1" transform="translate(210, 110)">
-    <circle cx="0" cy="0" r="8" fill="#e6edf3" stroke="#58a6ff" stroke-width="2"/>
-    <circle cx="0" cy="-6" r="4" fill="#e6edf3"/>
-    <path d="M -4 -1 L 4 -1 L 2 3 L -2 3 Z" fill="#e6edf3"/>
-  </g>
-
-  <!-- Gate 1 Approved Stamp -->
-  <g class="approved-1" transform="translate(210, 150)">
-    <circle cx="0" cy="0" r="20" fill="none" stroke="#58a6ff" stroke-width="2" transform="rotate(45)"/>
-    <text x="0" y="6" class="text-primary" font-size="14" font-weight="bold" text-anchor="middle">✓</text>
-  </g>
-
-  <!-- ============ GATE 2: Design Review ============ -->
-  <!-- AI Zone 2 -->
-  <g id="ai-zone-2">
-    <rect x="260" y="130" width="150" height="40" fill="none" stroke="#d2a8ff" stroke-width="1" stroke-dasharray="3,3" rx="4" opacity="0.5"/>
-    <text x="337" y="148" class="text-secondary" font-size="11" text-anchor="middle">AI Works</text>
-    <text x="337" y="160" class="text-secondary" font-size="9" text-anchor="middle">Phase 1b</text>
-
-    <!-- Robot icon with rotation -->
-    <g class="robot-icon" transform="translate(295, 135)">
-      <use href="#robot-gear" color="#d2a8ff"/>
+  <!-- Brownfield -->
+  <g class="fade-in delay-200">
+    <rect x="410" y="90" width="340" height="350" rx="12" fill="#FEF3C7" stroke="#D97706" stroke-width="1" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));"/>
+    <text x="580" y="120" text-anchor="middle" font-size="16" font-weight="700" fill="#D97706">Brownfield Gates</text>
+    
+    <g transform="translate(440, 150)">
+      <text x="0" y="0" font-size="12" fill="#92400E">🚦 B1 Exit: Extraction Accuracy</text>
+      <text x="0" y="30" font-size="12" fill="#92400E">🚦 B2a: PRD Approved</text>
+      <text x="0" y="60" font-size="12" fill="#92400E">🚦 B2b: FRDs Approved</text>
+      <text x="0" y="90" font-size="12" fill="#92400E">🚦 B2c: Spec Refinement</text>
+      <text x="0" y="120" font-size="12" fill="#92400E">🚦 Testability Gate (Track A/B)</text>
+      <text x="0" y="150" font-size="12" fill="#92400E">🚦 Green Baseline (Track A)</text>
+      <text x="0" y="180" font-size="12" fill="#92400E">🚦 Track B Review</text>
+      <text x="0" y="210" font-size="12" fill="#92400E">🚦 Path Selection</text>
     </g>
-
-    <!-- Particles -->
-    <use href="#particle-dot" class="particle particle-1" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-2" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-3" transform="translate(0, 150)"/>
   </g>
 
-  <!-- Gate 2 Shield -->
-  <g class="gate-2-pulse" transform="translate(430, 150)">
-    <use href="#gate-shield" color="#d2a8ff"/>
-  </g>
-
-  <!-- Gate 2 Label -->
-  <text x="430" y="185" class="text-primary" font-size="12" font-weight="bold" text-anchor="middle">Design Review</text>
-  <text x="430" y="198" class="text-secondary" font-size="10" text-anchor="middle">Prototypes approved?</text>
-
-  <!-- Gate 2 Human Icon -->
-  <g class="human-icon-2" transform="translate(430, 110)">
-    <circle cx="0" cy="0" r="8" fill="#e6edf3" stroke="#d2a8ff" stroke-width="2"/>
-    <circle cx="0" cy="-6" r="4" fill="#e6edf3"/>
-    <path d="M -4 -1 L 4 -1 L 2 3 L -2 3 Z" fill="#e6edf3"/>
-  </g>
-
-  <!-- Gate 2 Approved Stamp -->
-  <g class="approved-2" transform="translate(430, 150)">
-    <circle cx="0" cy="0" r="20" fill="none" stroke="#d2a8ff" stroke-width="2" transform="rotate(45)"/>
-    <text x="0" y="6" class="text-primary" font-size="14" font-weight="bold" text-anchor="middle">✓</text>
-  </g>
-
-  <!-- ============ GATE 3: Test Review ============ -->
-  <!-- AI Zone 3 -->
-  <g id="ai-zone-3">
-    <rect x="480" y="130" width="150" height="40" fill="none" stroke="#7ee787" stroke-width="1" stroke-dasharray="3,3" rx="4" opacity="0.5"/>
-    <text x="557" y="148" class="text-secondary" font-size="11" text-anchor="middle">AI Works</text>
-    <text x="557" y="160" class="text-secondary" font-size="9" text-anchor="middle">Phase 2 Step 1</text>
-
-    <!-- Robot icon with rotation -->
-    <g class="robot-icon" transform="translate(515, 135)">
-      <use href="#robot-gear" color="#7ee787"/>
-    </g>
-
-    <!-- Particles -->
-    <use href="#particle-dot" class="particle particle-1" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-2" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-3" transform="translate(0, 150)"/>
-  </g>
-
-  <!-- Gate 3 Shield -->
-  <g class="gate-3-pulse" transform="translate(650, 150)">
-    <use href="#gate-shield" color="#7ee787"/>
-  </g>
-
-  <!-- Gate 3 Label -->
-  <text x="650" y="185" class="text-primary" font-size="12" font-weight="bold" text-anchor="middle">Test Review</text>
-  <text x="650" y="198" class="text-secondary" font-size="10" text-anchor="middle">Gherkin scenarios approved?</text>
-
-  <!-- Gate 3 Human Icon -->
-  <g class="human-icon-3" transform="translate(650, 110)">
-    <circle cx="0" cy="0" r="8" fill="#e6edf3" stroke="#7ee787" stroke-width="2"/>
-    <circle cx="0" cy="-6" r="4" fill="#e6edf3"/>
-    <path d="M -4 -1 L 4 -1 L 2 3 L -2 3 Z" fill="#e6edf3"/>
-  </g>
-
-  <!-- Gate 3 Approved Stamp -->
-  <g class="approved-3" transform="translate(650, 150)">
-    <circle cx="0" cy="0" r="20" fill="none" stroke="#7ee787" stroke-width="2" transform="rotate(45)"/>
-    <text x="0" y="6" class="text-primary" font-size="14" font-weight="bold" text-anchor="middle">✓</text>
-  </g>
-
-  <!-- ============ GATE 4: Deploy Review ============ -->
-  <!-- AI Zone 4 -->
-  <g id="ai-zone-4">
-    <rect x="700" y="130" width="150" height="40" fill="none" stroke="#f0883e" stroke-width="1" stroke-dasharray="3,3" rx="4" opacity="0.5"/>
-    <text x="775" y="148" class="text-secondary" font-size="11" text-anchor="middle">AI Works</text>
-    <text x="775" y="160" class="text-secondary" font-size="9" text-anchor="middle">Phase 2 Step 3</text>
-
-    <!-- Robot icon with rotation -->
-    <g class="robot-icon" transform="translate(735, 135)">
-      <use href="#robot-gear" color="#f0883e"/>
-    </g>
-
-    <!-- Particles -->
-    <use href="#particle-dot" class="particle particle-1" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-2" transform="translate(0, 150)"/>
-    <use href="#particle-dot" class="particle particle-3" transform="translate(0, 150)"/>
-  </g>
-
-  <!-- Gate 4 Shield -->
-  <g class="gate-4-pulse" transform="translate(860, 150)">
-    <use href="#gate-shield" color="#f0883e"/>
-  </g>
-
-  <!-- Gate 4 Label -->
-  <text x="860" y="185" class="text-primary" font-size="12" font-weight="bold" text-anchor="middle">Deploy Review</text>
-  <text x="860" y="198" class="text-secondary" font-size="10" text-anchor="middle">PR approved? Ready to ship?</text>
-
-  <!-- Gate 4 Human Icon -->
-  <g class="human-icon-4" transform="translate(860, 110)">
-    <circle cx="0" cy="0" r="8" fill="#e6edf3" stroke="#f0883e" stroke-width="2"/>
-    <circle cx="0" cy="-6" r="4" fill="#e6edf3"/>
-    <path d="M -4 -1 L 4 -1 L 2 3 L -2 3 Z" fill="#e6edf3"/>
-  </g>
-
-  <!-- Gate 4 Approved Stamp -->
-  <g class="approved-4" transform="translate(860, 150)">
-    <circle cx="0" cy="0" r="20" fill="none" stroke="#f0883e" stroke-width="2" transform="rotate(45)"/>
-    <text x="0" y="6" class="text-primary" font-size="14" font-weight="bold" text-anchor="middle">✓</text>
-  </g>
-
-  <!-- ============ DEPLOYMENT ============ -->
-  <!-- Final Deployed state -->
-  <g transform="translate(860, 220)">
-    <rect x="-40" y="-15" width="80" height="30" fill="none" stroke="#58a6ff" stroke-width="2" rx="4"/>
-    <text x="0" y="8" class="text-primary" font-size="13" font-weight="bold" text-anchor="middle">Deployed ☁️</text>
-  </g>
-
-  <!-- ============ LEGEND ============ -->
-  <!-- AI Zone legend -->
-  <g transform="translate(40, 280)">
-    <rect x="0" y="0" width="8" height="8" fill="#58a6ff" opacity="0.3"/>
-    <text x="15" y="8" class="text-secondary" font-size="10">AI Autonomous Zone (robot works, no human intervention)</text>
-  </g>
-
-  <!-- Human Gate legend -->
-  <g transform="translate(40, 300)">
-    <circle cx="4" cy="4" r="3" fill="#f0883e"/>
-    <text x="15" y="8" class="text-secondary" font-size="10">Human Gate (mandatory approval required before proceeding)</text>
-  </g>
-
-  <!-- Cycle time -->
-  <text x="40" y="330" class="text-secondary" font-size="10">Complete approval cycle: ~13 seconds | Each gate auto-approves after human review simulation</text>
+  <!-- Bottom Flow -->
+  <text x="400" y="475" text-anchor="middle" font-size="14" font-weight="bold" fill="#334155">PAUSE ➔ REVIEW ➔ APPROVE ➔ CONTINUE</text>
 </svg>

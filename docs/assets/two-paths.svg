@@ -1,114 +1,130 @@
-<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="background-color: #F8FAFC;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
   <defs>
-    <!-- Hand-drawn filter effect -->
-    <filter id="sketch" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
-    </filter>
-    
-    <!-- Arrow marker -->
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#475569" filter="url(#sketch)"/>
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes drawPath {
+        from { stroke-dashoffset: 300; }
+        to { stroke-dashoffset: 0; }
+      }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+      .draw-path {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+        animation: drawPath 0.6s ease-out forwards;
+      }
+      .shadow { filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1)); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
     </marker>
   </defs>
-
-  <style>
-    .box { fill: white; stroke-width: 2.5; stroke-linecap: round; filter: url(#sketch); }
-    .title-header { font-family: -apple-system, system-ui, sans-serif; font-size: 22px; font-weight: 800; text-anchor: middle; }
-    .step-text { font-family: -apple-system, system-ui, sans-serif; font-size: 15px; font-weight: 500; fill: #334155; text-anchor: middle; dominant-baseline: middle; }
-    .arrow { stroke: #475569; stroke-width: 2; fill: none; stroke-linecap: round; marker-end: url(#arrowhead); filter: url(#sketch); opacity: 0.8; }
-    .phase-label { font-family: -apple-system, system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1E40AF; text-anchor: middle; dominant-baseline: middle; }
-    
-    /* Specific Colors */
-    .greenfield-bg { fill: #ECFDF5; stroke: #10B981; }
-    .brownfield-bg { fill: #FFF7ED; stroke: #F59E0B; }
-    .shared-bg { fill: #EFF6FF; stroke: #3B82F6; }
-    
-    .greenfield-text { fill: #059669; }
-    .brownfield-text { fill: #D97706; }
-  </style>
+  <rect width="800" height="550" fill="#F8FAFC" rx="0"/>
 
   <!-- Left Column: Greenfield -->
-  <g transform="translate(100, 30)">
-    <text x="100" y="0" class="title-header greenfield-text">🌱 GREENFIELD</text>
-    <text x="100" y="25" class="step-text" style="font-size: 14px; font-style: italic;">"Build New"</text>
+  <g class="fade-in delay-100">
+    <text x="30" y="30" font-size="18" font-weight="bold" fill="#059669">🌱 GREENFIELD — Build New</text>
+    <rect x="30" y="45" width="360" height="420" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="2" class="shadow"/>
     
-    <!-- Flow -->
-    <line x1="100" y1="40" x2="100" y2="65" class="arrow" />
-    
-    <!-- Step 1 -->
-    <rect x="0" y="70" width="200" height="40" rx="8" class="box greenfield-bg" />
-    <text x="100" y="90" class="step-text">PRD → FRD → UI</text>
-    
-    <line x1="100" y1="110" x2="100" y2="135" class="arrow" />
-    
-    <!-- Step 2 -->
-    <rect x="0" y="140" width="200" height="40" rx="8" class="box greenfield-bg" />
-    <text x="100" y="160" class="step-text">Tests → Contracts</text>
-    
-    <line x1="100" y1="180" x2="100" y2="205" class="arrow" />
+    <!-- Steps -->
+    <g transform="translate(50, 65)">
+      <!-- Step 1 -->
+      <rect x="0" y="0" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
+      <text x="10" y="25" font-size="14" font-weight="bold" fill="#334155">Phase 1: Discovery</text>
+      <text x="10" y="45" font-size="12" fill="#64748B">PRD → FRD → UI/UX → Tech Stack</text>
+      
+      <!-- Arrow -->
+      <path d="M 160 60 L 160 80" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-200"/>
 
-    <!-- Step 3 -->
-    <rect x="0" y="210" width="200" height="40" rx="8" class="box greenfield-bg" />
-    <text x="100" y="230" class="step-text">Implementation</text>
+      <!-- Step 2 -->
+      <rect x="0" y="80" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
+      <text x="10" y="105" font-size="14" font-weight="bold" fill="#334155">Phase 2: Tests</text>
+      <text x="10" y="125" font-size="12" fill="#64748B">E2E, Gherkin, Unit stubs, Red baseline</text>
 
-    <!-- Path to Converge -->
-    <path d="M 100 250 Q 100 350, 100 480" class="arrow" style="stroke-dasharray: 4,2;" />
+      <!-- Arrow -->
+      <path d="M 160 140 L 160 160" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-300"/>
+
+      <!-- Step 3 -->
+      <rect x="0" y="160" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
+      <text x="10" y="185" font-size="14" font-weight="bold" fill="#334155">Phase 2: Contracts + Implement</text>
+      <text x="10" y="205" font-size="12" fill="#64748B">OpenAPI, Types, API∥Web→Integration</text>
+
+      <!-- Arrow -->
+      <path d="M 160 220 L 160 240" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-400"/>
+
+      <!-- Step 4 -->
+      <rect x="0" y="240" width="320" height="60" rx="8" fill="white" stroke="#059669" stroke-width="1"/>
+      <text x="10" y="265" font-size="14" font-weight="bold" fill="#334155">Phase 2: Deploy</text>
+      <text x="10" y="285" font-size="12" fill="#64748B">Azure provision, Smoke tests, ✅ Live</text>
+    </g>
   </g>
 
   <!-- Right Column: Brownfield -->
-  <g transform="translate(500, 30)">
-    <text x="100" y="0" class="title-header brownfield-text">🏗️ BROWNFIELD</text>
-    <text x="100" y="25" class="step-text" style="font-size: 14px; font-style: italic;">"Modernize Existing"</text>
-    
-    <line x1="100" y1="40" x2="100" y2="65" class="arrow" />
-    
-    <!-- Step 1 -->
-    <rect x="0" y="70" width="200" height="40" rx="8" class="box brownfield-bg" />
-    <text x="100" y="90" class="step-text">Extract → Specs</text>
-    
-    <line x1="100" y1="110" x2="100" y2="135" class="arrow" />
+  <g class="fade-in delay-200">
+    <text x="410" y="30" font-size="18" font-weight="bold" fill="#D97706">🏗️ BROWNFIELD — Modernize Existing</text>
+    <rect x="410" y="45" width="360" height="420" rx="12" fill="#FFFBEB" stroke="#D97706" stroke-width="2" class="shadow"/>
 
-    <!-- Gate -->
-    <rect x="0" y="140" width="200" height="60" rx="8" class="box brownfield-bg" style="stroke-width: 3;" />
-    <text x="100" y="160" class="step-text" style="font-weight: bold;">Testability Gate</text>
-    <text x="100" y="180" class="step-text" style="font-size: 12px;">Track A / Track B</text>
+    <!-- Steps -->
+    <g transform="translate(430, 65)">
+      <!-- Step 1 -->
+      <rect x="0" y="0" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
+      <text x="10" y="20" font-size="14" font-weight="bold" fill="#334155">B1: Extract</text>
+      <text x="10" y="38" font-size="12" fill="#64748B">Scanner, Deps, Arch, API, Data, Tests</text>
+      
+      <!-- Arrow -->
+      <path d="M 160 50 L 160 65" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-300"/>
 
-    <line x1="100" y1="200" x2="100" y2="225" class="arrow" />
+      <!-- Step 2 -->
+      <rect x="0" y="65" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
+      <text x="10" y="85" font-size="14" font-weight="bold" fill="#334155">B2: Spec-Enable</text>
+      <text x="10" y="103" font-size="12" fill="#64748B">PRD, FRDs, Refinement</text>
 
-    <!-- Step 3 -->
-    <rect x="0" y="230" width="200" height="40" rx="8" class="box brownfield-bg" />
-    <text x="100" y="250" class="step-text">Assess → Plan</text>
+      <!-- Arrow -->
+      <path d="M 160 115 L 160 130" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-400"/>
 
-    <!-- Path to Converge -->
-    <path d="M 100 270 Q 100 350, 100 480" class="arrow" style="stroke-dasharray: 4,2;" />
+      <!-- Step 3: Testability Gate -->
+      <rect x="0" y="130" width="320" height="60" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
+      <text x="10" y="150" font-size="14" font-weight="bold" fill="#334155">⚖️ Testability Gate</text>
+      <!-- Track A/B sub-boxes -->
+      <rect x="10" y="160" width="145" height="20" rx="4" fill="#ECFDF5" stroke="#059669" stroke-width="1"/>
+      <text x="45" y="174" font-size="11" fill="#059669" font-weight="bold">Track A</text>
+      <rect x="165" y="160" width="145" height="20" rx="4" fill="#FEF2F2" stroke="#DC2626" stroke-width="1"/>
+      <text x="200" y="174" font-size="11" fill="#DC2626" font-weight="bold">Track B</text>
+
+      <!-- Arrow -->
+      <path d="M 160 190 L 160 205" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-500"/>
+
+      <!-- Step 4 -->
+      <rect x="0" y="205" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
+      <text x="10" y="225" font-size="14" font-weight="bold" fill="#334155">Assess → Plan</text>
+      <text x="10" y="243" font-size="12" fill="#64748B">Targeted assessment + increments</text>
+
+      <!-- Arrow -->
+      <path d="M 160 255 L 160 270" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" class="draw-path delay-500"/>
+
+      <!-- Step 5 -->
+      <rect x="0" y="270" width="320" height="50" rx="8" fill="white" stroke="#D97706" stroke-width="1"/>
+      <text x="10" y="290" font-size="14" font-weight="bold" fill="#334155">Phase 2: Deliver</text>
+      <text x="10" y="308" font-size="12" fill="#64748B">Track-aware pipeline</text>
+    </g>
   </g>
-  
-  <!-- Connecting curved paths to the shared pipeline -->
-  <path d="M 200 480 Q 400 480, 600 480" stroke="none" fill="none"/> <!-- spacer -->
-  
-  <g transform="translate(150, 480)">
-     <!-- Connector Lines -->
-     <path d="M 50 -230 Q 50 -30, 250 -30" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="5,5" />
-     <path d="M 450 -210 Q 450 -30, 250 -30" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" />
-     
-     <!-- Shared Box -->
-     <rect x="0" y="0" width="500" height="100" rx="12" class="box shared-bg" style="stroke-width: 4;" />
-     <text x="250" y="30" class="phase-label" style="font-size: 20px;">Phase 2: Same Delivery Pipeline</text>
-     
-     <!-- Internal Flow -->
-     <g transform="translate(50, 60)">
-        <text x="0" y="0" class="step-text">Tests</text>
-        <path d="M 30 -4 L 80 -4" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowhead)" />
-        
-        <text x="110" y="0" class="step-text">Contracts</text>
-        <path d="M 150 -4 L 200 -4" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowhead)" />
-        
-        <text x="220" y="0" class="step-text">Impl</text>
-        <path d="M 245 -4 L 295 -4" stroke="#3B82F6" stroke-width="2" marker-end="url(#arrowhead)" />
-        
-        <text x="350" y="0" class="step-text">Deploy to Azure</text>
-     </g>
+
+  <!-- Bottom Convergence -->
+  <g class="fade-in delay-500" transform="translate(100, 480)">
+    <rect x="0" y="0" width="600" height="50" rx="25" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2" class="shadow"/>
+    <text x="300" y="30" font-size="14" font-weight="bold" fill="#1E40AF" text-anchor="middle">Same Delivery Pipeline — Tests → Contracts → Implement → Deploy</text>
+    
+    <!-- Connecting Arrows -->
+    <path d="M 110 -15 L 110 0" stroke="#1E40AF" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+    <path d="M 490 -15 L 490 0" stroke="#1E40AF" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
   </g>
 
 </svg>

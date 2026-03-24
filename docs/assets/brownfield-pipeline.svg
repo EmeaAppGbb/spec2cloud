@@ -1,78 +1,117 @@
-<svg width="800" height="580" viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg">
-
-<style>
-    text { font-family: -apple-system, system-ui, sans-serif; }
-    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
-    .label { font-size: 14px; fill: #334155; }
-    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
-    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
-    .gate-icon { fill: #EF4444; font-size: 16px; }
-    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
-</style>
-
-<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
-
-<!-- Existing Codebase -->
-<text x="400" y="30" text-anchor="middle" class="title">🏗️ Existing Codebase</text>
-<path d="M400 40 L400 60" class="connector"/>
-
-<!-- B0 -->
-<rect x="250" y="60" width="300" height="40" fill="#F1F5F9" stroke="#94A3B8" class="box"/>
-<text x="400" y="85" text-anchor="middle" class="label" font-weight="bold">B0: Onboarding</text>
-<path d="M400 100 L400 120" class="connector"/>
-
-<!-- B1 -->
-<rect x="200" y="120" width="400" height="80" fill="#DBEAFE" stroke="#3B82F6" class="box"/>
-<text x="210" y="140" class="phase-label" fill="#3B82F6">B1: Extract (6 skills)</text>
-<text x="400" y="160" text-anchor="middle" class="label">Scanner → Deps → Arch → API → Data → Tests</text>
-<text x="400" y="185" text-anchor="middle" class="label" font-style="italic" font-size="12">Pure facts, zero judgment</text>
-<path d="M400 200 L400 220" class="connector"/>
-<text x="410" y="215" font-size="16">🚦</text>
-
-<!-- B2 -->
-<rect x="200" y="220" width="400" height="60" fill="#FEF3C7" stroke="#F59E0B" class="box"/>
-<text x="210" y="240" class="phase-label" fill="#F59E0B">B2: Spec-Enable</text>
-<text x="400" y="260" text-anchor="middle" class="label">PRD → FRDs → Spec Refinement</text>
-<path d="M400 280 L400 300" class="connector"/>
-<text x="410" y="295" font-size="16">🚦</text>
-
-<!-- Testability Gate -->
-<rect x="150" y="300" width="500" height="100" fill="#FFF7ED" stroke="#F97316" class="box"/>
-<text x="400" y="325" text-anchor="middle" class="title" fill="#F97316">Testability Gate</text>
-<text x="400" y="345" text-anchor="middle" class="label">Can this app be tested?</text>
-
-<!-- Tracks -->
-<g transform="translate(170, 360)">
-    <rect x="0" y="0" width="140" height="30" fill="#D1FAE5" stroke="#10B981" rx="4"/>
-    <text x="70" y="20" text-anchor="middle" class="label" font-size="12" font-weight="bold">Track A (Testable)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" width="800" height="700">
+  <defs>
     
-    <rect x="160" y="0" width="140" height="30" fill="url(#hybridGrad)" stroke="#64748B" rx="4"/>
-    <text x="230" y="20" text-anchor="middle" class="label" font-size="12" font-weight="bold">Hybrid (Mix)</text>
-    
-    <rect x="320" y="0" width="140" height="30" fill="#FEF3C7" stroke="#F59E0B" rx="4"/>
-    <text x="390" y="20" text-anchor="middle" class="label" font-size="12" font-weight="bold">Track B (Doc-Only)</text>
-</g>
-<defs>
-    <linearGradient id="hybridGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style="stop-color:#D1FAE5;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#FEF3C7;stop-opacity:1" />
-    </linearGradient>
-</defs>
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes drawPath {
+        from { stroke-dashoffset: 300; }
+        to { stroke-dashoffset: 0; }
+      }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+      .delay-600 { animation-delay: 0.6s; }
+      .delay-700 { animation-delay: 0.7s; }
+      .delay-800 { animation-delay: 0.8s; }
+      .delay-900 { animation-delay: 0.9s; }
+      .delay-1000 { animation-delay: 1.0s; }
+      .draw-path {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+        animation: drawPath 0.6s ease-out forwards;
+      }
+    </style>
 
-<path d="M400 400 L400 420" class="connector"/>
-<text x="410" y="415" font-size="16">🚦</text>
+  </defs>
 
-<!-- Path Selection -->
-<rect x="200" y="420" width="400" height="40" fill="#F1F5F9" stroke="#94A3B8" class="box"/>
-<text x="400" y="445" text-anchor="middle" class="label" font-weight="bold">Path Selection: Modernize | Rewrite | Cloud | Extend</text>
-<path d="M400 460 L400 480" class="connector"/>
+  <!-- Background -->
+  <rect width="800" height="700" fill="#F8FAFC" rx="0"/>
 
-<!-- Delivery -->
-<rect x="200" y="480" width="400" height="40" fill="#D1FAE5" stroke="#10B981" class="box"/>
-<text x="400" y="505" text-anchor="middle" class="label" font-weight="bold">Assess → Plan → Phase 2 Delivery</text>
-<path d="M400 520 L400 540" class="connector"/>
+  <!-- 1. Top Title -->
+  <g class="fade-in">
+    <text x="400" y="38" text-anchor="middle" font-size="20" font-weight="700" fill="#1E293B">🏗️ Existing Codebase</text>
+  </g>
 
-<!-- Production -->
-<text x="400" y="560" text-anchor="middle" class="title" fill="#0EA5E9">☁️ Production on Azure</text>
+  <!-- Arrow 1 -->
+  <line x1="400" y1="50" x2="400" y2="68" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-100"/>
 
+  <!-- 2. Box 1 – B1: Extract (Blue) -->
+  <g class="fade-in delay-100" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="140" y="70" width="520" height="90" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="400" y="97" text-anchor="middle" font-size="17" font-weight="700" fill="#1E40AF">B1: Extract</text>
+    <text x="400" y="118" text-anchor="middle" font-size="12" fill="#1E40AF">Scanner · Deps · Architecture · API · Data Models · Tests</text>
+    <text x="400" y="140" text-anchor="middle" font-size="11" fill="#64748B" font-style="italic">Pure facts, zero judgment</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <line x1="400" y1="160" x2="400" y2="185" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-200"/>
+
+  <!-- 3. Box 2 – B2: Spec-Enable (Blue) -->
+  <g class="fade-in delay-200" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="180" y="188" width="440" height="85" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="400" y="216" text-anchor="middle" font-size="17" font-weight="700" fill="#1E40AF">B2: Spec-Enable</text>
+    <text x="400" y="237" text-anchor="middle" font-size="12" fill="#1E40AF">PRD Generation · FRD Generation · Spec Refinement</text>
+    <text x="400" y="257" text-anchor="middle" font-size="11" fill="#64748B" font-style="italic">Always produces valuable docs</text>
+  </g>
+
+  <!-- Arrow 3 with gate icon -->
+  <line x1="400" y1="273" x2="400" y2="305" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-300"/>
+  <text x="418" y="296" font-size="16">🚦</text>
+
+  <!-- 4. Box 3 – Testability Gate (Orange) -->
+  <g class="fade-in delay-400" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="160" y="308" width="480" height="100" rx="12" fill="#FEF3C7" stroke="#D97706" stroke-width="2.5" stroke-dasharray="8 4"/>
+    <text x="400" y="335" text-anchor="middle" font-size="16" font-weight="700" fill="#D97706">⚖️ TESTABILITY GATE</text>
+    <text x="400" y="355" text-anchor="middle" font-size="12" fill="#92400E">Can this app be tested?</text>
+    <!-- Sub-boxes -->
+    <rect x="215" y="366" width="100" height="30" rx="8" fill="#D1FAE5" stroke="#059669" stroke-width="1.5"/>
+    <text x="265" y="386" text-anchor="middle" font-size="11" font-weight="600" fill="#059669">A: Green</text>
+    <rect x="350" y="366" width="100" height="30" rx="8" fill="#DBEAFE" stroke="#1E40AF" stroke-width="1.5"/>
+    <text x="400" y="386" text-anchor="middle" font-size="11" font-weight="600" fill="#1E40AF">Hybrid</text>
+    <rect x="485" y="366" width="100" height="30" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5"/>
+    <text x="535" y="386" text-anchor="middle" font-size="11" font-weight="600" fill="#EF4444">B: Docs</text>
+  </g>
+
+  <!-- Arrow 4 with gate icon -->
+  <line x1="400" y1="408" x2="400" y2="440" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-500"/>
+  <text x="418" y="432" font-size="16">🚦</text>
+
+  <!-- 5. Box 4 – Path Selection (Purple/Indigo) -->
+  <g class="fade-in delay-600" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="150" y="443" width="500" height="80" rx="12" fill="#E0E7FF" stroke="#4338CA" stroke-width="2"/>
+    <text x="400" y="472" text-anchor="middle" font-size="16" font-weight="700" fill="#4338CA">🧭 Path Selection</text>
+    <text x="400" y="494" text-anchor="middle" font-size="12" fill="#4338CA">Modernize · Rewrite · Cloud-Native · Extend · Fix Bugs · Security</text>
+  </g>
+
+  <!-- Arrow 5 -->
+  <line x1="400" y1="523" x2="400" y2="553" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-700"/>
+
+  <!-- 6. Box 5 – Assess → Plan → Deliver (Green) -->
+  <g class="fade-in delay-800" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="170" y="556" width="460" height="80" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+    <text x="400" y="584" text-anchor="middle" font-size="16" font-weight="700" fill="#059669">Assess → Plan → Deliver</text>
+    <text x="400" y="606" text-anchor="middle" font-size="12" fill="#059669">Track-aware Phase 2 pipeline · Incremental delivery</text>
+  </g>
+
+  <!-- Arrow 6 -->
+  <line x1="400" y1="636" x2="400" y2="658" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrowGray)" class="draw-path delay-900"/>
+
+  <!-- 7. Bottom Title -->
+  <g class="fade-in delay-1000">
+    <text x="400" y="682" text-anchor="middle" font-size="20" font-weight="700" fill="#059669">☁️ Production on Azure</text>
+  </g>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
+    </marker>
+  </defs>
 </svg>

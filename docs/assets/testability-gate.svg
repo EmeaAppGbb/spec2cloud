@@ -1,71 +1,99 @@
-<svg width="800" height="420" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg">
-
-<style>
-    text { font-family: -apple-system, system-ui, sans-serif; }
-    .title { font-size: 20px; font-weight: bold; fill: #1E293B; }
-    .label { font-size: 14px; fill: #334155; }
-    .box { stroke-width: 2; rx: 8; ry: 8; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1)); }
-    .connector { stroke: #64748B; stroke-width: 2; fill: none; stroke-linecap: round; }
-    .gate-icon { fill: #EF4444; font-size: 16px; }
-    .phase-label { font-size: 12px; font-weight: bold; fill: #64748B; text-transform: uppercase; letter-spacing: 1px; }
-</style>
-
-<rect width="100%" height="100%" fill="#F8FAFC" rx="12"/>
-
-<!-- Gate Diamond -->
-<path d="M400 20 L550 80 L400 140 L250 80 Z" fill="#FFF7ED" stroke="#F97316" stroke-width="2" filter="drop-shadow(2px 2px 2px rgba(0,0,0,0.1))"/>
-<text x="400" y="70" text-anchor="middle" class="title" fill="#EA580C" font-size="18">TESTABILITY GATE</text>
-<text x="400" y="95" text-anchor="middle" class="label">Can we test this?</text>
-
-<!-- Connectors -->
-<path d="M400 140 L400 180" class="connector"/> <!-- Center -->
-<path d="M325 110 C 250 110, 150 120, 150 180" class="connector" fill="none"/> <!-- Left -->
-<path d="M475 110 C 550 110, 650 120, 650 180" class="connector" fill="none"/> <!-- Right -->
-
-<!-- Track A -->
-<g transform="translate(50, 180)">
-    <rect x="0" y="0" width="200" height="220" fill="#D1FAE5" stroke="#10B981" class="box"/>
-    <text x="100" y="30" text-anchor="middle" class="title" fill="#10B981">TRACK A</text>
-    <text x="100" y="50" text-anchor="middle" class="label">Testable</text>
-    <line x1="20" y1="60" x2="180" y2="60" stroke="#10B981" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
     
-    <text x="30" y="90" class="label">✅ Build</text>
-    <text x="30" y="115" class="label">✅ Run</text>
-    <text x="30" y="140" class="label">✅ Test</text>
-    
-    <line x1="20" y1="155" x2="180" y2="155" stroke="#10B981" stroke-width="1"/>
-    <text x="30" y="180" class="label" font-size="12">Gherkin capture</text>
-    <text x="30" y="200" class="label" font-size="12">Green baseline</text>
-</g>
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes drawPath {
+        from { stroke-dashoffset: 300; }
+        to { stroke-dashoffset: 0; }
+      }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .delay-500 { animation-delay: 0.5s; }
+      .delay-600 { animation-delay: 0.6s; }
+      .delay-700 { animation-delay: 0.7s; }
+      .delay-800 { animation-delay: 0.8s; }
+      .delay-900 { animation-delay: 0.9s; }
+      .delay-1000 { animation-delay: 1.0s; }
+      .draw-path {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+        animation: drawPath 0.6s ease-out forwards;
+      }
+    </style>
 
-<!-- Hybrid -->
-<g transform="translate(300, 180)">
-    <rect x="0" y="0" width="200" height="220" fill="#F1F5F9" stroke="#64748B" class="box"/>
-    <text x="100" y="30" text-anchor="middle" class="title" fill="#475569">HYBRID</text>
-    <text x="100" y="50" text-anchor="middle" class="label">Mix A+B</text>
-    <line x1="20" y1="60" x2="180" y2="60" stroke="#64748B" stroke-width="1"/>
-    
-    <text x="30" y="100" class="label">Per-feature</text>
-    <text x="30" y="125" class="label">decision</text>
-    
-    <line x1="20" y1="155" x2="180" y2="155" stroke="#64748B" stroke-width="1"/>
-    <text x="30" y="180" class="label" font-size="12">A: Gherkin</text>
-    <text x="30" y="200" class="label" font-size="12">B: Docs</text>
-</g>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D97706"/>
+    </marker>
+  </defs>
 
-<!-- Track B -->
-<g transform="translate(550, 180)">
-    <rect x="0" y="0" width="200" height="220" fill="#FEF3C7" stroke="#F59E0B" class="box"/>
-    <text x="100" y="30" text-anchor="middle" class="title" fill="#F59E0B">TRACK B</text>
-    <text x="100" y="50" text-anchor="middle" class="label">Doc-Only</text>
-    <line x1="20" y1="60" x2="180" y2="60" stroke="#F59E0B" stroke-width="1"/>
-    
-    <text x="30" y="90" class="label">❌ Can't build</text>
-    <text x="30" y="115" class="label">❌ Deps missing</text>
-    
-    <line x1="20" y1="155" x2="180" y2="155" stroke="#F59E0B" stroke-width="1"/>
-    <text x="30" y="180" class="label" font-size="12">Gherkin-like prose</text>
-    <text x="30" y="200" class="label" font-size="12">Manual checklist</text>
-</g>
+  <!-- Background -->
+  <rect width="800" height="500" fill="#F8FAFC" rx="0"/>
 
+  <!-- Diamond – Testability Gate -->
+  <g class="fade-in" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <polygon points="400,30 530,95 400,160 270,95" fill="#FEF3C7" stroke="#D97706" stroke-width="2.5"/>
+    <text x="400" y="90" text-anchor="middle" font-size="14" font-weight="700" fill="#D97706">TESTABILITY</text>
+    <text x="400" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#D97706">GATE</text>
+  </g>
+  <text x="400" y="185" text-anchor="middle" font-size="13" fill="#92400E" font-style="italic" class="fade-in delay-100">Can we test this?</text>
+
+  <!-- Arrow Left -->
+  <line x1="310" y1="130" x2="175" y2="220" stroke="#D97706" stroke-width="2" marker-end="url(#arrowOrange)" class="draw-path delay-200"/>
+  <!-- Arrow Center -->
+  <line x1="400" y1="160" x2="400" y2="220" stroke="#D97706" stroke-width="2" marker-end="url(#arrowOrange)" class="draw-path delay-300"/>
+  <!-- Arrow Right -->
+  <line x1="490" y1="130" x2="625" y2="220" stroke="#D97706" stroke-width="2" marker-end="url(#arrowOrange)" class="draw-path delay-400"/>
+
+  <!-- LEFT BOX – Track A (Green) -->
+  <g class="fade-in delay-300" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="50" y="225" width="230" height="250" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+    <text x="165" y="255" text-anchor="middle" font-size="18" font-weight="700" fill="#059669">TRACK A</text>
+    <text x="165" y="278" text-anchor="middle" font-size="13" fill="#065F46" font-weight="600">Testable</text>
+    <line x1="75" y1="290" x2="255" y2="290" stroke="#059669" stroke-width="1" opacity="0.4"/>
+    <text x="80" y="315" font-size="12" fill="#065F46">✅ Can build &amp; run</text>
+    <text x="80" y="337" font-size="12" fill="#065F46">✅ Endpoints reachable</text>
+    <text x="80" y="359" font-size="12" fill="#065F46">✅ Deps mockable</text>
+    <line x1="75" y1="375" x2="255" y2="375" stroke="#059669" stroke-width="1" opacity="0.4"/>
+    <text x="80" y="398" font-size="12" fill="#065F46" font-weight="600">→ Gherkin capture</text>
+    <text x="80" y="420" font-size="12" fill="#065F46" font-weight="600">→ Green baseline tests</text>
+    <text x="80" y="442" font-size="12" fill="#065F46" font-weight="600">→ Full regression safety</text>
+  </g>
+
+  <!-- MIDDLE BOX – Hybrid (Blue) -->
+  <g class="fade-in delay-500" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="295" y="225" width="210" height="250" rx="12" fill="#DBEAFE" stroke="#1E40AF" stroke-width="2"/>
+    <text x="400" y="255" text-anchor="middle" font-size="18" font-weight="700" fill="#1E40AF">HYBRID</text>
+    <text x="400" y="278" text-anchor="middle" font-size="13" fill="#1E3A8A" font-weight="600">Mixed</text>
+    <line x1="320" y1="290" x2="480" y2="290" stroke="#1E40AF" stroke-width="1" opacity="0.4"/>
+    <text x="315" y="315" font-size="12" fill="#1E3A8A">Mix of Track A + B</text>
+    <text x="315" y="337" font-size="12" fill="#1E3A8A">per feature</text>
+    <line x1="320" y1="355" x2="480" y2="355" stroke="#1E40AF" stroke-width="1" opacity="0.4"/>
+    <text x="315" y="378" font-size="12" fill="#1E3A8A" font-weight="600">A features → tests</text>
+    <text x="315" y="400" font-size="12" fill="#1E3A8A" font-weight="600">B features → docs</text>
+    <text x="315" y="430" font-size="11" fill="#64748B" font-style="italic">Promote B→A when</text>
+    <text x="315" y="448" font-size="11" fill="#64748B" font-style="italic">testability improves</text>
+  </g>
+
+  <!-- RIGHT BOX – Track B (Red/Orange) -->
+  <g class="fade-in delay-700" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="520" y="225" width="230" height="250" rx="12" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+    <text x="635" y="255" text-anchor="middle" font-size="18" font-weight="700" fill="#EF4444">TRACK B</text>
+    <text x="635" y="278" text-anchor="middle" font-size="13" fill="#991B1B" font-weight="600">Doc-Only</text>
+    <line x1="545" y1="290" x2="725" y2="290" stroke="#EF4444" stroke-width="1" opacity="0.4"/>
+    <text x="540" y="315" font-size="12" fill="#991B1B">❌ Can't build locally</text>
+    <text x="540" y="337" font-size="12" fill="#991B1B">❌ Deps unreachable</text>
+    <text x="540" y="359" font-size="12" fill="#991B1B">❌ No test env</text>
+    <line x1="545" y1="375" x2="725" y2="375" stroke="#EF4444" stroke-width="1" opacity="0.4"/>
+    <text x="540" y="398" font-size="12" fill="#991B1B" font-weight="600">→ Gherkin-like prose</text>
+    <text x="540" y="420" font-size="12" fill="#991B1B" font-weight="600">→ Manual checklists</text>
+    <text x="540" y="442" font-size="12" fill="#991B1B" font-weight="600">→ Testability roadmap</text>
+  </g>
 </svg>

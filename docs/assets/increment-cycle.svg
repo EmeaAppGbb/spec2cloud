@@ -1,57 +1,66 @@
-<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, system-ui, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420">
   <defs>
-    <filter id="handdrawn" x="-20%" y="-20%" width="140%" height="140%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" result="noise" />
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
-    </filter>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#64748B" />
+    <style>
+      text { font-family: -apple-system, system-ui, 'Segoe UI', sans-serif; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes drawPath { from { stroke-dashoffset: 300; } to { stroke-dashoffset: 0; } }
+      .fade-in { opacity: 0; animation: fadeIn 0.5s ease-out forwards; }
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      .delay-400 { animation-delay: 0.4s; }
+      .draw-path { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawPath 0.6s ease-out forwards; }
+    </style>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
     </marker>
   </defs>
-  <rect width="800" height="500" fill="#F8FAFC" />
-  
-  <text x="400" y="40" text-anchor="middle" font-size="28" font-weight="bold" fill="#334155">Increment Delivery Cycle</text>
-  <text x="400" y="480" text-anchor="middle" font-size="18" fill="#64748B" font-style="italic">Repeat per increment</text>
 
-  <!-- Step 1: Tests (Top - Red) -->
-  <g transform="translate(300, 80)">
-    <rect width="200" height="110" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2" filter="url(#handdrawn)"/>
-    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#991B1B">Step 1: TESTS</text>
-    <text x="20" y="50" font-size="14" fill="# E2E specs</text>7F1D1D">
-    <text x="20" y="70" font-size="14" fill="# Gherkin scenarios</text>7F1D1D">
-  </g>    <text x="20" y="90" font-size="14" fill="# Red baseline 7F1D1D">
+  <rect width="800" height="420" fill="#F8FAFC" rx="0"/>
 
-  <!-- Step 2: Contracts (Right - Blue) -->
-  <g transform="translate(530, 200)">
-    <rect width="200" height="110" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2" filter="url(#handdrawn)"/>
-    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#1E40AF">Step 2: CONTRACTS</text>
-    <text x="20" y="50" font-size="14" fill="# OpenAPI specs</text>1E3A8A">
-    <text x="20" y="70" font-size="14" fill="# TypeScript types</text>1E3A8A">
-    <text x="20" y="90" font-size="14" fill="# Infra contracts</text>1E3A8A">
+  <!-- Center Text -->
+  <text x="400" y="210" text-anchor="middle" font-size="16" font-weight="700" fill="#1E293B">Repeat per increment</text>
+
+  <!-- Top: Tests -->
+  <g class="fade-in delay-100" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="310" y="20" width="180" height="100" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+    <text x="400" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#B91C1C">Step 1: TESTS</text>
+    <text x="400" y="75" text-anchor="middle" font-size="12" fill="#7F1D1D">Gherkin &amp; E2E Specs</text>
+    <text x="400" y="95" text-anchor="middle" font-size="11" font-weight="bold" fill="#EF4444">🔴 Red Baseline</text>
   </g>
 
-  <!-- Step 3: Implement (Bottom - Green) -->
-  <g transform="translate(300, 320)">
-    <rect width="200" height="120" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2" filter="url(#handdrawn)"/>
-    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#166534">Step 3: IMPLEMENT</text>
-    <text x="20" y="50" font-size="14" fill="# API slice (parallel)</text>14532D">
-    <text x="20" y="70" font-size="14" fill="# Web slice (parallel)</text>14532D">
-    <text x="20" y="90" font-size="14" fill="# Integration (seq)</text>14532D">
-  </g>    <text x="20" y="110" font-size="14" fill="#14532D">
-
-  <!-- Step 4: Deploy (Left - Purple) -->
-  <g transform="translate(70, 200)">
-    <rect width="200" height="110" rx="8" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="2" filter="url(#handdrawn)"/>
-    <text x="100" y="25" text-anchor="middle" font-size="18" font-weight="bold" fill="#5B21B6">Step 4: DEPLOY</text>
-    <text x="20" y="50" font-size="14" fill="# Azure provision</text>4C1D95">
-    <text x="20" y="70" font-size="14" fill="# Smoke tests</text>4C1D95">
-    <text x=20 y=90 font-size=14 fill=#4C1D95> Live on Azure</text>
+  <!-- Right: Contracts -->
+  <g class="fade-in delay-200" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="560" y="150" width="180" height="100" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1"/>
+    <text x="650" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="#1E40AF">Step 2: CONTRACTS</text>
+    <text x="650" y="205" text-anchor="middle" font-size="12" fill="#1E3A8A">OpenAPI &amp; Types</text>
+    <text x="650" y="225" text-anchor="middle" font-size="11" font-style="italic" fill="#3B82F6">Parallel Enablement</text>
   </g>
 
-  <!-- Connecting Arrows -->
-  <path d="M 500 135 L 630 200" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
-  <path d="M 630 310 L 500 380" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
-  <path d="M 300 380 L 170 310" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
-  <path d="M 170 200 L 300 135" fill="none" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,5" />
+  <!-- Bottom: Implement -->
+  <g class="fade-in delay-300" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="310" y="280" width="180" height="100" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1"/>
+    <text x="400" y="310" text-anchor="middle" font-size="14" font-weight="700" fill="#065F46">Step 3: IMPLEMENT</text>
+    <text x="400" y="335" text-anchor="middle" font-size="12" fill="#064E3B">API &amp; Web Slices</text>
+    <text x="400" y="355" text-anchor="middle" font-size="11" font-weight="bold" fill="#059669">🟢 Green</text>
+  </g>
+
+  <!-- Left: Deploy -->
+  <g class="fade-in delay-400" style="filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));">
+    <rect x="60" y="150" width="180" height="100" rx="8" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1"/>
+    <text x="150" y="180" text-anchor="middle" font-size="14" font-weight="700" fill="#92400E">Step 4: DEPLOY</text>
+    <text x="150" y="205" text-anchor="middle" font-size="12" fill="#78350F">Provision &amp; Deploy</text>
+    <text x="150" y="225" text-anchor="middle" font-size="11" font-weight="bold" fill="#D97706">✅ Live</text>
+  </g>
+
+  <!-- Arrows -->
+  <!-- Top to Right -->
+  <path d="M 500 70 Q 550 70 590 140" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-100"/>
+  <!-- Right to Bottom -->
+  <path d="M 650 260 Q 650 330 500 330" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-200"/>
+  <!-- Bottom to Left -->
+  <path d="M 300 330 Q 200 330 150 260" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-300"/>
+  <!-- Left to Top -->
+  <path d="M 150 140 Q 150 70 300 70" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowGray)" class="draw-path delay-400"/>
 
 </svg>
