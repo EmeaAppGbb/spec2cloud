@@ -15,8 +15,10 @@ import { tmpdir } from 'node:os';
 import { createInterface } from 'node:readline';
 
 const REPO = 'EmeaAppGbb/spec2cloud';
+const DEFAULT_ORG = 'EmeaAppGbb';
+const SHELL_TOPIC = 'spec2cloud-shell';
 const DEFAULT_REF = 'vNext';
-const PKG_VERSION = '2.1.0';
+const PKG_VERSION = '2.3.0';
 const MAX_CONCURRENT = 15;
 
 // ---------------------------------------------------------------------------
@@ -37,18 +39,25 @@ const log = {
 };
 
 // ---------------------------------------------------------------------------
-// Shell registry — available project scaffolds
+// Shell registry — dynamic discovery via GitHub topics
 // ---------------------------------------------------------------------------
-const SHELLS = [
+// Shell repos self-declare by adding the topic "spec2cloud-shell".
+// Each shell repo has an optional shell.json at root with { id, name, desc }.
+// If shell.json is missing, metadata is derived from the GitHub repo itself.
+// Falls back to shells.json in the spec2cloud repo, then to a hardcoded list.
+// ---------------------------------------------------------------------------
+
+// Last-resort fallback — used when both dynamic discovery and shells.json fail
+const FALLBACK_SHELLS = [
   {
-    id: 'nextjs-typescript',
-    name: 'Next.js + TypeScript',
+    id: 'typescript',
+    name: 'TypeScript (Next.js + Express)',
     desc: 'Next.js, Express, Playwright, Cucumber, Vitest',
     repo: 'EmeaAppGbb/shell-typescript',
   },
   {
     id: 'dotnet',
-    name: '.NET',
+    name: '.NET (ASP.NET Core)',
     desc: 'ASP.NET Core, Blazor, .NET testing',
     repo: 'EmeaAppGbb/shell-dotnet',
   },
@@ -65,6 +74,109 @@ const SHELLS = [
     repo: 'EmeaAppGbb/agentic-shell-python',
   },
 ];
+
+let SHELLS = null;
+
+/** Fetch shell.json manifest from a repo root. Returns null on failure. */
+async function fetchShellManifest(repo, ref = 'main') {
+  const url = `https://raw.githubusercontent.com/${repo}/${ref}/shell.json`;
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': 'spec2cloud-cli' } });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+/** Discover shell repos in a GitHub org by topic. */
+async function discoverShellsByTopic(org) {
+  // Use GitHub search API to find repos with the spec2cloud-shell topic
+  const query = encodeURIComponent(`topic:${SHELL_TOPIC} org:${org}`);
+  const url = `https://api.github.com/search/repositories?q=${query}&per_page=50`;
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'spec2cloud-cli', Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.items || data.items.length === 0) return null;
+
+    // For each discovered repo, fetch shell.json for rich metadata
+    const shells = await Promise.all(data.items.map(async (r) => {
+      const manifest = await fetchShellManifest(r.full_name, r.default_branch);
+      return {
+        id: manifest?.id || r.name,
+        name: manifest?.name || r.name,
+        desc: manifest?.desc || r.description || '',
+        repo: r.full_name,
+      };
+    }));
+
+    // Sort alphabetically by id for stable ordering
+    shells.sort((a, b) => a.id.localeCompare(b.id));
+    return shells;
+  } catch {
+    return null;
+  }
+}
+
+/** Fetch the static shells.json registry from the spec2cloud repo. */
+async function fetchShellsJson(ref) {
+  const url = `https://raw.githubusercontent.com/${REPO}/${ref}/shells.json`;
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': 'spec2cloud-cli' } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) throw new Error('Empty registry');
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get available shells using a tiered strategy:
+ *   1. Dynamic discovery via GitHub topic (spec2cloud-shell) in the org
+ *   2. Static shells.json from the spec2cloud repo
+ *   3. Hardcoded FALLBACK_SHELLS
+ */
+async function fetchShellRegistry(org, ref) {
+  // Tier 1: dynamic topic-based discovery
+  const discovered = await discoverShellsByTopic(org);
+  if (discovered && discovered.length > 0) {
+    log.info(`Discovered ${c.bold(String(discovered.length))} shell(s) from ${c.cyan(org)} via topic ${c.dim(SHELL_TOPIC)}`);
+    return discovered;
+  }
+
+  // Tier 2: static shells.json
+  log.info(`No shells found via topic discovery. Trying shells.json registry...`);
+  const fromJson = await fetchShellsJson(ref);
+  if (fromJson) return fromJson;
+
+  // Tier 3: hardcoded fallback
+  log.warn('Could not fetch shell registry. Using built-in list.');
+  return FALLBACK_SHELLS;
+}
+
+async function getShells(org, ref) {
+  if (!SHELLS) SHELLS = await fetchShellRegistry(org, ref);
+  return SHELLS;
+}
+
+async function fetchBranches(repo) {
+  const url = `https://api.github.com/repos/${repo}/branches?per_page=100`;
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'spec2cloud-cli', Accept: 'application/vnd.github+json' },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data.map(b => b.name);
+  } catch {
+    return ['main'];
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Manifest — what to download from the spec2cloud core repo
@@ -202,10 +314,12 @@ ${c.bold('COMMANDS')}
 ${c.bold('OPTIONS')}
   --minimal         Install only skills and AGENTS.md (no devcontainer/MCP)
   --ref <ref>       Branch or tag to install from (default: ${DEFAULT_REF})
+  --org <org>       GitHub org to discover shells from (default: ${DEFAULT_ORG})
   --target <dir>    Target directory (default: current directory)
   --force           Overwrite existing files without prompting
   --flow <type>     Skip flow prompt: greenfield or brownfield
   --shell <id>      Install a shell template (implies --flow greenfield)
+  --shell-ref <ref> Branch or tag for the shell template (default: main)
   --list-shells     List available shell templates and exit
   --help, -h        Show this help message
   --version, -v     Show version
@@ -215,22 +329,28 @@ ${c.bold('FLOW MODES')}
   ${c.cyan('greenfield')}        Start fresh — installs skills & orchestrator (you provide code)
   ${c.cyan('greenfield+shell')}  Start fresh with a complete project scaffold
 
-${c.bold('AVAILABLE SHELLS')}
-${SHELLS.map(s => `  ${c.bold(s.id.padEnd(22))} ${s.name} — ${s.desc}`).join('\n')}
+${c.bold('SHELL DISCOVERY')}
+  Shells are discovered automatically from GitHub repos tagged with the
+  topic "${SHELL_TOPIC}" in the configured org. Each shell repo can include a
+  shell.json at root with { id, name, desc } for rich metadata.
+  Use --list-shells to see discovered shells. Use --org to search a different org.
 
 ${c.bold('EXAMPLES')}
   npx spec2cloud init                           # Interactive mode
   npx spec2cloud init --flow brownfield          # Skip prompts — brownfield
   npx spec2cloud init --flow greenfield          # Skip prompts — greenfield (flow only)
-  npx spec2cloud init --shell nextjs-typescript  # Greenfield with Next.js shell
+  npx spec2cloud init --shell typescript         # Greenfield with TypeScript shell
+  npx spec2cloud init --shell dotnet --shell-ref dev  # Shell from dev branch
+  npx spec2cloud init --org my-org --list-shells # List shells from a different org
   npx spec2cloud init --minimal                  # Skills & AGENTS.md only
   npx spec2cloud init --ref main --force         # From main branch, overwrite
 `);
 }
 
-function printShellList() {
+async function printShellList(org, ref) {
+  const shells = await getShells(org, ref);
   console.log(c.bold('Available shell templates:\n'));
-  for (const s of SHELLS) {
+  for (const s of shells) {
     console.log(`  ${c.bold(s.id.padEnd(22))} ${s.name}`);
     console.log(`  ${''.padEnd(22)} ${c.dim(s.desc)}`);
     console.log(`  ${''.padEnd(22)} ${c.dim(s.repo)}`);
@@ -283,8 +403,8 @@ ${c.bold('Shell installed:')} ${shell.name} ${c.dim(`(${shell.repo})`)}
 // ---------------------------------------------------------------------------
 function parseArgs(argv) {
   const opts = {
-    command: null, mode: 'full', ref: DEFAULT_REF, target: '.',
-    force: false, flow: null, shell: null, listShells: false,
+    command: null, mode: 'full', ref: DEFAULT_REF, org: DEFAULT_ORG, target: '.',
+    force: false, flow: null, shell: null, shellId: null, shellRef: null, listShells: false,
   };
   let i = 0;
 
@@ -319,15 +439,18 @@ function parseArgs(argv) {
       }
       case '--shell': {
         if (!argv[i + 1]) { log.error('--shell requires a shell id'); process.exit(1); }
-        const id = argv[++i].toLowerCase();
-        const match = SHELLS.find(s => s.id === id);
-        if (!match) {
-          log.error(`Unknown shell: "${id}"`);
-          log.info(`Available shells: ${SHELLS.map(s => s.id).join(', ')}`);
-          process.exit(1);
-        }
-        opts.shell = match;
+        opts.shellId = argv[++i].toLowerCase();
         opts.flow = 'greenfield';
+        break;
+      }
+      case '--shell-ref': {
+        if (!argv[i + 1]) { log.error('--shell-ref requires a value'); process.exit(1); }
+        opts.shellRef = argv[++i];
+        break;
+      }
+      case '--org': {
+        if (!argv[i + 1]) { log.error('--org requires a GitHub organization name'); process.exit(1); }
+        opts.org = argv[++i];
         break;
       }
       case '--list-shells':
@@ -356,16 +479,29 @@ function parseArgs(argv) {
 // ---------------------------------------------------------------------------
 
 async function selectFlow(opts) {
+  const shells = await getShells(opts.org, opts.ref);
+
+  // Resolve --shell id if provided via CLI flag
+  if (opts.shellId) {
+    const match = shells.find(s => s.id === opts.shellId);
+    if (!match) {
+      log.error(`Unknown shell: "${opts.shellId}"`);
+      log.info(`Available shells: ${shells.map(s => s.id).join(', ')}`);
+      process.exit(1);
+    }
+    opts.shell = match;
+  }
+
   // Already set via flags
-  if (opts.flow && opts.shell) return { flow: opts.flow, shell: opts.shell };
-  if (opts.flow === 'brownfield') return { flow: 'brownfield', shell: null };
-  if (opts.flow === 'greenfield' && !opts.shell) return { flow: 'greenfield', shell: null };
+  if (opts.flow && opts.shell) return { flow: opts.flow, shell: opts.shell, shellRef: opts.shellRef };
+  if (opts.flow === 'brownfield') return { flow: 'brownfield', shell: null, shellRef: null };
+  if (opts.flow === 'greenfield' && !opts.shell) return { flow: 'greenfield', shell: null, shellRef: null };
 
   // Non-interactive — default to brownfield-style install
   if (!process.stdin.isTTY) {
     log.info('Non-interactive mode detected. Installing core spec2cloud (brownfield-compatible).');
     log.info('Use --flow and --shell flags for non-interactive flow selection.');
-    return { flow: null, shell: null };
+    return { flow: null, shell: null, shellRef: null };
   }
 
   // Step 1: Greenfield vs Brownfield
@@ -375,7 +511,7 @@ async function selectFlow(opts) {
   ]);
 
   if (flowChoice.value === 'brownfield') {
-    return { flow: 'brownfield', shell: null };
+    return { flow: 'brownfield', shell: null, shellRef: null };
   }
 
   // Step 2: Greenfield — Flow only vs Flow + Shell
@@ -385,17 +521,37 @@ async function selectFlow(opts) {
   ]);
 
   if (setupChoice.value === 'flow-only') {
-    return { flow: 'greenfield', shell: null };
+    return { flow: 'greenfield', shell: null, shellRef: null };
   }
 
   // Step 3: Pick a shell
-  const shellChoice = await promptSelect('Select a shell template:', SHELLS.map(s => ({
+  const shellChoice = await promptSelect('Select a shell template:', shells.map(s => ({
     name: s.name,
     desc: s.desc,
     value: s,
   })));
 
-  return { flow: 'greenfield', shell: shellChoice.value };
+  const selectedShell = shellChoice.value;
+
+  // Step 4: Pick a branch for the shell
+  let shellRef = opts.shellRef;
+  if (!shellRef) {
+    log.info(`Fetching branches for ${c.bold(selectedShell.name)}...`);
+    const branches = await fetchBranches(selectedShell.repo);
+
+    if (branches.length > 1) {
+      const branchChoice = await promptSelect('Select a branch:', branches.map(b => ({
+        name: b,
+        desc: b === 'main' ? 'default branch' : '',
+        value: b,
+      })));
+      shellRef = branchChoice.value;
+    } else {
+      shellRef = branches[0] || 'main';
+    }
+  }
+
+  return { flow: 'greenfield', shell: selectedShell, shellRef };
 }
 
 // ---------------------------------------------------------------------------
@@ -576,11 +732,9 @@ async function downloadCore(opts) {
   }
 }
 
-async function downloadShell(shell, ref) {
-  const shellRef = ref === DEFAULT_REF ? 'main' : ref;
-
+async function downloadShell(shell, shellRef) {
   try {
-    log.info(`Fetching shell template: ${c.bold(shell.name)}...`);
+    log.info(`Fetching shell template: ${c.bold(shell.name)} ${c.dim(`(ref: ${shellRef})`)}...`);
     const tree = await fetchTree(shell.repo, shellRef);
     const files = buildShellFileList(tree);
     log.success(`Resolved ${c.bold(String(files.length))} shell files`);
@@ -676,7 +830,7 @@ async function main() {
 
   // Handle --list-shells
   if (opts.listShells) {
-    printShellList();
+    await printShellList(opts.org, opts.ref);
     process.exit(0);
   }
 
@@ -689,11 +843,12 @@ async function main() {
   printHeader();
 
   // Interactive flow selection
-  const { flow, shell } = await selectFlow(opts);
+  const { flow, shell, shellRef } = await selectFlow(opts);
 
   log.info(`Mode: ${c.bold(opts.mode)}`);
   log.info(`Flow: ${c.bold(flow || 'default')}`);
   if (shell) log.info(`Shell: ${c.bold(shell.name)} ${c.dim(`(${shell.repo})`)}`);
+  if (shellRef) log.info(`Shell ref: ${c.bold(shellRef)}`);
   log.info(`Ref: ${c.bold(opts.ref)}`);
   log.info(`Target: ${c.bold(resolve(opts.target))}`);
   console.log();
@@ -701,7 +856,8 @@ async function main() {
   // Download shell first (if selected), then layer core on top
   let shellFiles = [];
   if (shell) {
-    const shellResult = await downloadShell(shell, opts.ref);
+    const effectiveShellRef = shellRef || 'main';
+    const shellResult = await downloadShell(shell, effectiveShellRef);
     shellFiles = shellResult.files;
     console.log();
     log.info(`Installing shell to ${c.bold(resolve(opts.target))} ...`);

@@ -40,7 +40,8 @@ npx spec2cloud init
 curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash
 
 # Option 3: Start from a shell template (new projects)
-npx spec2cloud init --shell nextjs-typescript
+npx spec2cloud init --list-shells          # See available shells
+npx spec2cloud init --shell typescript     # Start with a shell
 ```
 
 See **[INTEGRATION.md](INTEGRATION.md)** for detailed installation options and configuration.
@@ -61,7 +62,7 @@ See **[INTEGRATION.md](INTEGRATION.md)** for detailed installation options and c
 
 Contributions welcome! You can:
 - Create new skills following the [agentskills.io spec](https://agentskills.io/specification)
-- Build new shell templates for different tech stacks
+- Build new shell templates for different tech stacks (just add the `spec2cloud-shell` topic)
 - Publish skills to [skills.sh](https://skills.sh/)
 
 ## License

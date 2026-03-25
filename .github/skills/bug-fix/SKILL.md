@@ -67,7 +67,24 @@ The test must:
 3. Assert the EXPECTED behavior (not the buggy behavior).
 4. Reference the FRD: `// Validates: frd-user-auth.md, AC-3`
 
-### Step 3 — Verify the Test Fails
+### Step 3 — Human Approval of the Test
+
+**MANDATORY GATE.** Present the test to the user for review before proceeding:
+
+1. Show the test code and explain what it verifies.
+2. Explain which FRD acceptance criterion it maps to.
+3. Ask the user to approve or reject the test.
+
+| User Response | Action |
+|--------------|--------|
+| **Approve** | Proceed to Step 4 (verify the test fails). |
+| **Reject with feedback** | Revise the test based on feedback. Re-present. |
+| **Defer** | Log the bug as a known issue in state.json. Resume previous work. |
+
+Do NOT proceed to fix the code until the user approves the test. The test
+defines what "fixed" means — the user must agree on that definition.
+
+### Step 4 — Verify the Test Fails
 
 Run the test and confirm it fails with the expected error:
 
@@ -82,7 +99,7 @@ npx playwright test --grep "duplicate email"
 If the test passes → the bug is not reproduced. Re-examine the reproduction
 steps and the test. Do NOT proceed until the test fails.
 
-### Step 4 — Fix the Code
+### Step 5 — Fix the Code
 
 Apply the minimal change to make the failing test pass:
 
@@ -95,7 +112,7 @@ Apply the minimal change to make the failing test pass:
 The fix should be obvious from the diff. If the fix is complex, it may
 warrant a full increment rather than a bug-fix micro-increment.
 
-### Step 5 — Run Full Regression
+### Step 6 — Run Full Regression
 
 After the fix, run the complete test suite:
 
@@ -113,7 +130,7 @@ npm run build
 Every test must pass — the bug-fix test AND all pre-existing tests. If any
 pre-existing test breaks, the fix is too broad or has side effects. Revise.
 
-### Step 6 — Update State
+### Step 7 — Update State
 
 Update `.spec2cloud/state.json` with the micro-increment:
 
@@ -133,7 +150,7 @@ Update `.spec2cloud/state.json` with the micro-increment:
 }
 ```
 
-### Step 7 — Commit
+### Step 8 — Commit
 
 Commit with the standard bug-fix format:
 
@@ -160,10 +177,11 @@ Every bug fix creates a complete traceability chain:
 Bug Report
   → FRD (frd-{feature}.md, acceptance criterion N)
     → Failing Test (proves the bug exists)
-      → Fix (minimal code change)
-        → Passing Test (proves the bug is fixed)
-          → Commit (links all artifacts)
-            → State (tracked as micro-increment)
+      → Human Approval (user agrees the test captures the problem)
+        → Fix (minimal code change)
+          → Passing Test (proves the bug is fixed)
+            → Commit (links all artifacts)
+              → State (tracked as micro-increment)
 ```
 
 This chain ensures:
@@ -178,6 +196,7 @@ Append to `.spec2cloud/audit.log`:
 
 ```
 [ISO-timestamp] step=bugfix action=test-created bug=bugfix-{nnn} frd={frd-id} test={test-file} result=failing
+[ISO-timestamp] step=bugfix action=test-approved bug=bugfix-{nnn} approver=human result=approved
 [ISO-timestamp] step=bugfix action=fix-applied bug=bugfix-{nnn} files={fixed-files} result=done
 [ISO-timestamp] step=bugfix action=regression-passed bug=bugfix-{nnn} result=all-green
 [ISO-timestamp] step=bugfix action=committed bug=bugfix-{nnn} commit={sha} result=done

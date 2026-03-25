@@ -25,9 +25,30 @@ is driven by automated tests generated from those specifications.
 ## Spec-Driven Development Rules
 - **Never implement features not in the specs** (specs/frd-*.md)
 - **Never modify tests** without human approval — tests are the contract
+- **Never skip tests** — no `test.skip()`, no `xit()`, no `@pending`, no commenting out. Tests are proof that specs are met.
 - **Always check Gherkin scenarios** before implementing a feature
-- **Always run tests** after making changes
+- **Always run tests** after making changes — the FULL suite, not just "relevant" tests
 - If a spec seems wrong, flag it — do not silently deviate
+
+## Test Discipline Gospel
+Tests are the **proof** that specifications have been implemented correctly. They are not optional, not skippable, and not negotiable. See AGENTS.md §9 for the full protocol.
+
+Key rules:
+- **Tests = proof of spec completion.** A feature without passing tests is not done.
+- **Phase order is sacred.** Tests → Contracts → Implementation → Verify. Never skip or reorder.
+- **All tests must pass before advancing.** No deployment, no commit to main while any test fails.
+- **Regression is mandatory.** After every change, run ALL tests — not just new ones.
+
+### When the User Spots a Problem
+At any point during the flow, if the user identifies something wrong:
+1. **Pause** current work
+2. **Offer** to generate a test that captures the problem
+3. **Present** the test for user approval (mandatory human gate)
+4. **Fix** minimally after approval
+5. **Verify** the test passes and full regression is green
+6. **Resume** the interrupted work
+
+This is the **bug-spot protocol** — it applies in every phase. The user's approval of the test is mandatory because the test defines what "fixed" means.
 
 ## File Organization
 ```
@@ -65,9 +86,11 @@ The agent MUST pause and ask for human approval at these points:
 - After UI/UX design (before increment planning)
 - After increment plan approval (before tech stack resolution)
 - After tech stack resolution (before first increment) — technology choices must be approved
-- Per increment: after Gherkin generation (before BDD test scaffolding)
+- Per increment: after Gherkin generation (before BDD test scaffolding) — **user approves scenarios**
+- Per increment: after test generation (before contracts) — **user approves test code**
 - Per increment: after implementation (before deployment) — via PR review
 - Per increment: after deployment (verify it works)
+- **Bug-spot protocol: user must approve the bug-reproducing test before any fix proceeds**
 
 ## State Management
 - Read `.spec2cloud/state.json` at the start of every session
@@ -138,7 +161,8 @@ specs/
 
 ## Bug Fix Protocol
 - Bug fixes use the `bug-fix` skill — lightweight path through the pipeline
-- Every bug fix MUST: link to an FRD, create a failing test, fix minimally, verify regression
+- Every bug fix MUST: link to an FRD, create a failing test, **get user approval on the test**, fix minimally, verify regression
+- The user approves the test because it defines what "fixed" means — this gate is not optional
 - Commit format: `[bugfix] {frd-id}: {description}`
 - Tracked as micro-increments in state.json
 

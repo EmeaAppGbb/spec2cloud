@@ -171,11 +171,13 @@ Resolve every technology, library, service. Research via MCP tools. Search skill
                                                                    main green + deployed
 ```
 
+> **⚠ MANDATORY:** Every step must execute in order. No step may be skipped, reordered, or compressed. Tests from Step 1 are the proof that specs are met — they are the contract. See §9 Test Discipline Gospel.
+
 #### Step 1: Test Scaffolding
 - **1a** `e2e-generation` — Playwright specs + POMs from flow walkthrough
-- **1b** `gherkin-generation` — Feature files from FRDs (**human gate** after this)
-- **1c** `test-generation` — Cucumber steps + Vitest from Gherkin
-- **1d** Red baseline: new tests fail, existing tests still pass
+- **1b** `gherkin-generation` — Feature files from FRDs (**human gate** after this — user approves scenarios)
+- **1c** `test-generation` — Cucumber steps + Vitest from Gherkin (**human gate** — user approves test code)
+- **1d** Red baseline: new tests fail, existing tests still pass. Zero `test.skip()` allowed.
 **Commit:** `[increment] {id}/tests — test scaffolding complete`
 
 #### Step 2: Contracts → `contract-generation` skill
@@ -547,3 +549,69 @@ infra/            # Azure infrastructure templates (Bicep/Terraform)
 Before writing implementation code, invoke the `research-best-practices` skill.
 Consult `specs/tech-stack.md` first — most technology decisions are pre-resolved in Phase 1d.
 For details, see the `research-best-practices` skill in `.github/skills/`.
+
+---
+
+## 9. Test Discipline Gospel
+
+Tests are the **proof** that specifications have been implemented. They are not optional, not skippable, and not negotiable. Every test in the pipeline exists because a spec demands it. Skipping a test is equivalent to silently removing a requirement.
+
+### Absolute Rules
+
+1. **Tests are proof of spec completion.** A feature is not done until every test generated from its Gherkin scenarios passes. No exceptions.
+2. **Never skip a test.** Do not use `test.skip()`, `xit()`, `@skip`, `pending`, or any mechanism that bypasses test execution. If a test cannot run, fix the infrastructure — do not skip the test.
+3. **Never delete a test.** Tests are the contract. Deleting a test removes proof that a spec was met. If a spec changes, update the test to match the new spec — do not delete the old one without replacement.
+4. **Never modify a test without human approval.** Tests are human-approved contracts. Any change to a test requires explicit human consent because it changes what "done" means.
+5. **The phase pipeline is sacred.** The sequence Tests → Contracts → Implementation → Verify is not a suggestion. Every increment must pass through every step. The orchestrator must not skip, reorder, or compress these steps.
+6. **All tests must pass before advancing.** No phase transition, no deployment, no commit to main happens while any test is failing. A red test is a blocking issue.
+7. **Regression is mandatory.** After every change (implementation, bug fix, refactor), the FULL test suite runs. Not just the new tests — all tests.
+
+### Mid-Flow Bug-Spot Protocol
+
+When a user spots something wrong at **any point** during the spec2cloud flow — during a review, during deployment verification, during normal usage — the orchestrator activates the **bug-spot protocol**:
+
+```
+1. PAUSE current work
+2. ACKNOWLEDGE the problem — summarize what the user reported
+3. IDENTIFY the relevant FRD and acceptance criterion
+4. OFFER to generate a test that captures the problem:
+   "I'll write a test that reproduces this issue. Would you like to review it?"
+5. GENERATE the failing test (following bug-fix skill conventions)
+6. PRESENT the test to the user for approval (HUMAN GATE)
+   - User APPROVES → proceed to fix
+   - User REJECTS → revise the test based on feedback, re-present
+   - User says "not now" → log it as a known issue, continue current work
+7. VERIFY the test fails (proves the bug exists)
+8. FIX the code minimally
+9. VERIFY the test passes AND full regression passes
+10. RESUME the interrupted work from where it was paused
+```
+
+This protocol applies regardless of which phase is active. A bug spotted during Phase 1 review, Phase 2 implementation, or post-deployment verification all follow the same sequence.
+
+### Test Approval Gates
+
+Tests require human approval at these points:
+
+| When | What | Gate Type |
+|------|------|-----------|
+| Step 1b (Gherkin) | Generated Gherkin scenarios | Human reviews scenarios match FRD intent |
+| Step 1c (Tests) | Generated test code | Human reviews test logic matches Gherkin |
+| Bug-spot protocol | Bug-reproducing test | Human approves the test captures the real problem |
+| Brownfield Track A | Green baseline tests | Human verifies tests describe actual behavior |
+| Any test modification | Changed test code | Human approves the change to the contract |
+
+### What "Skipping" Looks Like (All Prohibited)
+
+- ❌ `test.skip("should validate email format", ...)` — skipping a test
+- ❌ Commenting out a test body or assertion
+- ❌ Moving to Step 3 (Implementation) before Step 1 (Tests) completes
+- ❌ Deploying with failing tests ("we'll fix it later")
+- ❌ Marking a test as `@pending` or `@wip` to avoid failures
+- ❌ Running only "relevant" tests instead of the full suite at phase gates
+- ❌ Removing a Gherkin scenario without updating the FRD first
+- ❌ Proceeding after `npm test` shows failures ("only 2 failing, the rest pass")
+
+### The Only Exception: Track B (Non-Testable)
+
+Track B brownfield features that cannot be tested (per the testability gate decision) use manual verification checklists instead of automated tests. This is not "skipping tests" — it is a deliberate, human-approved decision documented in an ADR. Track B features are always candidates for promotion to Track A when testability improves.

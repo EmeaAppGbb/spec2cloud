@@ -1,0 +1,26 @@
+[
+  {
+    "id": "typescript",
+    "name": "TypeScript (Next.js + Express)",
+    "desc": "Next.js, Express, Playwright, Cucumber, Vitest",
+    "repo": "EmeaAppGbb/shell-typescript"
+  },
+  {
+    "id": "dotnet",
+    "name": ".NET (ASP.NET Core)",
+    "desc": "ASP.NET Core, Blazor, .NET testing",
+    "repo": "EmeaAppGbb/shell-dotnet"
+  },
+  {
+    "id": "agentic-dotnet",
+    "name": "Agentic .NET",
+    "desc": ".NET + AI Agents (LangGraph)",
+    "repo": "EmeaAppGbb/agentic-shell-dotnet"
+  },
+  {
+    "id": "agentic-python",
+    "name": "Agentic Python",
+    "desc": "Python + AI Agents (LangGraph)",
+    "repo": "EmeaAppGbb/agentic-shell-python"
+  }
+]

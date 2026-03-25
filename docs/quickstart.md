@@ -23,12 +23,12 @@ curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts
 
 ## Option 3: Shell Template (Recommended for New Projects)
 
-Use a pre-configured shell:
+Use a pre-configured shell (discovered dynamically from the org):
 
-- **Next.js + TypeScript**: `shell-typescript`
-- **.NET**: `shell-dotnet`
-- **Agentic .NET**: `agentic-shell-dotnet`
-- **Agentic Python**: `agentic-shell-python`
+```bash
+npx spec2cloud init --list-shells   # See available shells
+npx spec2cloud init --shell <id>    # Start with a shell
+```
 
 ## Option 4: Add to Existing Project
 
