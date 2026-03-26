@@ -97,7 +97,7 @@ The hooks capture a screenshot after **every** Gherkin step. These screenshots a
 
 - Config: `e2e/playwright.config.ts` — baseURL defaults to `http://localhost:3001` (Aspire web port)
 - Page Objects: `e2e/pages/{page-name}.page.ts` — one class per page, derived from UI prototypes
-- Web server: Playwright config auto-starts `aspire run` for local runs
+- Web server: Playwright config auto-starts `aspire start` + `aspire wait` for local runs
 - Do NOT create or modify e2e specs or POMs — they are Phase 3 artifacts
 
 ---

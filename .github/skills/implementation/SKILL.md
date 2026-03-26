@@ -142,7 +142,7 @@ See `references/web-slice.md` for the full procedure.
 ## Integration Slice — Overview
 
 Wire API + Web together via the Aspire environment. Replace all mocks with real
-API calls. All tests run against `aspire run`.
+API calls. All tests run against `aspire start`.
 
 **Key rules:**
 - **Mock removal is mandatory.** No mock API calls may remain after this slice.

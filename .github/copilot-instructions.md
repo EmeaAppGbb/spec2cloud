@@ -77,7 +77,7 @@ infra/          → Azure infrastructure (Bicep)
 4. **Gherkin step definitions** — BDD behavioral tests, run against Aspire environment
 5. **Smoke tests** — post-deployment verification (per increment)
 
-> **All Cucumber and Playwright tests run against the Aspire environment** (`aspire run`), which orchestrates API and Web services identically to production.
+> **All Cucumber and Playwright tests run against the Aspire environment** (`aspire start` + `aspire wait`), which orchestrates API and Web services identically to production.
 > **Iterative delivery:** Each increment goes through the full test → implement → deploy cycle. After each increment, ALL tests pass and the app is deployed.
 
 ## Human Gates

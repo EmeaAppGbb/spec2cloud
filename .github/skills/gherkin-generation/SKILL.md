@@ -56,7 +56,7 @@ When operating in `capture-existing` mode, follow these steps instead of the sta
 
 1. **Read the FRD's "Current Implementation" section** — this is the primary input. Understand what the feature does today, including its endpoints, UI flows, data handling, and known limitations.
 2. **Read extracted API contracts** (`specs/contracts/api/*.yaml`) — use the extracted OpenAPI specs to understand exact endpoint behavior: request/response shapes, status codes, and error responses.
-3. **Observe actual behavior (if app is running)** — if the application is available (e.g., via `aspire run`), make requests or walk through flows to verify your understanding. Resolve any discrepancies between docs and actual behavior in favor of actual behavior.
+3. **Observe actual behavior (if app is running)** — if the application is available (e.g., via `aspire start`), make requests or walk through flows to verify your understanding. Resolve any discrepancies between docs and actual behavior in favor of actual behavior.
 4. **Generate happy-path scenarios** — write scenarios for the primary success paths of each feature area as it works today.
 5. **Generate known edge-case scenarios** — document edge cases that the current implementation handles (or mishandles). Only include edge cases you can confirm exist.
 6. **Generate error-handling scenarios** — document how the app currently responds to invalid input, unauthorized access, missing resources, etc.

@@ -5,7 +5,7 @@
 After BOTH the API and Web slices are complete (all their tests green), wire
 them together and verify end-to-end behavior. The key task is **replacing any
 mock API calls in the Web slice with real fetch calls to the running API**. All
-integration tests run against the **Aspire environment** (`aspire run`), which
+integration tests run against the **Aspire environment** (`aspire start`), which
 orchestrates API and Web services identically to production.
 
 ## Procedure
@@ -33,7 +33,9 @@ orchestrates API and Web services identically to production.
          and the real API responses — the contract types are the source of truth.
 
 3.  Start the Aspire environment (if not already running):
-      aspire run
+      aspire start
+      aspire wait api --status healthy
+      aspire wait web --status healthy
 
 4.  Verify Playwright browsers are installed:
       npx playwright install --with-deps
@@ -107,7 +109,9 @@ Before marking the integration slice as done, verify:
 
 ```bash
 # Start Aspire environment
-aspire run
+aspire start
+aspire wait api --status healthy
+aspire wait web --status healthy
 
 # Cucumber for a specific feature
 npx cucumber-js --tags "@{feature}"

@@ -93,7 +93,9 @@ cd src/web && npx vitest run
 
 ```bash
 # Start Aspire environment
-aspire run
+aspire start
+aspire wait api --status healthy
+aspire wait web --status healthy
 
 # Cucumber for a specific feature
 npx cucumber-js --tags "@{feature}"

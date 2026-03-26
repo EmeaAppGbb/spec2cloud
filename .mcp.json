@@ -30,14 +30,8 @@
       "type": "local",
       "command": "aspire",
       "args": [
-        "mcp",
-        "start"
-      ],
-      "env": {
-        "DOTNET_ROOT": "${DOTNET_ROOT}"
-      },
-      "tools": [
-        "*"
+        "agent",
+        "mcp"
       ]
     }
   }

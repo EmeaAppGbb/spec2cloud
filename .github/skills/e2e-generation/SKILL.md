@@ -148,7 +148,7 @@ Apply tags consistently:
 
 All e2e tests run against the **Aspire-managed environment**. The Playwright config already handles this:
 
-- `webServer` in `e2e/playwright.config.ts` starts `aspire run --project ../apphost.cs`
+- `webServer` in `e2e/playwright.config.ts` starts `aspire start` + `aspire wait web`
 - Base URL defaults to `http://localhost:3001` (Aspire web port)
 - API is available at `http://localhost:5001` (Aspire API port)
 - Running locally via Aspire is **non-negotiable** — never start API/Web individually

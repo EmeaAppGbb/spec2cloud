@@ -536,7 +536,7 @@ infra/            # Azure infrastructure templates (Bicep/Terraform)
 
 | Command | Purpose |
 |---|---|
-| `aspire run` | Run all services with Aspire orchestration |
+| `aspire start` | Run all services with Aspire orchestration |
 | `azd provision` | Provision Azure resources |
 | `azd deploy` | Build and deploy to Azure |
 | `azd env get-values` | Retrieve deployed URLs |
