@@ -54,6 +54,7 @@ This is the **bug-spot protocol** — it applies in every phase. The user's appr
 ```
 specs/          → Specifications (PRD, FRDs, Gherkin)
 specs/contracts/→ Contracts (API specs per feature, infrastructure resources)
+specs/ui/       → UI/UX design artifacts (screen-map, design-system, component-inventory, prototypes/, walkthroughs)
 specs/tech-stack.md → Resolved tech stack (all technology decisions, wiring, deployment)
 e2e/            → Playwright end-to-end tests (integration slice)
 tests/          → Cucumber.js BDD tests (integration slice)
