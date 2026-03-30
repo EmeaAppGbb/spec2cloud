@@ -149,3 +149,15 @@ Append to `.spec2cloud/audit.log`:
 ```
 [ISO-timestamp] increment={id} step=contracts action=contracts-generated result=done
 ```
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking contract-generation as complete:
+
+- [ ] API contracts exist in `specs/contracts/api/` for every endpoint in the increment
+- [ ] Shared types in `src/shared/types/` cover all data structures used across API and Web
+- [ ] `specs/contracts/infra/resources.yaml` is updated with any NEW infrastructure needs for this increment (new Azure resources, new model deployments, new env vars)
+- [ ] Any new Azure resources needed are flagged for provisioning and have corresponding Bicep definitions in `infra/`
+- [ ] Any new environment variables are documented in both `resources.yaml` (per-resource env_vars) and `specs/tech-stack.md` (per-increment map)
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to implementation.

@@ -21,8 +21,15 @@
   "activePaths": [],
   "assessment": {},
   "adrs": {
-    "nextNumber": 1,
-    "records": []
+    "nextNumber": 2,
+    "records": [
+      {
+        "id": "adr-001",
+        "title": "Use Azure OpenAI Service instead of Direct OpenAI API",
+        "status": "accepted",
+        "path": "specs/adrs/adr-001-azure-openai-over-direct-openai.md"
+      }
+    ]
   },
   "incrementPlan": [],
   "currentIncrement": null,
@@ -39,5 +46,11 @@
     "plan-approved": false
   },
   "testsStatus": {},
-  "lastUpdated": "2026-03-16T00:00:00Z"
+  "lastUpdated": "2026-03-30T16:55:00Z",
+  "infrastructureContract": {
+    "status": "complete",
+    "lastUpdated": "2026-03-30T16:55:00Z",
+    "path": "specs/contracts/infra/resources.yaml",
+    "resources": ["container-apps-api", "container-apps-web", "azure-ai-services", "container-registry", "log-analytics", "app-insights", "container-apps-env", "managed-identity-api", "managed-identity-web", "ai-foundry-project"]
+  }
 }

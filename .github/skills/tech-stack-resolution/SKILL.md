@@ -145,3 +145,17 @@ Before presenting to the human for approval:
 - [ ] No technology in the increment plan without being in tech-stack.md
 - [ ] Skills exist for non-trivial technologies
 - [ ] Instructions in copilot-instructions.md for project-wide conventions
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking tech-stack-resolution as complete:
+
+- [ ] `specs/tech-stack.md` contains an "Infrastructure Resources" section with a table of all Azure resources
+- [ ] `specs/contracts/infra/resources.yaml` exists and lists all Azure resources with types, SKUs, and increment mappings
+- [ ] Every technology decision that requires an Azure resource has that resource documented in both tech-stack.md and resources.yaml
+- [ ] Per-increment infrastructure map shows which resources and env vars each increment needs
+- [ ] At least one ADR exists in `specs/adrs/` for significant technology choices (e.g., cloud provider, AI service, database)
+- [ ] `infra/main.bicep` is checked for gaps against the infrastructure contract — every resource in resources.yaml has a corresponding Bicep definition
+- [ ] Authentication model is documented (managed identity vs API keys vs connection strings)
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to increment delivery.
