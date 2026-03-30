@@ -67,11 +67,11 @@ This is the most important brownfield decision. After specs are generated, you a
 
 | Outcome | Track | What happens next |
 |---------|-------|-------------------|
-| All/most checked | **Track A** (Testable) | Green baseline — Gherkin + tests that pass on current app |
-| Few/none checked | **Track B** (Doc-Only) | Behavioral documentation + manual verification checklists |
-| Mixed | **Hybrid** | Track A for testable features, Track B for the rest |
+| 5-6 checked | **Track A** (Testable) | Green baseline — Gherkin + tests that pass on current app |
+| 0-2 checked | **Track B** (Doc-Only) | Behavioral documentation + manual verification checklists |
+| 3-4 checked | **Hybrid** | Track A for testable features, Track B for the rest |
 
-**Human Gate:** This is a critical decision point — it shapes the entire rest of the workflow.
+**Human Gate:** This is a critical decision point — it shapes the entire rest of the workflow. The decision must be documented in an ADR (`specs/adrs/`) with rationale.
 
 ---
 

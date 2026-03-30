@@ -135,6 +135,8 @@ The most important brownfield gate. After specs are generated, you assess testab
 - Is there a working dev/test environment?
 
 **Outcomes:**
-- **Track A** — All/most checked → Green baseline (Gherkin + passing tests)
-- **Track B** — Few/none checked → Documentation-only (behavioral docs + manual checklists)
-- **Hybrid** — Mixed → Track A for testable features, Track B for the rest
+- **Track A** — 5-6 checked → Green baseline (Gherkin + passing tests)
+- **Track B** — 0-2 checked → Documentation-only (behavioral docs + manual checklists)
+- **Hybrid** — 3-4 checked → Track A for testable features, Track B for the rest
+
+The track decision must be documented in an ADR with rationale for which checklist items passed/failed.

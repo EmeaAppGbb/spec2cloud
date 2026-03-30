@@ -14,7 +14,7 @@
 
 ## Deep Dives
 
-- [Skills Catalog](skills.md) — All 43 skills with modes and interactions
+- [Skills Catalog](skills.md) — All 46 skills with modes and interactions
 - [State & Human Gates](state-and-gates.md) — Resumability, auditability, approval checkpoints
 - [Architecture](architecture.md) — The Ralph Loop internals and directory structure
 - [Shell Templates](shells.md) — Pre-configured project scaffolds

@@ -8,6 +8,8 @@ Build production-ready applications from a product specification, deployed to Az
 
 Pick a shell template that matches your tech stack. The shell provides project structure, test frameworks, Azure infrastructure templates, and CI/CD workflows.
 
+Before Phase 0 exits, all scaffolding must be verified: `specs/` directory, `.spec2cloud/state.json`, `.spec2cloud/audit.log`, `AGENTS.md`, shell template files, Playwright wiring, and Azure CLI (`azd`) installed.
+
 | Template | Language | Stack |
 |----------|----------|-------|
 | **Next.js** | TypeScript | React + Express + PostgreSQL |
@@ -39,9 +41,20 @@ Every technology choice is researched, evaluated, and documented as an Architect
 
 **Human Gate:** Review tech stack choices and ADRs.
 
+Before moving to Phase 2, the orchestrator verifies all Phase 1 artifacts exist: PRD/FRDs, all 6 UI/UX artifacts, increment plan, tech stack, and infrastructure contract.
+
 ## Phase 2: Increment Delivery
 
 ![Increment Delivery Cycle](assets/increment-delivery.svg)
+
+Each step transition has a prerequisite gate:
+
+| Transition | Prerequisite |
+|------------|-------------|
+| Step 1 → 2 | Tests exist, compile, and FAIL (red baseline). No `test.skip()`. Human approved Gherkin + tests. |
+| Step 2 → 3 | Contracts exist. Shared types compile. Infra contract updated. |
+| Step 3 → 4 | ALL tests pass. PR review approved. |
+| Step 4 → Next | Deploy succeeded. Smoke tests pass. Human verified. |
 
 ### Step 1: Tests First
 

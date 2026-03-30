@@ -47,7 +47,7 @@ State is committed to git after every action. This means:
 
 ```
 .github/
-├── skills/              — 43 agentskills.io skills (reusable workflow components)
+├── skills/              — 46 agentskills.io skills (reusable workflow components)
 └── copilot-instructions.md — Stack-specific coding conventions
 
 .spec2cloud/             — State persistence

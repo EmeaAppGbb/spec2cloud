@@ -1,6 +1,6 @@
 # Skills Catalog
 
-spec2cloud uses 43 specialized skills following the [agentskills.io](https://agentskills.io) standard. Each skill is a reusable procedure stored in `.github/skills/` with a SKILL.md file and optional references, scripts, and assets.
+spec2cloud uses 46 specialized skills following the [agentskills.io](https://agentskills.io) standard. Each skill is a reusable procedure stored in `.github/skills/` with a SKILL.md file and optional references, scripts, and assets.
 
 ![Skills Architecture](assets/skills-architecture.svg)
 
@@ -61,6 +61,10 @@ Support tools used throughout.
 | research-best-practices | Use MCP tools to research approaches |
 | skill-creator | Package new reusable patterns as skills |
 | skill-discovery | Search skills.sh for community skills |
+| find-skills | Help users discover and install skills for specific tasks |
+| aspire | Orchestrate Aspire distributed apps (start, stop, describe, logs) |
+| playwright-cli | Automate browser interactions for testing, screenshots, data extraction |
+| adr | Generate and manage Architecture Decision Records |
 
 ## Brownfield Skills (21)
 

@@ -48,7 +48,7 @@ Every shell provides:
 
 ## Skills Work With Any Stack
 
-The 43 skills are stack-agnostic. Shells provide the stack-specific wiring (which test runner to use, which build commands, which Azure resources), but the skills themselves—spec refinement, gherkin generation, implementation strategy—work identically regardless of your technology choice.
+The 46 skills are stack-agnostic. Shells provide the stack-specific wiring (which test runner to use, which build commands, which Azure resources), but the skills themselves—spec refinement, gherkin generation, implementation strategy—work identically regardless of your technology choice.
 
 ## Starting from a Shell
 

@@ -20,14 +20,14 @@ The loop maintains deterministic progress through `state.json`, committed to git
 
 Skills are reusable procedures that do the actual work. Each skill has a SKILL.md file with instructions, optional references, and scripts. The orchestrator discovers and invokes them automatically.
 
-**43 skills in 7 categories:**
+**46 skills in 7 categories:**
 
 | Category | What they do | Count |
 |----------|-------------|-------|
 | Phase | Drive discovery (spec refinement, UI/UX, tech stack) | 3 |
 | Delivery | Execute increments (tests, contracts, implementation, deploy) | 6 |
 | Protocol | Ensure consistency (state, commits, audit, gates, resume, errors) | 6 |
-| Utility | Support tools (validator, runner, build check, diagnostics) | 8 |
+| Utility | Support tools (validator, runner, build check, diagnostics, Aspire, Playwright) | 11 |
 | Extraction | Scan existing codebases (scanner, deps, arch, API, data, tests) | 6 |
 | Assessment | Evaluate paths (modernize, rewrite, cloud-native, security, perf) | 5 |
 | Planning | Generate increments (modernize, rewrite, cloud-native, extend, security) | 5+4 |
