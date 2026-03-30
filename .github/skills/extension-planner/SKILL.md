@@ -241,3 +241,16 @@ Before finalizing, verify:
 
 After approval at the human gate, each increment proceeds through Phase 2:
 gherkin → test generation → contract generation → implementation → deploy.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking extension-planner as complete:
+
+- [ ] New FRDs exist in `specs/frd-*.md` for each extension feature (one FRD per feature)
+- [ ] `specs/increment-plan.md` is updated with all extension increments (unique IDs, scope, dependencies, effort)
+- [ ] Each FRD documents integration points with existing code
+- [ ] Prerequisite increments are verified to not break existing features (backward compatibility)
+- [ ] Increment ordering respects dependency chains
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to Phase 2 delivery.

@@ -39,3 +39,15 @@ Append every significant action to `.spec2cloud/audit.log`. Never overwrite — 
 ```
 [2026-02-09T14:40:00Z] phase=deployment action=azd-provision result=error message="quota exceeded in eastus"
 ```
+
+## Mandatory Completion Checklist
+
+Every audit log entry MUST contain ALL of the following fields:
+
+- [ ] ISO-8601 timestamp (e.g., `2026-02-09T14:40:00Z`)
+- [ ] Context identifier: `phase=` or `increment=` (what work is being done)
+- [ ] `action=` field (what specific action was taken)
+- [ ] `result=` field (outcome: `done`, `error`, `approved`, `rejected`, etc.)
+- [ ] `message=` field for errors and rejections (human-readable detail)
+
+**BLOCKING**: An audit entry missing any required field makes the audit trail incomplete. The orchestrator must ensure every append follows this schema.

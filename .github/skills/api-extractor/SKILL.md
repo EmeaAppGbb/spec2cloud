@@ -228,3 +228,15 @@ sharedTypes:
    Flask, etc.) in the `path` field.
 7. **Every endpoint.** Missing a route that exists in code is a failure.
    Scan systematically — do not rely on sampling.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking api-extractor as complete:
+
+- [ ] At least one contract file exists in `specs/contracts/api/` in OpenAPI-compatible YAML format
+- [ ] Every HTTP route/endpoint found in source code is documented (method, path, parameters)
+- [ ] Request and response schemas are documented where determinable; noted as "not determined" otherwise
+- [ ] Authentication/authorization patterns are identified per endpoint (e.g., JWT, API key, public)
+- [ ] Error response shapes are documented where the code defines them
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to the next extraction step.

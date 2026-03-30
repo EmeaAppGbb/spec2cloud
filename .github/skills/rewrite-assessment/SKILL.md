@@ -173,3 +173,16 @@ This assessment **must** produce at least one ADR:
 - If the user hasn't specified a target stack, ask before proceeding. Assessment without a target is meaningless.
 - Effort estimates should include ramp-up time, testing, migration, and parallel-run periods — not just coding.
 - Do not minimize the cost of knowledge embedded in existing code. Implicit behavior is expensive to rediscover.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking rewrite-assessment as complete:
+
+- [ ] `specs/assessment/rewrite.md` exists with: feasibility rating, effort comparison (rewrite vs modernize), risk analysis, and target stack evaluation
+- [ ] A rewrite-vs-modernize recommendation is stated with supporting evidence
+- [ ] Strangler fig (partial rewrite) option is explicitly evaluated
+- [ ] Data migration complexity is assessed
+- [ ] At least one ADR exists in `specs/adrs/` documenting the rewrite/modernize decision
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to planning.

@@ -261,3 +261,15 @@ _Extracted on [date]. Documents the data layer as defined in code._
 8. **Relationship accuracy.** Every foreign key and relationship decorator
    must appear in the output. Verify by checking both sides of bidirectional
    relationships.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking data-model-extractor as complete:
+
+- [ ] `specs/docs/architecture/data-models.md` exists with a Mermaid ERD diagram
+- [ ] Every ORM model, migration file, and schema definition in the codebase is covered
+- [ ] All entities have their fields, types, and constraints documented
+- [ ] All relationships (foreign keys, one-to-many, many-to-many) are documented with both sides verified
+- [ ] Index definitions are cataloged where present in schema files
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to the next extraction step.

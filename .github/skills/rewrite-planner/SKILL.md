@@ -232,3 +232,17 @@ Before finalizing, verify:
 
 After approval at the human gate, each increment proceeds through Phase 2:
 test generation → contract generation → implementation → build & deploy.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking rewrite-planner as complete:
+
+- [ ] `specs/increment-plan.md` is updated with all rewrite increments (unique IDs, scope, dependencies, effort)
+- [ ] Each increment rewrites exactly one component (no multi-component increments)
+- [ ] Strangler fig routing (feature flags) is planned for each increment
+- [ ] Behavioral equivalence tests are specified before any enhancement increments
+- [ ] Every increment references its justifying ADR
+- [ ] Gherkin deltas document both old behavior (to preserve) and new behavior (to verify)
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to Phase 2 delivery.

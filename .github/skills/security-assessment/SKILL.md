@@ -190,3 +190,17 @@ Generate ADRs via the `adr` skill for major security architecture decisions:
 - Focus remediation guidance on practical steps the team can take, not theoretical best practices.
 - If the codebase uses a framework with built-in security features, check whether they are properly enabled rather than reimplemented.
 - Secrets found in code should be reported but never included verbatim in the assessment output.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking security-assessment as complete:
+
+- [ ] `specs/assessment/security.md` exists with: executive summary, findings by OWASP category, severity ratings, and remediation guidance
+- [ ] Every finding has a severity level (critical / high / medium / low) and a clear remediation path
+- [ ] Dependency CVE scan results are included (even if no CVEs found — state "0 known CVEs")
+- [ ] Authentication and authorization patterns are reviewed and documented
+- [ ] Secrets-in-code scan completed (no secrets included verbatim in output)
+- [ ] At least one ADR exists in `specs/adrs/` for significant security architecture decisions
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to planning.

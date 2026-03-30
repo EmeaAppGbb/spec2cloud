@@ -65,3 +65,15 @@ When tests fail against the Aspire environment:
 - Aspire resources unhealthy → restart via `aspire start` (auto-stops previous)
 - Tests exceed 5 minutes → check for hung processes
 - Always capture both stdout and stderr
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking test-runner as complete:
+
+- [ ] All test suites were executed (unit, integration, e2e, Cucumber) — none skipped
+- [ ] Results include: total tests, passed, failed, skipped counts per suite
+- [ ] Any failures include file path, test name, and error message
+- [ ] Aspire environment was healthy during test execution (resources Running + Healthy)
+- [ ] If any tests failed, the failure is reported as a blocking issue — not silently ignored
+
+**BLOCKING**: If the test runner itself fails (infrastructure failure, timeout, partial execution), this must be reported as "run incomplete" — not as "all tests passed".

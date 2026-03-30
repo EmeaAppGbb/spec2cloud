@@ -239,3 +239,16 @@ proceeds through the standard Phase 2 pipeline:
 2. **Contract generation** — update infra contracts for new Azure resources
 3. **Implementation** — build Dockerfiles, IaC, CI/CD workflows
 4. **Build & deploy** — verify containerized app builds and deploys to Azure
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking cloud-native-planner as complete:
+
+- [ ] `specs/increment-plan.md` is updated with all cloud-native increments (unique IDs, scope, dependencies, effort)
+- [ ] Infrastructure increments are ordered: containerization → config externalization → IaC → observability → CI/CD
+- [ ] Every new Azure resource has a corresponding entry in `specs/contracts/infra/resources.yaml`
+- [ ] Security defaults are planned (non-root containers, managed identity, Key Vault for secrets)
+- [ ] All increments are consistent with existing ADRs for Azure service choices
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to Phase 2 delivery.

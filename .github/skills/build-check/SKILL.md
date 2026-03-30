@@ -38,3 +38,14 @@ Details:
 
 - Web (Next.js) requires `output: 'standalone'` in `next.config.ts`
 - API uses TypeScript with Express
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking build-check as complete:
+
+- [ ] Every service (API, Web) has been built — none skipped
+- [ ] Each service reports PASS or FAIL with error/warning counts
+- [ ] If any service fails to build, the failure details (file, line, message) are included
+- [ ] A partial build (one service passes, another not attempted) is reported as "incomplete" — not as PASS
+
+**BLOCKING**: A build-check with any FAIL or incomplete service means the codebase is not ready for testing or deployment. The orchestrator must fix build errors before proceeding.

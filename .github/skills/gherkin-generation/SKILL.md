@@ -188,3 +188,18 @@ Notice:
 - Steps use domain language ("submits the login form"), not implementation details.
 - Data is concrete and realistic.
 - Scenarios are independent — neither relies on the other's state.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking gherkin-generation as complete:
+
+- [ ] At least one `.feature` file exists in `specs/features/` for every FRD in scope for this increment
+- [ ] Every acceptance criterion in the FRD(s) has at least one corresponding Gherkin scenario
+- [ ] Each scenario tests exactly one behavior (no multi-behavior scenarios)
+- [ ] Tags are applied: feature tag (`@feature-name`), type tags (`@happy`, `@error`, `@edge`), and track tags (`@existing-behavior` for brownfield capture)
+- [ ] Steps use domain language, not implementation details (no CSS selectors, no API paths in step text)
+- [ ] Error/edge case scenarios exist for every documented error condition in the FRDs
+- [ ] `data-testid` attribute names from `specs/ui/component-inventory.md` are used in UI-related steps (if UI/UX design phase completed)
+- [ ] State JSON is updated with generated feature files
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to test generation.

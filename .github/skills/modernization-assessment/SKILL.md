@@ -155,3 +155,15 @@ Each ADR should reference the specific assessment findings that triggered it.
 - Effort estimates are rough guidance, not commitments.
 - If extraction outputs are incomplete, note gaps rather than guessing.
 - Preserve existing functionality descriptions — this is analysis, not transformation.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking modernization-assessment as complete:
+
+- [ ] `specs/assessment/modernization.md` exists with: executive summary, findings by category, severity ratings, and effort estimates
+- [ ] Every finding has a severity level (critical / high / medium / low) and an estimated effort
+- [ ] At least one ADR exists in `specs/adrs/` for each significant architecture decision surfaced
+- [ ] Findings reference specific files, line numbers, or patterns from the extraction outputs
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to planning.

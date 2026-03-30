@@ -431,3 +431,5 @@ Before presenting FRDs for human review:
 - [ ] **Track B only:** Testability Roadmap lists all blockers with effort estimates
 - [ ] **Track B only:** Track B sections are omitted if feature is testable (Track A)
 - [ ] State JSON is updated with all generated FRDs
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing. FRDs drive all downstream Gherkin, test, and implementation work — incomplete FRDs cause cascading gaps.

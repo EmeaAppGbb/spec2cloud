@@ -296,3 +296,15 @@ _Extracted on [date]. Catalogs all tests that exist in the project._
 8. **Uncertain mappings are okay.** If you cannot determine what a test file
    tests, say "mapping uncertain" rather than guessing. Partial information
    is better than fabricated information.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking test-discovery as complete:
+
+- [ ] `specs/docs/testing/coverage.md` exists with: test framework(s), total test count, pass/fail/skip breakdown
+- [ ] Every test file in the project is cataloged with its framework and approximate test count
+- [ ] Test-to-source mapping is documented where determinable (which tests cover which source files)
+- [ ] Skipped/pending/todo tests are counted separately and listed
+- [ ] Coverage reports (if they exist as files) are referenced with their location and date
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to the next extraction step.

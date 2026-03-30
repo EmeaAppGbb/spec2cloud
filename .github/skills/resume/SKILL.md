@@ -37,3 +37,16 @@ On every CLI session start, check for existing state.
    - Do not revert human edits — adjust your plan to the new state
 
 5. **Continue the Ralph loop** from the determined position.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before resuming work:
+
+- [ ] `.spec2cloud/state.json` exists and is valid JSON
+- [ ] Current phase and increment are determined from state
+- [ ] Re-validation ran for the current step (tests compile, builds pass, deployment status checked — as appropriate)
+- [ ] If re-validation results differ from state, state was updated to reflect reality
+- [ ] Human edits during pause (if any) are detected and treated as ground truth — not reverted
+- [ ] Audit log entry records the resume event with any discrepancies found
+
+**BLOCKING**: If state.json is missing or unparseable, the orchestrator must initialize from Phase 0 (not guess). If re-validation fails, the orchestrator must update state before proceeding — never resume from stale state.

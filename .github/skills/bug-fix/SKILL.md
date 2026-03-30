@@ -216,3 +216,18 @@ Append to `.spec2cloud/audit.log`:
 - **Minimal change only.** Refactoring goes in separate increments.
 - **No silent fixes.** Every fix is committed, logged, and tracked in state.
 - **Regression must pass.** If the fix breaks other tests, the fix is wrong.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking bug-fix as complete:
+
+- [ ] Bug is linked to a specific FRD (or flagged as a feature request if no FRD exists)
+- [ ] A failing test exists that reproduces the bug
+- [ ] Human approved the reproduction test (mandatory gate)
+- [ ] The fix is minimal (< 50 lines; larger fixes escalated to full increments)
+- [ ] The reproduction test now passes
+- [ ] Full regression suite passes (no other tests broken)
+- [ ] State JSON records the micro-increment; audit log has the fix entry
+- [ ] Commit uses `[bugfix] {frd-id}: {description}` format
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items.

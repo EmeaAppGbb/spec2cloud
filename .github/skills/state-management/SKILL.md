@@ -88,3 +88,16 @@ When `track` is `"hybrid"`, each increment in Phase 2 inherits its track from `f
    - Verification step: check deployment status
 4. If results match state → continue from where you left off
 5. If results differ → update state to reflect reality, then continue
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following after every state write:
+
+- [ ] `.spec2cloud/state.json` is valid JSON (parseable without errors)
+- [ ] `currentPhase` reflects the actual phase the orchestrator is in
+- [ ] `currentIncrement` and increment step match the work just completed
+- [ ] `lastUpdated` timestamp is current
+- [ ] No fields are null/undefined that downstream skills depend on (e.g., `adrs.nextNumber`, `incrementPlan`)
+- [ ] State file is committed alongside the artifacts it describes (not orphaned)
+
+**BLOCKING**: If state.json is invalid or inconsistent with actual artifacts, the `resume` skill will reconstruct the wrong position. Fix state before proceeding.

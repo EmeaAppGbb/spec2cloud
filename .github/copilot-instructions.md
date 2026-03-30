@@ -15,7 +15,7 @@ is driven by automated tests generated from those specifications.
 ## Coding Conventions
 - Write minimal code to pass tests — no gold-plating
 - Follow existing patterns in the codebase
-- All code must be covered by tests (unit, integration, or e2e)
+- All code must be covered by tests (unit, integration, or e2e). **Exception:** Brownfield Track B features use manual verification checklists when automated tests are not feasible (see AGENTS.md Testability Gate).
 - No hardcoded secrets — use environment variables
 - No hardcoded URLs — use configuration
 - Error handling: every external call must have error handling
@@ -55,6 +55,11 @@ This is the **bug-spot protocol** — it applies in every phase. The user's appr
 specs/          → Specifications (PRD, FRDs, Gherkin)
 specs/contracts/→ Contracts (API specs per feature, infrastructure resources)
 specs/ui/       → UI/UX design artifacts (screen-map, design-system, component-inventory, prototypes/, walkthroughs)
+specs/features/ → Gherkin feature files (greenfield + brownfield Track A)
+specs/adrs/     → Architecture Decision Records
+specs/docs/     → Brownfield extraction outputs (technology/, architecture/, testing/)
+specs/assessment/ → Assessment outputs (modernization, security, cloud-native, etc.)
+specs/increment-plan.md → Ordered increment delivery plan
 specs/tech-stack.md → Resolved tech stack (all technology decisions, wiring, deployment)
 e2e/            → Playwright end-to-end tests (integration slice)
 tests/          → Cucumber.js BDD tests (integration slice)

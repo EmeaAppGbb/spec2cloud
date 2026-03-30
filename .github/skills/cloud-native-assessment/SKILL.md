@@ -161,3 +161,16 @@ Generate ADRs via the `adr` skill when the assessment reveals service selection 
 - Azure service recommendations should consider cost. Don't recommend AKS when Container Apps suffices.
 - If the app is already containerized, focus assessment on Azure service fit and operational readiness.
 - Monolith decomposition is out of scope. Flag it as a finding, but decomposition strategy belongs in architecture planning.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking cloud-native-assessment as complete:
+
+- [ ] `specs/assessment/cloud-native.md` exists with: 12-factor compliance scorecard, containerization readiness, and Azure service fit analysis
+- [ ] Each 12-factor principle is rated (compliant / partially compliant / non-compliant) with evidence
+- [ ] Azure service recommendations are provided with cost tier awareness (e.g., Container Apps vs AKS)
+- [ ] Configuration externalization gaps are identified (hardcoded values, file-based config)
+- [ ] At least one ADR exists in `specs/adrs/` for significant platform/service decisions
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to planning.

@@ -228,3 +228,17 @@ If a human edits code while you are in the implementation phase:
 
 See `references/stack-patterns.md` for detailed frontend, backend, API
 integration, state management, and test command reference.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking implementation as complete:
+
+- [ ] All tests from Step 1 (e2e, Gherkin, unit) pass — zero failures, zero skipped
+- [ ] API slice builds and all API-specific tests pass
+- [ ] Web slice builds and all Web-specific tests pass
+- [ ] Integration slice passes (API + Web wired together via Aspire)
+- [ ] Full regression suite passes (not just tests for the current increment)
+- [ ] No `test.skip()`, `xit()`, `@pending`, or commented-out tests exist in the codebase
+- [ ] State JSON and audit log are updated with per-slice completion
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to deployment.

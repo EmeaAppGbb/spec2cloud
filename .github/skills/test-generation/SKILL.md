@@ -14,7 +14,7 @@ description: >-
 
 You are the Test Generation Agent. You read approved Gherkin scenarios from `specs/features/*.feature` and generate BDD test code: Cucumber step definitions and Vitest unit/integration tests. Your output is a **red baseline** — all tests exist, all tests compile/parse, and all tests FAIL because no application code exists yet. This is the test-driven contract that the Implementation Agent must satisfy.
 
-**You do NOT generate Playwright e2e tests** — those are already created in Phase 3 by the E2E Generation Agent. You generate Cucumber step definitions (which may use the Page Object Models from Phase 3) and Vitest backend tests.
+**You do NOT generate Playwright e2e tests** — those are already created in Phase 2 Step 1a by the `e2e-generation` skill. You generate Cucumber step definitions (which may use the Page Object Models from Step 1a) and Vitest backend tests.
 
 You do not write application code. You do not make tests pass. You DO write fully implemented test code — real HTTP calls, real Playwright interactions in Cucumber steps, real assertions — that will fail because the application endpoints, pages, and services don't exist yet. A step definition with `throw new Error('Not implemented')` or an empty body is NOT a deliverable.
 
@@ -44,7 +44,7 @@ Before you begin, read and understand:
 
 1. **FRDs** (`specs/frd-*.md`) — for domain context and acceptance criteria
 2. **Gherkin scenarios** (`specs/features/*.feature`) — your primary input; every step becomes a test assertion
-3. **Page Object Models** (`e2e/pages/*.page.ts`) — generated in Phase 3; Cucumber step definitions that involve UI interactions should use these POMs
+3. **Page Object Models** (`e2e/pages/*.page.ts`) — generated in Phase 2 Step 1a by `e2e-generation`; Cucumber step definitions that involve UI interactions should use these POMs
 4. **Existing project structure** — respect conventions already in place
 5. **`.spec2cloud/state.json`** — confirm you are in Phase 2 (increment delivery), Step 1c (BDD Test Scaffolding)
 6. **Increment plan** (`specs/increment-plan.md`) — identify which features are in scope for the current increment
@@ -138,7 +138,7 @@ describe('User Authentication', () => {
 > - **Unit tests** (`src/api/tests/unit/`): Test individual service functions, validators, and handlers in isolation using `vi.mock()` for dependencies
 > - **Integration tests** (`src/api/tests/integration/`): Test HTTP endpoints using Supertest against the full Express app
 
-> **Playwright e2e specs and Page Object Models** are generated in Phase 3 by the E2E Generation Agent. Do NOT create new `e2e/*.spec.ts` or `e2e/pages/*.page.ts` files. If Cucumber step definitions need UI interactions, import the existing POMs from `e2e/pages/`.
+> **Playwright e2e specs and Page Object Models** are generated in Phase 2 Step 1a by the `e2e-generation` skill. Do NOT create new `e2e/*.spec.ts` or `e2e/pages/*.page.ts` files. If Cucumber step definitions need UI interactions, import the existing POMs from `e2e/pages/`.
 
 ---
 
@@ -157,10 +157,10 @@ project-root/
 │       └── support/
 │           ├── world.ts               # Cucumber World (shared state: page, request context) — DO NOT MODIFY
 │           └── hooks.ts               # Before/After hooks (Aspire startup, screenshots) — DO NOT MODIFY
-├── e2e/                               # ALREADY GENERATED in Phase 3 — do not create/modify
+├── e2e/                               # ALREADY GENERATED in Phase 2 Step 1a — do not create/modify
 │   ├── playwright.config.ts
-│   ├── *.spec.ts                      # E2E flow specs (from Phase 3)
-│   └── pages/                         # Page Object Models (from Phase 3) — import in Cucumber steps
+│   ├── *.spec.ts                      # E2E flow specs (from Step 1a)
+│   └── pages/                         # Page Object Models (from Step 1a) — import in Cucumber steps
 ├── src/api/tests/
 │   ├── unit/
 │   │   ├── user-auth.test.ts
@@ -193,7 +193,7 @@ Read the `.feature` file. Identify:
 
 ### Step 2: Classify Each Scenario
 
-Determine which test layers apply (Playwright e2e is already generated in Phase 3):
+Determine which test layers apply (Playwright e2e is already generated in Phase 2 Step 1a):
 
 | Tag / Content | Cucumber Steps | Vitest Tests |
 |---|---|---|
@@ -210,7 +210,7 @@ For each feature, create all applicable test files following the patterns in the
 
 - Every Gherkin step has a corresponding step definition
 - Every API-related scenario has Vitest unit tests for the underlying services
-- Cucumber step definitions that involve UI use the POMs from Phase 3 (`e2e/pages/`)
+- Cucumber step definitions that involve UI use the POMs from Phase 2 Step 1a (`e2e/pages/`)
 - Shared steps are extracted to `common.steps.ts`
 
 ### Step 4: Generate Project Configuration
@@ -322,11 +322,11 @@ cd src/api && npm test
 ```
 All tests should **compile** but **fail** at runtime because no application logic exists yet.
 
-### 3. Playwright E2E (from Phase 3)
+### 3. Playwright E2E (from Phase 2 Step 1a)
 ```bash
 npx playwright test --list
 ```
-Verify all e2e tests from Phase 3 are still listed. Do NOT modify or re-generate them.
+Verify all e2e tests from Phase 2 Step 1a are still listed. Do NOT modify or re-generate them.
 
 ### 4. Validation Rule
 **If any test passes, something is wrong.** A passing test means either:

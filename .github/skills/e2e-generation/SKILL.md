@@ -229,3 +229,17 @@ After completing e2e generation:
    [TIMESTAMP] e2e-generation: All specs compile and are listed ✅
    ```
 3. Commit all generated files with message: `[e2e-gen] scaffold e2e tests for all flows`
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking e2e-generation as complete:
+
+- [ ] At least one Playwright spec file (`e2e/*.spec.ts`) exists for every user flow in `specs/ui/flow-walkthrough.md`
+- [ ] A Page Object Model (`e2e/pages/*.page.ts`) exists for every screen in `specs/ui/screen-map.md`
+- [ ] Every POM uses `data-testid` selectors from `specs/ui/component-inventory.md` (not CSS classes or XPath)
+- [ ] `e2e/playwright.config.ts` exists and is configured for the Aspire environment
+- [ ] All spec files compile successfully (`npx playwright test --list` returns all specs without errors)
+- [ ] Navigation flows between pages are tested (not just individual page interactions)
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to Gherkin generation.

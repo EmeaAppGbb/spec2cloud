@@ -206,3 +206,15 @@ _Extracted on [date]. This is a factual inventory of the project as it exists._
    files (e.g., `"^18.2.0"` not just `"18"`).
 7. **No inferencing beyond the code.** If you can't determine something from the
    files, say "not determinable from source" — do not guess.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking codebase-scanner as complete:
+
+- [ ] `specs/docs/technology/stack.md` exists and contains: languages, frameworks, package managers, build tools, and entry points
+- [ ] Every language detected has version constraints documented (from manifest files)
+- [ ] Every framework detected has its role documented (web, API, testing, etc.)
+- [ ] Entry points are identified for each application boundary
+- [ ] Monorepo workspaces (if any) are inventoried separately
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to the next extraction step.

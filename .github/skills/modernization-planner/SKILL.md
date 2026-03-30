@@ -220,3 +220,17 @@ proceeds through the standard Phase 2 pipeline:
 2. **Contract generation** — update contracts if APIs change
 3. **Implementation** — execute the modernization
 4. **Build & deploy** — verify the app builds and deploys successfully
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking modernization-planner as complete:
+
+- [ ] `specs/increment-plan.md` is updated with all modernization increments (unique IDs, scope, dependencies, effort)
+- [ ] Each increment addresses exactly one concern (runtime upgrade OR library swap OR config migration — not multiple)
+- [ ] Increment ordering respects dependency chains (no increment depends on an unplanned predecessor)
+- [ ] Gherkin deltas (new/modified scenarios) are specified per increment for Track A features
+- [ ] Behavioral doc updates are specified per increment for Track B features
+- [ ] All increments are consistent with existing ADRs; conflicts are flagged
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to Phase 2 delivery.

@@ -239,3 +239,16 @@ proceeds through the standard Phase 2 pipeline:
 2. **Contract generation** — update contracts if API behavior changes
 3. **Implementation** — apply the minimal fix
 4. **Build & deploy** — verify the fix in CI, re-run security scanners
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking security-planner as complete:
+
+- [ ] `specs/increment-plan.md` is updated with all security fix increments (unique IDs, scope, severity, effort)
+- [ ] Increments are ordered by severity: critical → high → medium → low (no exceptions)
+- [ ] Every fix increment has a corresponding reproduction test specified
+- [ ] Increments are consistent with security-related ADRs; conflicts are flagged
+- [ ] Dependency CVE fixes are separate increments from code-level vulnerability fixes
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to Phase 2 delivery.

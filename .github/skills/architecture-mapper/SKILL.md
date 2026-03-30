@@ -245,3 +245,15 @@ _Extracted on [date]._
    external API, queue) is a failure. Trace every outbound connection.
 7. **Ambiguity is okay.** If you cannot determine a pattern or relationship
    from the code, say "not determinable" rather than guessing.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking architecture-mapper as complete:
+
+- [ ] `specs/docs/architecture/overview.md` exists with a high-level Mermaid component diagram
+- [ ] `specs/docs/architecture/components.md` exists with per-component detail (responsibility, dependencies, interfaces)
+- [ ] All integration points are cataloged (databases, external APIs, queues, caches, file systems)
+- [ ] Data flow between components is documented with a Mermaid sequence or flow diagram
+- [ ] Layer boundaries (if any) are identified (e.g., controller → service → repository)
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to the next extraction step.

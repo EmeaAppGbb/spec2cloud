@@ -208,3 +208,15 @@ _Extracted on [date]. This is a factual catalog of all declared dependencies._
    then produce a unified summary.
 8. **Transitive accuracy.** Only report transitive relationships you can verify
    from lock files. Do not guess transitive trees.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking dependency-inventory as complete:
+
+- [ ] `specs/docs/technology/dependencies.md` exists and contains: all direct dependencies with versions, purposes, and license info
+- [ ] Every package manifest file in the project is covered (package.json, requirements.txt, *.csproj, etc.)
+- [ ] Lock file versions are used where available; absence of lock file is noted
+- [ ] Dependency relationships (which packages depend on which) are documented
+- [ ] Monorepo workspaces (if any) have per-workspace inventories plus a unified summary
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to the next extraction step.

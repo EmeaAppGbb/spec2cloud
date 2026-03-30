@@ -40,3 +40,15 @@ Each increment is a self-contained delivery. Commits at increment boundaries mea
 - `git log --oneline --grep="\[increment\]"` shows the delivery timeline
 - Each delivered increment is a revertable, deployable unit
 - Mid-increment commits at slice granularity create resumable checkpoints
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following for every commit:
+
+- [ ] Commit message follows the format table above (correct prefix for the phase/step)
+- [ ] `.spec2cloud/state.json` is included in the commit
+- [ ] `.spec2cloud/audit.log` is included in the commit
+- [ ] No secrets, `.env` files, or `node_modules` are staged
+- [ ] Co-authored-by trailer is present
+
+**BLOCKING**: A commit without state.json and audit.log breaks resume capability. The orchestrator must include them before finalizing the commit.

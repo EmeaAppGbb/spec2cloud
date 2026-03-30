@@ -146,3 +146,17 @@ If smoke tests fail after deployment:
 See `references/stack-deployment.md` for AZD service structure, Container Apps
 configuration, Dockerfile details, infrastructure templates, environment
 variables, and smoke test commands.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking azure-deployment as complete:
+
+- [ ] Full regression suite passes locally before deployment
+- [ ] `azd provision` completes without errors
+- [ ] `azd deploy` completes without errors
+- [ ] Smoke tests pass against the deployed endpoints (not localhost)
+- [ ] HTTPS is enabled on all deployed endpoints
+- [ ] Application logs show no startup errors (check via `azd monitor`)
+- [ ] State JSON and audit log are updated with deployment URLs and status
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before marking the increment as delivered.

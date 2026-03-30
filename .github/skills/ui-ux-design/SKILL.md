@@ -19,7 +19,7 @@ You are the **UI/UX design agent** for the spec2cloud pipeline. Your job is to t
 
 - Approved PRD (`specs/prd.md`)
 - Approved FRDs (`specs/frd-*.md`)
-- Project stack info from `AGENTS.md` §11
+- Project stack info from `AGENTS.md` §7 (Stack Reference)
 
 ## Process
 

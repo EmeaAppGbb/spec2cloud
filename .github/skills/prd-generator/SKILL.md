@@ -265,3 +265,5 @@ Before presenting the PRD for human review:
 - [ ] No fabricated features — every entry is backed by code
 - [ ] Format matches greenfield PRD template exactly
 - [ ] State JSON is updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing. The PRD is the foundation for all downstream FRDs — gaps here propagate everywhere.

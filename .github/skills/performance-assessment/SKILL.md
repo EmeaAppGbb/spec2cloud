@@ -180,3 +180,16 @@ Generate ADRs via the `adr` skill when optimization requires architectural decis
 - Context matters. An N+1 query on a list that always returns 3 items is low impact. The same pattern on a list with 10,000 items is high impact. Note the data volume context when available.
 - Frontend and backend performance are different disciplines. Clearly separate findings by layer.
 - Always suggest measurement before optimization. The roadmap should include "verify with profiling" steps.
+
+## Mandatory Completion Checklist
+
+The orchestrator MUST verify ALL of the following before marking performance-assessment as complete:
+
+- [ ] `specs/assessment/performance.md` exists with: findings by layer (frontend / backend / database / network), severity ratings, and quick-win identification
+- [ ] Every finding has an impact level (high / medium / low) and estimated effort to fix
+- [ ] N+1 query patterns, missing indexes, and unoptimized queries are explicitly checked and reported
+- [ ] Frontend performance patterns are assessed separately from backend
+- [ ] "Measure before optimize" steps are included in the remediation roadmap
+- [ ] State JSON and audit log are updated
+
+**BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to planning.
