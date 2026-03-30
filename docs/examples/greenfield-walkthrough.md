@@ -22,7 +22,7 @@ Create a repo from a shell template and connect to Azure:
 gh repo create my-task-board --template EmeaAppGbb/spec2cloud-shell-nextjs-typescript
 cd my-task-board
 npm install && cd src/web && npm install && cd ../.. && cd src/api && npm install && cd ../..
-azd auth login && azd env new microhack && azd env set AZURE_LOCATION eastus
+azd auth login && azd env new microhack && azd env set AZURE_LOCATION swedencentral
 ```
 
 You get: Next.js + Express + Playwright + Cucumber + Vitest + Bicep — all pre-wired with Aspire orchestration and 45 agentskills.io skills.
@@ -35,12 +35,16 @@ This is the only step where you write anything substantial. Open `specs/prd.md` 
 
 > **Why this matters:** Your PRD is the ground truth everything traces back to. The more deliberately you write it, the more meaningful the verification is at every downstream gate. Vague requirements lead to passing tests that don't actually prove anything.
 
-Then kick off the orchestrator:
+Then kick off the orchestrator. Start Copilot CLI in autonomous mode and use fleet to begin:
+
+```bash
+copilot --yolo
+```
+
+Then in the Copilot session:
 
 ```
-@workspace I want to run the spec2cloud pipeline.
-Read AGENTS.md and start from Phase 1a (Spec Refinement).
-The PRD is in specs/prd.md.
+/fleet I want to start the spec2cloud flow, the prd is already created, lets start with the review process and continue
 ```
 
 ---
@@ -49,6 +53,8 @@ The PRD is in specs/prd.md.
 
 ### 1a — Spec Refinement
 The orchestrator reviews your PRD through product and technical lenses, splits it into FRDs, and flags gaps. Expect files like `specs/frd-tasks.md` and `specs/frd-board.md`.
+
+> **💡 Best practice:** Don't just accept the agent's fixes wholesale. Ask it to address gaps **one by one** and really pay attention to each proposed change. It's good practice to run the review multiple times until you're confident the PRD captures exactly what you want. Once the PRD is solid, ask the agent to review each FRD with the same rigour — treat FRDs as first-class specs, not just generated artifacts.
 
 🚦 **Human Gate — spec verification:** Check that every user story from your PRD is represented in an FRD with clear acceptance criteria. If something is wrong here, fix it now — anything that slips through will be tested, implemented, and deployed as-is.
 
@@ -101,6 +107,8 @@ Three slices run:
 | **API slice** | Express routes, in-memory store, input validation |
 | **Web slice** | Next.js board page, task cards, create/edit form, status controls |
 | **Integration** | API + Web running together, full regression green |
+
+> **💡 Try it live:** Aspire is already running in the background. Ask the agent for the Aspire dashboard URL and open your app in the browser. Click around, test the flows, and see if anything feels off. If you spot bugs or issues, ask the agent to fix them — it can use the Aspire and Playwright MCP tools to diagnose and resolve problems interactively. It's much cheaper to catch issues here than after deployment.
 
 🚦 **Human Gate — implementation verification:** Review the diff. Does this match what you approved in the Gherkin? Tests passing is necessary — but not sufficient. You're verifying the *right* implementation, not just a green one.
 
@@ -169,7 +177,6 @@ azd down
 
 | Symptom | Fix |
 |---------|-----|
-| `azd provision` quota error | `azd env set AZURE_LOCATION westeurope` and retry |
 | Agent stuck in a loop | Ask: *"read the resume skill and continue from current state"* |
 | Tests failing after implementation | Ask: *"run the test runner skill and fix any failures"* |
 | Smoke tests fail after deploy | Agent auto-rolls back — review failure and re-approve |
