@@ -40,10 +40,10 @@ coverage/
 .apm
 
 # Docs (auto-generated)
-docs/features/
+# docs/features/ — generated but tracked (auto-generated from Gherkin features)
 docs/design/
 docs/screenshots/
-docs/nav.yml
+# docs/nav.yml — generated but tracked
 site/
 
 # UI/UX prototypes (generated, not committed)

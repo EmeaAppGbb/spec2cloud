@@ -529,12 +529,30 @@ function main() {
   const nav = generateMkDocsNav(features);
   fs.writeFileSync(path.join(ROOT, 'docs', 'nav.yml'), nav, 'utf-8');
 
+  // Auto-merge nav into mkdocs.yml
+  mergNavIntoMkdocs(nav);
+
   console.log('');
   console.log(`   ✅ Generated ${features.length} feature page(s)`);
   console.log(`   ✅ Updated docs/index.md`);
   console.log(`   ✅ Updated docs/nav.yml`);
+  console.log(`   ✅ Merged nav into mkdocs.yml`);
   console.log('');
   console.log('   Run "npm run docs:serve" to preview the documentation site.');
+}
+
+function mergNavIntoMkdocs(navContent: string): void {
+  const mkdocsPath = path.join(ROOT, 'mkdocs.yml');
+  const mkdocsContent = fs.readFileSync(mkdocsPath, 'utf-8');
+
+  // Remove existing nav section and trailing comment
+  const cleaned = mkdocsContent
+    .replace(/\n# Navigation is auto-generated[^\n]*\n# Copy the contents[^\n]*\n?/g, '\n')
+    .replace(/\nnav:\n[\s\S]*$/, '\n');
+
+  // Append nav content
+  const updated = cleaned.trimEnd() + '\n\n' + navContent.trimEnd() + '\n';
+  fs.writeFileSync(mkdocsPath, updated, 'utf-8');
 }
 
 main();

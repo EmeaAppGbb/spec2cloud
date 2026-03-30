@@ -16,8 +16,7 @@ builder.AddJavaScriptApp("web", "./src/web")
 
 // Docs — MkDocs documentation server
 builder.AddPythonExecutable("docs", ".", "mkdocs")
-    .WithArgs("serve", "--dev-addr", "0.0.0.0:8000")
-    .WithHttpEndpoint(port: 8000)
+    .WithArgs("serve", "--dev-addr", "0.0.0.0:8200")
     .WithExternalHttpEndpoints();
 
 builder.Build().Run();
