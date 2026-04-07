@@ -54,7 +54,7 @@ The 46 skills are stack-agnostic. Shells provide the stack-specific wiring (whic
 
 1. Run the installer with a shell: `npx spec2cloud init --shell <id>`
 2. Open in VS Code with the dev container
-3. Write your PRD in `specs/prd.md`
+3. Write your PRD in `specs/prd.md`, starting with a Mermaid product/process diagram when it clarifies the workflow
 4. Start with `/prd` in Copilot Chat
 
 ## Adding to an Existing Project

@@ -119,7 +119,25 @@ Using import graphs, call chains, and shared data models:
 4. Record external service dependencies (third-party APIs, databases, message
    queues)
 
-### Step 5: Determine Product Scope
+### Step 5: Generate Diagrams
+
+Generate Mermaid diagrams that make the PRD easier to understand:
+
+1. **Product Flow Diagram** — place this at the top of the PRD when the product
+   has a meaningful workflow, actor handoff, lifecycle, or multi-step process.
+   Prefer:
+   - `flowchart` for business processes
+   - `journey` for end-to-end user journeys
+   - `stateDiagram-v2` for lifecycle/state transitions
+2. **Implementation Diagram** — because brownfield already has working code,
+   include an as-built diagram when the runtime flow is non-trivial. Prefer:
+   - `sequenceDiagram` for request/response or command/event flows
+   - `flowchart` for orchestration or branching pipelines
+
+If a diagram would not materially improve understanding, say so explicitly
+instead of forcing decorative Mermaid.
+
+### Step 6: Determine Product Scope
 
 Categorize everything found into:
 
@@ -135,10 +153,20 @@ This directly maps to the "Out of Scope" section of the PRD.
 
 ### File: `specs/prd.md`
 
-The generated PRD must match the greenfield PRD format exactly:
+The generated PRD must preserve the greenfield PRD's core sections and order,
+with the optional diagram sections described below:
 
 ```markdown
 # Product Requirements Document
+
+## Product Flow Diagram
+
+```mermaid
+{Mermaid diagram that clarifies the product or business process when relevant}
+```
+
+{If no product/process diagram materially improves understanding, state that it
+was intentionally omitted because the flow is trivial.}
 
 ## Product Vision
 
@@ -186,7 +214,17 @@ analysis.}
 ## Out of Scope
 
 {Areas explicitly not implemented. If the app is an e-commerce platform but
-has no recommendation engine, note that here. Derived from Step 5.}
+has no recommendation engine, note that here. Derived from Step 6.}
+
+## Implementation Diagram
+
+```mermaid
+{Mermaid sequence, flow, or state diagram of the current implementation if
+useful}
+```
+
+{If the implementation is too trivial for a diagram, state that it was
+intentionally omitted.}
 
 ## Appendix: Extraction Evidence
 
@@ -206,10 +244,11 @@ locations that informed it. This provides traceability.}
 3. **Never fabricate features.** If a route exists but the handler is empty,
    document it as "Stubbed" — do not describe it as a working feature.
 
-4. **Preserve the greenfield format.** Downstream skills (FRD generator,
-   gherkin generator, increment planner) expect the exact section structure
-   shown above. Do not rename sections, add custom sections outside the
-   template, or change the feature table columns.
+4. **Preserve the greenfield core format.** Downstream skills (FRD generator,
+   gherkin generator, increment planner) expect the core section structure shown
+   above. Do not rename the core sections or change the feature table columns.
+   The only diagram additions are `## Product Flow Diagram` immediately after
+   the title and `## Implementation Diagram` before the appendix when useful.
 
 5. **Include the evidence appendix.** This is the brownfield-specific addition
    that gives reviewers confidence the PRD reflects reality.
@@ -223,6 +262,7 @@ FRD generation begins. Present the PRD with a summary of:
 - Persona count and confidence level
 - Areas where inference was heavy (low confidence sections)
 - Stubbed/incomplete features that may need product decisions
+- Whether the PRD included product and implementation diagrams or explicit omission rationale
 
 The human may:
 - ✅ Approve as-is → proceed to FRD generation
@@ -256,14 +296,16 @@ After human approval, update `status` to `"approved"`.
 Before presenting the PRD for human review:
 
 - [ ] Product Vision is a single, coherent paragraph
+- [ ] The PRD begins with a Mermaid product/process diagram when the workflow is non-trivial, or explicitly explains why a diagram was omitted
 - [ ] Every persona has evidence from the codebase
 - [ ] Every feature has a traceable source (routes, components, services)
 - [ ] Feature priorities reflect actual code completeness, not guesses
 - [ ] Non-functional requirements are extracted from real config, not assumed
 - [ ] Out of Scope section exists (even if minimal)
+- [ ] The PRD includes an as-built implementation diagram when the runtime flow is non-trivial, or explicitly explains why it was omitted
 - [ ] Evidence appendix maps every section to extraction sources
 - [ ] No fabricated features — every entry is backed by code
-- [ ] Format matches greenfield PRD template exactly
+- [ ] Format matches the greenfield PRD core template plus the diagram guidance above
 - [ ] State JSON is updated
 
 **BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing. The PRD is the foundation for all downstream FRDs — gaps here propagate everywhere.

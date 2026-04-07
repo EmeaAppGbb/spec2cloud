@@ -23,6 +23,9 @@ Before Phase 0 exits, all scaffolding must be verified: `specs/` directory, `.sp
 
 Your PRD is reviewed through product and technical lenses. Up to 5 refinement passes ensure completeness: edge cases, feasibility, clarity. The PRD is then broken into individual FRDs (Feature Requirement Documents).
 
+If the product has a meaningful workflow or lifecycle, the approved PRD should
+start with a Mermaid product/process diagram before the prose sections.
+
 **Human Gate:** Review and approve refined PRD and FRDs before proceeding.
 
 ### 1b — UI/UX Design
@@ -81,6 +84,10 @@ Three parallel slices:
 - **Integration Slice**: Wire API + Web together (tested with Cucumber + Playwright e2e)
 
 API and Web run in parallel. Integration is sequential after both complete. Red baseline tests turn green.
+
+If the implemented runtime flow is non-trivial, update `specs/prd.md` with an
+as-built Mermaid implementation diagram (often a sequence diagram) before the
+PR review gate.
 
 **Human Gate:** PR review before deployment.
 

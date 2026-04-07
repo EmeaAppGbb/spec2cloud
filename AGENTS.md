@@ -177,7 +177,9 @@ Phase 2: Increment Delivery   (repeats per increment)
 ### Phase 1: Product Discovery
 
 #### 1a: Spec Refinement → `spec-refinement` skill
-Review PRD/FRDs through product + technical lenses (max 5 passes). Break PRD into FRDs.
+Review PRD/FRDs through product + technical lenses (max 5 passes). If the PRD
+describes a non-trivial workflow, ensure it begins with a Mermaid
+product/process diagram. Break PRD into FRDs.
 **Exit:** Human approves all FRDs. **Human gate:** Yes.
 
 #### 1b: UI/UX Design → `ui-ux-design` skill
@@ -254,7 +256,9 @@ API contracts, shared TypeScript types, infrastructure requirements. No human ga
 **Commit:** `[increment] {id}/contracts — contracts generated`
 
 #### Step 3: Implementation → `implementation` skill
-API slice → Web slice (parallel) → Integration slice (sequential). Full regression.
+API slice → Web slice (parallel) → Integration slice (sequential). Full
+regression. If the runtime flow is non-trivial, update `specs/prd.md` with an
+as-built Mermaid implementation diagram before PR review.
 **Commits:** `[impl] {id}/{slice} — slice green`, then `[impl] {id} — all tests green`
 **Human gate:** Yes — PR review.
 
