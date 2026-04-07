@@ -21,6 +21,10 @@ handoffs:
     agent: devlead
     prompt: Review the FRD for technical feasibility, completeness, and identify any missing requirements to support implementation. Ensure minimal viable requirements are captured.
     send: false
+  - label: Model Domain with DDD (/ddd)
+    agent: ddd
+    prompt: Based on the PRD, FRDs and existent code, create database diagrams, DDD proposals. Create Mermaid domain and database diagrams.
+    send: false
   - label: Generate ADRs
     agent: architect
     prompt: Based on the PRD and FRDs, create Architecture Decision Records for key technical decisions that need to be made.

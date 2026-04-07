@@ -5,6 +5,10 @@ The workflow creates living documentation in `specs/`.
 ```
 specs/
 ├── prd.md              # Product Requirements Document
+├── domain/             # Domain-driven design outputs
+│   ├── proposals.md    # DDD proposals, bounded contexts, and glossary
+│   ├── domain-model.md # Mermaid domain/context diagrams
+│   └── database-model.md # Mermaid ER diagram and persistence mapping
 ├── features/           # Feature Requirements Documents
 │   ├── feature-1.md
 │   └── feature-2.md

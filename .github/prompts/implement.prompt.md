@@ -17,11 +17,13 @@ Follow these steps in order when implementing a task:
 Read all relevant context to understand the full scope:
 - PRD found in `specs\prd.md`
 - Relevant feature specifications in `specs\features`
+- Domain modeling outputs in `specs\domain`
 - Task specifications in `specs\tasks`
 
 ### 2. Create Implementation Plan
 Make a detailed plan for implementing the task, including:
 - Components or modules to be created/modified
+- Bounded contexts, aggregate boundaries, and persistence mapping to preserve
 - Data models and contracts
 - API endpoints or interfaces
 - Testing strategy
@@ -46,6 +48,7 @@ If information is not found on Microsoft Learn MCP, use the Context7 MCP server 
 Write the implementation code following:
 - Team coding standards (see `AGENTS.md`)
 - Architectural patterns defined in the project
+- Domain boundaries and ubiquitous language from `specs\domain\*.md` when present
 - Type-safety requirements
 - Modular, self-contained design principles
 

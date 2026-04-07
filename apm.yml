@@ -18,6 +18,7 @@ dependencies:
 scripts:
   prd: "copilot --allow-tool -p .github/prompts/prd.prompt.md"
   frd: "copilot --allow-tool -p .github/prompts/frd.prompt.md"
+  ddd: "copilot --allow-tool -p .github/prompts/ddd.prompt.md"
   plan: "copilot --allow-tool -p .github/prompts/plan.prompt.md"
   implement: "copilot --allow-tool -p .github/prompts/implement.prompt.md"
   delegate: "copilot --allow-tool -p .github/prompts/delegate.prompt.md"

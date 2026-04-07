@@ -14,6 +14,7 @@ When breaking down features, your responsibilities include:
 **ALWAYS start by reading the following files to understand requirements and standards:**
 - `specs\prd.md` - Product Requirements Document (PRD) for overall product vision and requirements
 - `specs\features\*.md` - Feature Requirements Documents (FRDs) for specific feature details
+- `specs\domain\*.md` - Domain proposals, bounded contexts, and database model (when present)
 - `AGENTS.md` - Development standards, guidelines, and architectural patterns that MUST be followed
 
 ### 2. Identify scaffolding tasks first
@@ -30,6 +31,7 @@ When breaking down features, your responsibilities include:
 
 **Create a comprehensive list of technical tasks ensuring:**
 - Both backend AND frontend features are covered for each user-facing capability
+- Bounded contexts, aggregate boundaries, and persistence mappings from `specs\domain\*.md` are respected when present
 - Backend API endpoints are defined with OpenAPI specifications
 - Frontend components consume backend APIs through generated SDK clients
 - Dependencies between tasks are clearly identified

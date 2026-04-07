@@ -1,5 +1,9 @@
 ---
 handoffs:
+  - label: Create DDD Model (/ddd)
+    agent: ddd
+    prompt: file:.github/prompts/ddd.prompt.md
+    send: false
   - label: Create Modernization Plan (/modernize)
     agent: modernizer
     prompt: file:.github/prompts/modernize.prompt.md

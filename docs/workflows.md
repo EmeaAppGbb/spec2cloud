@@ -10,7 +10,9 @@ graph TB
 
     PRD --> FRD["<b>/frd</b><br/>📋 PM Agent breaks down<br/>Feature Requirements Documents"]
 
-    FRD --> GenAgents["<b>/generate-agents</b><br/>📦 Dev Lead reads standards<br/>Generates AGENTS.md"]
+    FRD --> DDD["<b>/ddd</b><br/>🧭 DDD Agent proposes<br/>bounded contexts + data model"]
+
+    DDD --> GenAgents["<b>/generate-agents</b><br/>📦 Dev Lead reads standards<br/>Generates AGENTS.md"]
 
     GenAgents --> Plan["<b>/plan</b><br/>🔧 Dev Agent creates<br/>Technical Task Breakdown"]
 
@@ -29,6 +31,7 @@ graph TB
     style Start fill:#e1f5ff
     style PRD fill:#fff4e6
     style FRD fill:#fff4e6
+    style DDD fill:#e8f0fe
     style GenAgents fill:#e3f2fd
     style Plan fill:#e8f5e9
     style Implement fill:#e8f5e9
@@ -46,7 +49,9 @@ graph TB
 
     StartBrown --> RevEng["<b>/rev-eng</b><br/>📋 Reverse Engineering Agent<br/>Analyzes code & documents<br/>current state + extension points"]
 
-    RevEng --> Choice{"Evolution<br/>Choice"}
+    RevEng --> DDDReverse["<b>/ddd</b><br/>🧭 DDD Agent proposes<br/>domain + database model"]
+
+    DDDReverse --> Choice{"Evolution<br/>Choice"}
 
     Choice -->|Improve Quality| Modernize["<b>/modernize</b><br/>🔧 Modernization Agent<br/>Plans technical improvements"]
 
@@ -64,6 +69,7 @@ graph TB
 
     style StartBrown fill:#ffe0b2
     style RevEng fill:#e8f5e9
+    style DDDReverse fill:#e8f0fe
     style Choice fill:#fff9c4
     style Modernize fill:#e3f2fd
     style Extend fill:#f3e5f5
@@ -85,22 +91,27 @@ graph TB
    - Creates files in `specs/features/` for each feature
    - Defines inputs, outputs, dependencies, and acceptance criteria
 
-3. **`/generate-agents`** - Generate Agent Guidelines (Optional)
+3. **`/ddd`** - Domain Modeling (Optional, recommended for business-heavy domains)
+   - DDD Agent creates `specs/domain/proposals.md`
+   - Creates Mermaid domain diagrams in `specs/domain/domain-model.md`
+   - Creates Mermaid database diagrams in `specs/domain/database-model.md`
+
+4. **`/generate-agents`** - Generate Agent Guidelines (Optional)
    - Dev Lead Agent reads all standards from `standards/` directory
    - Consolidates engineering standards into comprehensive `AGENTS.md`
    - Can be run at project start or deferred until before `/plan` and `/implement`
    - **Must be completed before planning and implementation begins**
 
-4. **`/plan`** - Technical Planning
+5. **`/plan`** - Technical Planning
    - Dev Agent analyzes FRDs and creates technical task breakdowns
    - Creates files in `specs/tasks/` with implementation details
    - Identifies dependencies, estimates complexity, defines scaffolding needs
 
-5. **`/implement`** OR **`/delegate`** - Implementation
+6. **`/implement`** OR **`/delegate`** - Implementation
    - **Option A (`/implement`)**: Dev Agent writes code directly in `src/backend` and `src/frontend`
    - **Option B (`/delegate`)**: Dev Agent creates GitHub Issues with full task descriptions and assigns to GitHub Copilot Coding Agent
 
-6. **`/deploy`** - Azure Deployment
+7. **`/deploy`** - Azure Deployment
    - Azure Agent analyzes the codebase
    - Generates Bicep IaC templates
    - Creates GitHub Actions workflows for CI/CD
@@ -113,14 +124,19 @@ graph TB
    - Creates technical documentation, feature requirements, and current state analysis
    - **NEW**: Identifies extension points, capability gaps, and integration opportunities
    - Follows strict rules to ensure accuracy and honesty about existing functionality
-   - **Critical Rules**:
-     - ⚠️ **NEVER modifies code** - Read-only analysis
-     - ⚠️ **Documents ONLY what exists** - No fabrication
-     - ⚠️ **Honest about gaps** - Notes missing tests, incomplete features
-     - Links each finding to actual code files and implementations
-   - **Output supports two pathways**: Modernization OR Extension
+    - **Critical Rules**:
+      - ⚠️ **NEVER modifies code** - Read-only analysis
+      - ⚠️ **Documents ONLY what exists** - No fabrication
+      - ⚠️ **Honest about gaps** - Notes missing tests, incomplete features
+      - Links each finding to actual code files and implementations
+    - **Output supports two pathways**: Modernization OR Extension
 
-2. **`/modernize`** - Create Modernization Plan (Option A)
+2. **`/ddd`** - Domain Modeling (Optional)
+   - DDD Agent reads reverse-engineered documentation and feature specifications
+   - Creates bounded-context proposals plus Mermaid domain and database diagrams in `specs/domain/`
+   - Clarifies aggregate boundaries before modernization or extension work
+
+3. **`/modernize`** - Create Modernization Plan (Option A)
    - Modernization Agent assesses existing codebase for technical improvements
    - Creates files in `specs/modernize/` with modernization analysis
    - Creates files in `specs/tasks/` with specific modernization tasks
@@ -131,7 +147,7 @@ graph TB
      - ⚠️ **Evidence-based** - Recommendations based on actual code quality
      - ⚠️ **Honest about feasibility** - Notes technical debt and potential risks
 
-3. **`/extend`** - Create Extension Plan (Option B) **NEW**
+4. **`/extend`** - Create Extension Plan (Option B) **NEW**
    - Extension Agent gathers requirements from the user for new features
    - **Creates FRDs** in `specs/features/` for user-requested capabilities (same format as greenfield)
    - Creates extension strategy in `specs/extend/` (how to integrate with existing system)
@@ -143,13 +159,13 @@ graph TB
      - ⚠️ **Leverages existing patterns** - New features follow established conventions
      - ⚠️ **Preserves stability** - Extensions must not break existing functionality
 
-4. **`/plan`** - Implement Tasks (Optional)
+5. **`/plan`** - Implement Tasks (Optional)
    - Dev Agent reads tasks from `specs/tasks/` (modernization OR extension)
    - Implements tasks in the codebase
    - Follows best practices and existing architectural patterns
    - Ensures comprehensive testing of both new and existing functionality
 
-5. **`/deploy`** - Azure Deployment (Optional)
+6. **`/deploy`** - Azure Deployment (Optional)
    - Azure Agent deploys the evolved application to Azure
    - Generates updated Bicep IaC templates and CI/CD workflows
    - Uses Azure Dev CLI and MCP tools for deployment

@@ -248,6 +248,7 @@ function New-GitKeepFiles {
     
     $directories = @(
         "specs",
+        "specs\domain",
         "specs\features",
         "specs\tasks",
         "specs\docs"
@@ -275,12 +276,14 @@ function Write-NextSteps {
     Write-Host "   ${BLUE}Greenfield (New Features):${NC}"
     Write-Host "     • /prd      - Create Product Requirements Document"
     Write-Host "     • /frd      - Create Feature Requirements Documents"
+    Write-Host "     • /ddd      - Create domain and database model proposals"
     Write-Host "     • /plan     - Create Technical Task Breakdown"
     Write-Host "     • /implement - Implement features locally"
     Write-Host "     • /deploy   - Deploy to Azure"
     Write-Host ""
     Write-Host "   ${BLUE}Brownfield (Existing Code):${NC}"
     Write-Host "     • /rev-eng   - Reverse engineer codebase into specs"
+    Write-Host "     • /ddd       - Create bounded contexts and data model diagrams"
     Write-Host "     • /modernize - Create modernization plan"
     Write-Host ""
     Write-Host "3. ${BOLD}Learn more:${NC} https://github.com/EmeaAppGbb/spec2cloud"

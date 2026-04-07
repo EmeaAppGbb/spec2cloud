@@ -204,8 +204,15 @@ install_apm_config() {
 
 create_gitkeep_files() {
   log_info "Creating .gitkeep files for empty directories..."
-  
+
+  mkdir -p "$TARGET_DIR/specs"
+  mkdir -p "$TARGET_DIR/specs/domain"
+  mkdir -p "$TARGET_DIR/specs/features"
+  mkdir -p "$TARGET_DIR/specs/tasks"
+  mkdir -p "$TARGET_DIR/specs/docs"
+
   touch "$TARGET_DIR/specs/.gitkeep"
+  touch "$TARGET_DIR/specs/domain/.gitkeep"
   touch "$TARGET_DIR/specs/features/.gitkeep"
   touch "$TARGET_DIR/specs/tasks/.gitkeep"
   touch "$TARGET_DIR/specs/docs/.gitkeep"
@@ -225,12 +232,14 @@ print_next_steps() {
   echo -e "   ${BLUE}Greenfield (New Features):${NC}"
   echo "     • /prd      - Create Product Requirements Document"
   echo "     • /frd      - Create Feature Requirements Documents"
+  echo "     • /ddd      - Create domain and database model proposals"
   echo "     • /plan     - Create Technical Task Breakdown"
   echo "     • /implement - Implement features locally"
   echo "     • /deploy   - Deploy to Azure"
   echo
   echo -e "   ${BLUE}Brownfield (Existing Code):${NC}"
   echo "     • /rev-eng   - Reverse engineer codebase into specs"
+  echo "     • /ddd       - Create bounded contexts and data model diagrams"
   echo "     • /modernize - Create modernization plan"
   echo
   echo -e "3. ${BOLD}Learn more:${NC} https://github.com/EmeaAppGbb/spec2cloud"

@@ -34,6 +34,7 @@ scripts:
   # Greenfield workflows
   prd: "copilot --allow-tool -p .github/prompts/prd.prompt.md"
   frd: "copilot --allow-tool -p .github/prompts/frd.prompt.md"
+  ddd: "copilot --allow-tool -p .github/prompts/ddd.prompt.md"
   plan: "copilot --allow-tool -p .github/prompts/plan.prompt.md"
   implement: "copilot --allow-tool -p .github/prompts/implement.prompt.md"
   delegate: "copilot --allow-tool -p .github/prompts/delegate.prompt.md"
@@ -47,7 +48,7 @@ scripts:
   generate-agents: "copilot --allow-tool -p .github/prompts/generate-agents.prompt.md"
   
   # Architecture
-  architect: "copilot --allow-tool -p .github/prompts/architect.prompt.md"
+  adr: "copilot --allow-tool -p .github/prompts/adr.prompt.md"
 
 # After editing this file:
 # 1. Run: apm install (installs dependencies)

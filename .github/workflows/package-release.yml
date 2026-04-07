@@ -137,6 +137,7 @@ jobs:
           
           - `/prd` - Create Product Requirements Document
           - `/frd` - Create Feature Requirements Documents
+          - `/ddd` - Create DDD proposals and Mermaid diagrams
           - `/plan` - Create Technical Task Breakdown
           - `/implement` - Implement features locally
           - `/delegate` - Delegate to GitHub Copilot Coding Agent
@@ -215,8 +216,8 @@ jobs:
             ### 📋 What's Included
             
             **Full Package**:
-            - ✅ 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
-            - ✅ 12 workflow prompts
+            - ✅ 11 specialized AI agents (Spec2Cloud, PM, Dev Lead, DDD, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
+            - ✅ 13 workflow prompts
             - ✅ MCP server configuration
             - ✅ Dev container setup
             - ✅ Installation scripts (Linux/Mac/Windows)
@@ -224,8 +225,8 @@ jobs:
             - ✅ Documentation
             
             **Minimal Package**:
-            - ✅ 10 specialized AI agents
-            - ✅ 12 workflow prompts
+            - ✅ 11 specialized AI agents
+            - ✅ 13 workflow prompts
             
             ### 🔐 Verification
             

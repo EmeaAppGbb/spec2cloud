@@ -58,8 +58,8 @@ cd spec2cloud
 ### Full Installation
 
 Includes everything:
-- ✅ 10 specialized AI agents
-- ✅ 12 workflow prompts
+- ✅ 11 specialized AI agents
+- ✅ 13 workflow prompts
 - ✅ MCP server configuration
 - ✅ Dev container setup
 - ✅ APM configuration
@@ -76,8 +76,8 @@ Includes everything:
 ### Minimal Installation
 
 Includes only:
-- ✅ 10 specialized AI agents
-- ✅ 12 workflow prompts
+- ✅ 11 specialized AI agents
+- ✅ 13 workflow prompts
 
 ```bash
 # Linux/Mac
@@ -106,9 +106,10 @@ After installation, your project will have:
 ```
 your-project/
 ├── .github/
-│   ├── agents/              # 10 specialized AI agents
+│   ├── agents/              # 11 specialized AI agents
 │   │   ├── architect.agent.md
 │   │   ├── azure.agent.md
+│   │   ├── ddd.agent.md
 │   │   ├── dev.agent.md
 │   │   ├── devlead.agent.md
 │   │   ├── extender.agent.md
@@ -117,9 +118,10 @@ your-project/
 │   │   ├── pm.agent.md
 │   │   ├── spec2cloud.agent.md
 │   │   └── tech-analyst.agent.md
-│   └── prompts/             # 12 workflow prompts
+│   └── prompts/             # 13 workflow prompts
 │       ├── adr.prompt.md
 │       ├── bootstrap-agents.prompt.md
+│       ├── ddd.prompt.md
 │       ├── delegate.prompt.md
 │       ├── deploy.prompt.md
 │       ├── extend.prompt.md
@@ -135,6 +137,7 @@ your-project/
 ├── .devcontainer/
 │   └── devcontainer.json    # Dev container config (full install)
 ├── specs/                   # Documentation will be generated here
+│   ├── domain/
 │   ├── features/
 │   ├── tasks/
 │   └── docs/
@@ -276,19 +279,23 @@ For new features and projects:
 2. **`/frd`** - Create Feature Requirements Documents
    - Breaks down PRD into individual features
 
-3. **`/generate-agents`** (Optional) - Generate Agent Guidelines
+3. **`/ddd`** (Optional) - Model Domain and Data
+   - Creates DDD proposals in `specs/domain/proposals.md`
+   - Creates Mermaid domain and database diagrams in `specs/domain/`
+
+4. **`/generate-agents`** (Optional) - Generate Agent Guidelines
    - Consolidates engineering standards from `standards/` directory
 
-4. **`/plan`** - Create Technical Task Breakdown
+5. **`/plan`** - Create Technical Task Breakdown
    - Translates features into implementation tasks
 
-5. **`/implement`** - Implement Features Locally
+6. **`/implement`** - Implement Features Locally
    - Dev agent writes code directly
 
-6. **`/delegate`** - Delegate to GitHub Copilot
+7. **`/delegate`** - Delegate to GitHub Copilot
    - Creates GitHub issues for Copilot Coding Agent
 
-7. **`/deploy`** - Deploy to Azure
+8. **`/deploy`** - Deploy to Azure
    - Generates IaC and CI/CD pipelines
 
 ### Brownfield Workflows
@@ -299,13 +306,16 @@ For existing codebases:
    - Analyzes code and creates documentation
    - Generates tasks, features, and product vision
 
-2. **`/modernize`** (Optional) - Create Modernization Plan
+2. **`/ddd`** (Optional) - Create Domain Model Proposals
+   - Produces bounded contexts, aggregate proposals, and Mermaid domain/database diagrams
+
+3. **`/modernize`** (Optional) - Create Modernization Plan
    - Assesses technical debt and upgrade opportunities
 
-3. **`/plan`** (Optional) - Implement Modernization
+4. **`/plan`** (Optional) - Implement Modernization
    - Executes modernization tasks
 
-4. **`/deploy`** (Optional) - Deploy to Azure
+5. **`/deploy`** (Optional) - Deploy to Azure
    - Deploys modernized application
 
 ## 🔍 Troubleshooting
@@ -362,7 +372,7 @@ ls .github/agents/*.agent.md
 # Check prompts
 ls .github/prompts/*.prompt.md
 
-# Should see 10 agents and 12 prompts
+# Should see 11 agents and 13 prompts
 ```
 
 ## 📊 Verification
@@ -374,8 +384,8 @@ After installation, verify everything is working:
 tree .github/
 
 # 2. Count installed components
-find .github/agents -name "*.agent.md" | wc -l   # Should be 10
-find .github/prompts -name "*.prompt.md" | wc -l  # Should be 12
+find .github/agents -name "*.agent.md" | wc -l   # Should be 11
+find .github/prompts -name "*.prompt.md" | wc -l  # Should be 13
 
 # 3. Open in VS Code
 code .
@@ -384,10 +394,10 @@ code .
 # Press Ctrl+Shift+I (Windows/Linux) or Cmd+Shift+I (Mac)
 
 # 5. Type @ and verify agents appear
-# Should see: @spec2cloud, @pm, @devlead, @architect, @planner, @dev, @azure, @tech-analyst, @modernizer, @extender
+# Should see: @spec2cloud, @pm, @devlead, @ddd, @architect, @planner, @dev, @azure, @tech-analyst, @modernizer, @extender
 
 # 6. Type / and verify prompts appear
-# Should see: /prd, /frd, /plan, /implement, /deploy, /delegate, /rev-eng, /modernize, /extend, /adr, etc.
+# Should see: /prd, /frd, /ddd, /plan, /implement, /deploy, /delegate, /rev-eng, /modernize, /extend, /adr, etc.
 ```
 
 ## 🔄 Updating Spec2Cloud
@@ -433,6 +443,7 @@ find . -name "*.spec2cloud" -delete
 
 ### 2. Document as You Go
 - Use `/prd` before coding new features
+- Use `/ddd` before planning domain-heavy features or schema work
 - Run `/rev-eng` on inherited code
 - Keep specs/ directory in version control
 

@@ -189,6 +189,6 @@ log_success "Spec2Cloud installation complete!"
 echo
 echo "Next steps:"
 echo "1. Open your project in VS Code with GitHub Copilot"
-echo "2. Use workflows like /prd, /frd, /plan, /implement, /deploy"
+echo "2. Use workflows like /prd, /frd, /ddd, /plan, /implement, /deploy"
 echo "3. Learn more: https://github.com/${REPO}"
 echo

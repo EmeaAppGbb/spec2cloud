@@ -12,7 +12,7 @@ Instead of diving straight into code, spec2cloud guides you through a structured
 ┌─────────────────────────────────────────────────────────────────────┐
 │                         spec2cloud Flow                             │
 ├─────────────────────────────────────────────────────────────────────┤
-│  Idea → PRD → FRDs → ADRs → Implementation Plan → Code → Azure     │
+│ Idea → PRD → FRDs → DDD → ADRs → Implementation Plan → Code → Azure │
 │    ↑                                                          ↓     │
 │    └──────────── Specifications as Source of Truth ───────────┘     │
 └─────────────────────────────────────────────────────────────────────┘
@@ -68,6 +68,10 @@ User Idea
 └────────┬────────┘
          ↓
 ┌─────────────────┐
+│   DDD Agent     │ → Creates bounded contexts and domain/data diagrams
+└────────┬────────┘
+         ↓
+┌─────────────────┐
 │ Architect Agent │ → Creates ADRs for key decisions
 └────────┬────────┘
          ↓
@@ -119,6 +123,11 @@ Existing Codebase
 │ Tech-Analyst Agent  │ → Reverse engineers the codebase
 │                     │ → Creates technical docs in specs/docs/
 │                     │ → Generates FRDs from existing features
+└─────────┬───────────┘
+          ↓
+┌─────────────────────┐
+│     DDD Agent       │ → Creates specs/domain/ with
+│                     │ → domain and database models
 └─────────┬───────────┘
           ↓
 ┌─────────────────────┐
@@ -182,12 +191,14 @@ Predefined agents with specialized roles, available in `.github/agents/`:
 | **spec2cloud** | Orchestrator — routes requests to specialized agents |
 | **pm** | Product Manager — creates PRD and FRDs |
 | **devlead** | Dev Lead — reviews specs for technical completeness |
+| **ddd** | Domain-Driven Design — proposes bounded contexts, aggregates, and Mermaid domain/database diagrams |
 | **architect** | Architect — creates ADRs and manages guidelines |
 | **planner** | Planner — creates implementation plans and diagrams |
 | **dev** | Developer — implements features and manages standards |
 | **azure** | Azure Specialist — deploys with IaC and CI/CD |
 | **tech-analyst** | Reverse Engineer — analyzes existing codebases |
 | **modernizer** | Modernization Strategist — creates upgrade roadmaps |
+| **extender** | Extension Specialist — plans new features for existing systems |
 
 ### 2. Prompts
 
@@ -195,6 +206,7 @@ Structured prompts in `.github/prompts/` for common workflows:
 
 - `/prd` — Create a Product Requirements Document
 - `/frd` — Break PRD into Feature Requirements Documents
+- `/ddd` — Create DDD proposals and Mermaid domain/database diagrams
 - `/adr` — Create Architecture Decision Records
 - `/plan` — Create implementation plans with diagrams
 - `/deploy` — Deploy to Azure
@@ -267,12 +279,14 @@ Without AGENTS.md, coding agents lack project-specific context. With it, they ge
 | **spec2cloud** | Analyzes user intent, delegates to specialized agents, coordinates multi-agent workflows |
 | **pm** | Creates PRD and FRDs, focuses on WHAT not HOW, defines acceptance criteria |
 | **devlead** | Reviews specs for technical feasibility, identifies missing requirements, advocates simplicity |
+| **ddd** | Produces bounded-context proposals, aggregate models, and Mermaid database diagrams |
 | **architect** | Creates ADRs, researches technology options, maintains architecture standards |
 | **planner** | Creates multi-level Mermaid diagrams (L0-L3), breaks down work into tasks, planning only |
 | **dev** | Implements features, maintains code standards, follows AGENTS.md guidelines |
 | **azure** | Deploys to Azure using azd, creates Bicep templates, sets up CI/CD |
 | **tech-analyst** | Reverse engineers existing codebases, extracts specs from code, documents architecture |
 | **modernizer** | Analyzes legacy systems, identifies technical debt, creates modernization roadmaps |
+| **extender** | Gathers user requirements for brownfield extensions and creates integration-ready feature plans |
 
 ---
 
@@ -284,6 +298,7 @@ spec2cloud produces a structured set of artifacts:
 project/
 ├── specs/
 │   ├── prd.md                    # Product Requirements Document
+│   ├── domain/                   # DDD proposals and diagrams
 │   ├── features/                 # Feature Requirements Documents
 │   │   ├── user-auth.md
 │   │   ├── dashboard.md
@@ -304,6 +319,7 @@ project/
 | Artifact | Purpose | Created By |
 |----------|---------|------------|
 | **PRD** | Product vision, goals, success metrics | pm |
+| **Domain Model** | Bounded contexts, aggregates, and database diagrams | ddd |
 | **FRDs** | Feature specs with acceptance criteria | pm |
 | **ADRs** | Key technical decisions with rationale | architect |
 | **AGENTS.md** | Project-specific coding guidelines | architect / bootstrap |

@@ -28,8 +28,9 @@ Create ADRs when significant architectural decisions need to be documented, incl
 Before creating ADRs, read and analyze:
 1. **Product Requirements** - `specs/prd.md`
 2. **Feature Requirements** - `specs/features/*.md`
-3. **Engineering Standards** - `AGENTS.md` (if exists) or `standards/` folder
-4. **Existing ADRs** - `specs/adr/*.md` (to maintain consistency and avoid duplicates)
+3. **Domain Model Outputs** - `specs/domain/*.md` (if present)
+4. **Engineering Standards** - `AGENTS.md` (if exists) or `standards/` folder
+5. **Existing ADRs** - `specs/adr/*.md` (to maintain consistency and avoid duplicates)
 
 ## ADR Format (MADR - Markdown Any Decision Records)
 

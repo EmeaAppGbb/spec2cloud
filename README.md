@@ -38,8 +38,9 @@ Both workflows use specialized GitHub Copilot agents working together to maintai
 2. **copy your existing codebase** into the new repository
 3. **Open in Dev Container** - Everything is preconfigured in `.devcontainer/`
 4. **Run `/rev-eng`** - Reverse engineer codebase into specs and documentation
-5. **Run `/modernize`** - (optional) Create modernization plan and tasks
-6. **Run `/plan`** - (optional) Execute modernization tasks planned by the modernization agent
+5. **Run `/ddd`** - (optional) Propose bounded contexts and Mermaid domain/database diagrams
+6. **Run `/modernize`** - (optional) Create modernization plan and tasks
+7. **Run `/plan`** - (optional) Execute modernization tasks planned by the modernization agent
 
 ### Option 2: Install Into Existing Project using VSCode Extension
 
@@ -71,12 +72,12 @@ cd spec2cloud
 
 # Start using workflows
 code .
-# Use @pm, @dev, @azure agents and /prd, /frd, /plan, /deploy prompts
+# Use @pm, @ddd, @dev, @azure agents and /prd, /frd, /ddd, /plan, /deploy prompts
 ```
 
 **What Gets Installed**:
-- ✅ 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
-- ✅ 12 workflow prompts
+- ✅ 11 specialized AI agents (Spec2Cloud, PM, Dev Lead, DDD, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
+- ✅ 13 workflow prompts
 - ✅ MCP server configuration (optional)
 - ✅ Dev container setup (optional)
 - ✅ APM configuration (optional)

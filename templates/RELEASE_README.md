@@ -6,10 +6,11 @@ Transform any project into a spec2cloud-enabled development environment with spe
 
 This package contains:
 
-✅ **10 Specialized AI Agents**
+✅ **11 Specialized AI Agents**
 - Spec2Cloud Orchestrator - Main entry point, delegates to specialized agents
 - PM Agent - Product requirements and feature planning
 - Dev Lead Agent - Technical review and feasibility assessment
+- DDD Agent - Domain-driven design proposals and Mermaid domain/database diagrams
 - Architect Agent - Standards, guidelines, and AGENTS.md management
 - Planner Agent - Research and multi-step planning (no implementation)
 - Dev Agent - Implementation and code generation
@@ -18,9 +19,10 @@ This package contains:
 - Modernization Agent - Technical debt and upgrades
 - Extension Agent - New feature requirements and integration strategies
 
-✅ **12 Workflow Prompts**
+✅ **13 Workflow Prompts**
 - `/prd` - Create Product Requirements Document
 - `/frd` - Create Feature Requirements Documents
+- `/ddd` - Create DDD proposals and Mermaid domain/database diagrams
 - `/plan` - Create Technical Task Breakdown
 - `/implement` - Implement features locally
 - `/delegate` - Delegate to GitHub Copilot Coding Agent
@@ -77,7 +79,7 @@ After installation:
 3. Type `@` to see available agents
 4. Type `/` to see available workflows
 
-You should see all 10 agents and 12 prompts listed.
+You should see all 11 agents and 13 prompts listed.
 
 ## 📖 Usage
 
@@ -88,9 +90,10 @@ Build new features from product ideas:
 ```
 1. /prd       → Define product vision and requirements
 2. /frd       → Break down into features
-3. /plan      → Create technical tasks
-4. /implement → Write the code
-5. /deploy    → Deploy to Azure
+3. /ddd       → Model the domain and database boundaries
+4. /plan      → Create technical tasks
+5. /implement → Write the code
+6. /deploy    → Deploy to Azure
 ```
 
 ### Brownfield (Existing Code)
@@ -118,6 +121,7 @@ your-project/
 ├── .devcontainer/
 │   └── devcontainer.json   # Dev container (full install)
 ├── specs/                   # Generated documentation
+│   ├── domain/
 │   ├── features/
 │   ├── tasks/
 │   └── docs/
