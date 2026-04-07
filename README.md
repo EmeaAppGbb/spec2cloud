@@ -8,7 +8,7 @@
 
 ## What is spec2cloud?
 
-spec2cloud is a spec-driven development framework where **specifications are the single source of truth**. Tests are generated from specs, implementation makes those tests pass, and the result is deployed to Azure — all orchestrated by an AI agent with **43 specialized skills**. Every step is resumable, auditable, and requires human approval before anything ships.
+spec2cloud is a spec-driven development framework where **specifications are the single source of truth**. Tests are generated from specs, implementation makes those tests pass, and the result is deployed to Azure — all orchestrated by an AI agent with **46 specialized skills**. Every step is resumable, auditable, and requires human approval before anything ships.
 
 ## Why spec2cloud?
 
@@ -56,7 +56,7 @@ See **[INTEGRATION.md](INTEGRATION.md)** for detailed installation options and c
 
 ## Skills
 
-43 specialized skills power the framework — from spec refinement and test generation to Azure deployment and security assessment. [See the full catalog →](docs/skills.md)
+46 specialized skills power the framework — from spec refinement and DDD modeling to Azure deployment and security assessment. [See the full catalog →](docs/skills.md)
 
 ## Contributing
 

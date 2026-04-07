@@ -196,7 +196,7 @@ const SOURCES = [
 // Standard directories to create in the target project
 const SCAFFOLD_DIRS = [
   '.github/skills',
-  'specs/features', 'specs/tasks', 'specs/docs', '.spec2cloud',
+  'specs/features', 'specs/tasks', 'specs/docs', 'specs/domain', '.spec2cloud',
 ];
 
 // ---------------------------------------------------------------------------
@@ -789,7 +789,7 @@ function installFiles(files, contents, targetDir, force) {
   }
 
   // .gitkeep files
-  for (const dir of ['specs', 'specs/features', 'specs/tasks', 'specs/docs']) {
+  for (const dir of ['specs', 'specs/features', 'specs/tasks', 'specs/docs', 'specs/domain']) {
     const gk = join(target, dir, '.gitkeep');
     if (!existsSync(gk)) writeFileSync(gk, '');
   }

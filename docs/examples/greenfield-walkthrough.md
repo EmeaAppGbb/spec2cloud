@@ -25,7 +25,7 @@ npm install && cd src/web && npm install && cd ../.. && cd src/api && npm instal
 azd auth login && azd env new microhack && azd env set AZURE_LOCATION swedencentral
 ```
 
-You get: Next.js + Express + Playwright + Cucumber + Vitest + Bicep — all pre-wired with Aspire orchestration and 45 agentskills.io skills.
+You get: Next.js + Express + Playwright + Cucumber + Vitest + Bicep — all pre-wired with Aspire orchestration and 46 agentskills.io skills.
 
 > **Alternative shells:** The same pipeline works with [Python (FastAPI)](https://github.com/EmeaAppGbb/shell-python), [Java (Spring Boot)](https://github.com/EmeaAppGbb/shell-java), or [.NET (ASP.NET Core)](https://github.com/EmeaAppGbb/shell-dotnet). The orchestrator and skills are stack-agnostic.
 
@@ -62,6 +62,13 @@ The orchestrator reviews your PRD through product and technical lenses, splits i
 Interactive HTML wireframe prototypes are generated and served on localhost. Walk through the board layout, task creation, edit/delete flows.
 
 🚦 **Human Gate — prototype verification:** Does the UI match what you had in mind when you wrote the PRD? An adjustment here costs seconds. The same change post-implementation costs much more.
+
+### Optional — DDD Modeling
+If the app has rich business rules, multiple subdomains, or non-trivial data
+ownership, ask Copilot to run `ddd-modeling` before increment planning. That
+produces `specs/domain/proposals.md`, `specs/domain/domain-model.md`, and
+`specs/domain/database-model.md` to make bounded contexts and aggregate
+boundaries explicit.
 
 ### 1c — Increment Planning
 FRDs are broken into ordered increments. A typical plan:

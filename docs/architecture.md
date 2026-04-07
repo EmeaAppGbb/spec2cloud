@@ -59,6 +59,7 @@ State is committed to git after every action. This means:
 specs/                   — Generated specifications
 ├── prd.md               — Product requirements document
 ├── frd-{feature}.md     — Feature requirements (one per feature)
+├── domain/              — Optional DDD outputs (proposals, domain model, database model)
 ├── features/            — Gherkin scenarios (.feature files)
 ├── contracts/            — API contracts (OpenAPI YAML)
 │   └── api/

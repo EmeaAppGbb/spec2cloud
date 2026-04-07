@@ -29,6 +29,7 @@ deployment. You exist to eliminate all of that.
 ## Inputs
 
 - All approved FRDs (`specs/frd-*.md`)
+- Domain model artifacts (`specs/domain/*.md`) if present
 - UI/UX artifacts (`specs/ui/screen-map.md`, `specs/ui/component-inventory.md`,
   `specs/ui/design-system.md`)
 - Increment plan (`specs/increment-plan.md`)
@@ -40,10 +41,10 @@ deployment. You exist to eliminate all of that.
 
 ### Step 1: Extract Technology Needs
 
-Read every FRD, the UI component inventory, and the increment plan. For each
-feature, note what data it stores/retrieves, external services it calls,
-real-time behavior it needs, AI/ML capabilities it uses, special frontend
-components it requires, and infrastructure it depends on.
+Read every FRD, the UI component inventory, optional domain model artifacts, and
+the increment plan. For each feature, note what data it stores/retrieves,
+external services it calls, real-time behavior it needs, AI/ML capabilities it
+uses, special frontend components it requires, and infrastructure it depends on.
 
 Produce a raw inventory: a flat list of every technology need, tagged with which
 FRD and increment requires it.
@@ -145,6 +146,7 @@ Before presenting to the human for approval:
 - [ ] No technology in the increment plan without being in tech-stack.md
 - [ ] Skills exist for non-trivial technologies
 - [ ] Instructions in copilot-instructions.md for project-wide conventions
+- [ ] If `specs/domain/` exists, storage and integration decisions respect bounded context ownership
 
 ## Mandatory Completion Checklist
 

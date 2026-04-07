@@ -83,7 +83,7 @@ Spec2Cloud Quick Install Script
 Usage: curl -fsSL https://raw.githubusercontent.com/${REPO}/vNext/scripts/quick-install.sh | bash -s -- [OPTIONS]
 
 OPTIONS:
-  --minimal           Install minimal package (agents and prompts only)
+  --minimal           Install minimal package (skills only)
   --ref REF           Branch or tag to install from (default: vNext)
   --branch BRANCH     Alias for --ref
   --tag TAG           Alias for --ref
@@ -196,7 +196,7 @@ log_success "Spec2Cloud installation complete!"
 echo
 echo "Next steps:"
 echo "1. Open your project in VS Code with GitHub Copilot"
-echo "2. The spec2cloud orchestrator and 43 skills are now active"
+echo "2. The spec2cloud orchestrator and 46 skills are now active"
 echo "3. Start a conversation with Copilot to begin your workflow"
 echo "4. Learn more: https://github.com/${REPO}"
 echo

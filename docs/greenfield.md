@@ -31,6 +31,15 @@ Interactive HTML prototypes are generated from the approved specs and served via
 
 **Human Gate:** Review prototypes, provide feedback, approve designs.
 
+### Optional — DDD Modeling
+
+For domain-heavy systems, run `ddd-modeling` after FRDs are approved. The skill
+produces `specs/domain/proposals.md`, `specs/domain/domain-model.md`, and
+`specs/domain/database-model.md` so bounded contexts, aggregates, and
+persistence ownership are explicit before planning and implementation.
+
+**Human Gate:** Review and approve the proposed boundaries and terminology.
+
 ### 1c — Increment Planning
 
 FRDs are organized into ordered delivery increments. The first increment is always a "walking skeleton"—the minimal end-to-end path that proves the architecture works.
@@ -41,7 +50,7 @@ Every technology choice is researched, evaluated, and documented as an Architect
 
 **Human Gate:** Review tech stack choices and ADRs.
 
-Before moving to Phase 2, the orchestrator verifies all Phase 1 artifacts exist: PRD/FRDs, all 6 UI/UX artifacts, increment plan, tech stack, and infrastructure contract.
+Before moving to Phase 2, the orchestrator verifies all Phase 1 artifacts exist: PRD/FRDs, all 6 UI/UX artifacts, optional domain artifacts if DDD modeling was used, increment plan, tech stack, and infrastructure contract.
 
 ## Phase 2: Increment Delivery
 

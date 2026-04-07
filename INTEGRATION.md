@@ -4,7 +4,7 @@ This guide explains how to add the spec2cloud workflow to your existing projects
 
 ## What is Spec2Cloud?
 
-Spec2cloud is an AI-powered spec-driven development framework. It provides 43 specialized skills that transform how you build software:
+Spec2cloud is an AI-powered spec-driven development framework. It provides 46 specialized skills that transform how you build software:
 
 - **Greenfield**: Turn product ideas into deployed applications through structured specification-driven development
 - **Brownfield**: Extract specifications from existing codebases, then modernize, extend, rewrite, or fix
@@ -70,7 +70,7 @@ rm -rf /tmp/spec2cloud
 ```
 your-project/
   .github/
-    skills/              # 43 agentskills.io skills (core framework)
+    skills/              # 46 agentskills.io skills (core framework)
     copilot-instructions.md
     lsp.json
   .spec2cloud/           # State management
@@ -89,6 +89,7 @@ your-project/
     features/
     tasks/
     docs/
+    domain/
 ```
 
 ### Minimal Installation
@@ -96,7 +97,7 @@ your-project/
 ```
 your-project/
   .github/
-    skills/              # 43 agentskills.io skills
+    skills/              # 46 agentskills.io skills
   AGENTS.md              # Orchestrator instructions
   skills-lock.json       # Skills version lock
   .spec2cloud/           # State management
@@ -160,14 +161,14 @@ After installation, open VS Code and start a conversation with GitHub Copilot. T
 ### Greenfield Workflow
 
 1. **Phase 0: Shell Setup** — Scaffolding and config
-2. **Phase 1: Product Discovery** — PRD → FRD → UI/UX → Increment Plan → Tech Stack
+2. **Phase 1: Product Discovery** — PRD → FRD → UI/UX → optional DDD → Increment Plan → Tech Stack
 3. **Phase 2: Increment Delivery** — Tests → Contracts → Implementation → Deploy (repeats per increment)
 
 ### Brownfield Workflow
 
 1. **Phase B0: Onboarding** — Detect brownfield mode, initialize state
 2. **Phase B1: Extract** — Scan codebase, extract architecture, APIs, data models, test inventory
-3. **Phase B2: Spec-Enable** — Generate PRD and FRDs from code
+3. **Phase B2: Spec-Enable** — Generate PRD and FRDs from code, then optionally model bounded contexts and target data ownership
 4. **Testability Gate** — Assess whether the app can be tested:
    - **Track A (Testable)** — Generate Gherkin + tests that pass on current code (green baseline)
    - **Track B (Non-Testable)** — Generate behavioral documentation + manual verification checklists
@@ -183,7 +184,7 @@ After installation, open VS Code and start a conversation with GitHub Copilot. T
 
 **Solution**: Ensure `.github/skills/` directory exists and contains skill folders with `SKILL.md` files.
 ```bash
-find .github/skills -name "SKILL.md" | wc -l    # Should be 43
+find .github/skills -name "SKILL.md" | wc -l    # Should be 46
 ```
 
 ### MCP Servers Not Loading
@@ -206,7 +207,7 @@ find .github/skills -name "SKILL.md" | wc -l    # Should be 43
 
 ```bash
 # Check installed skills
-find .github/skills -name "SKILL.md" | wc -l    # Should be 43
+find .github/skills -name "SKILL.md" | wc -l    # Should be 46
 
 # Check orchestrator
 test -f AGENTS.md && echo "AGENTS.md exists"

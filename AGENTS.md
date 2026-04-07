@@ -89,6 +89,7 @@ All specialized logic lives in `.github/skills/` following the [agentskills.io](
 | `skill-discovery` | Search skills.sh for community skills |
 | `find-skills` | Help users discover and install skills for specific tasks |
 | `adr` | Generate and manage Architecture Decision Records |
+| `ddd-modeling` | Propose bounded contexts, aggregates, and Mermaid domain/database diagrams |
 | `bug-fix` | Lightweight bug fix with FRD traceability |
 | `aspire` | Orchestrate Aspire distributed apps (start, stop, describe, logs) |
 | `playwright-cli` | Automate browser interactions for testing, screenshots, data extraction |
@@ -145,6 +146,7 @@ Phase 0: Shell Setup          (one-time)
 Phase 1: Product Discovery    (one-time)
   ├── 1a: Spec Refinement     → skill: spec-refinement
   ├── 1b: UI/UX Design        → skill: ui-ux-design
+  ├── Optional: DDD Modeling  → skill: ddd-modeling
   ├── 1c: Increment Planning  → orchestrator (inline)
   └── 1d: Tech Stack          → skill: tech-stack-resolution
 Phase 2: Increment Delivery   (repeats per increment)
@@ -196,6 +198,20 @@ Follow the skill's 8-step process (Screen Inventory → Design System → HTML P
 
 **Exit:** Human approves **all 6 artifacts** after browsing the served prototypes. **Human gate:** Yes.
 
+#### Optional: DDD Modeling → `ddd-modeling` skill
+When the system has meaningful business rules, multiple subdomains, or unclear
+data ownership, run DDD modeling after FRDs are approved. The skill produces:
+
+- `specs/domain/proposals.md`
+- `specs/domain/domain-model.md`
+- `specs/domain/database-model.md`
+
+These artifacts inform increment planning, tech stack resolution, contracts, and
+implementation by making bounded contexts, aggregates, and persistence ownership
+explicit.
+
+**Exit:** Human approves the domain boundaries and terminology if the skill is invoked. **Human gate:** Yes.
+
 #### 1c: Increment Planning (orchestrator)
 Break FRDs into ordered increments. Walking skeleton first, then by dependency chain.
 **Output:** `specs/increment-plan.md` with ID, scope, screens, flows, dependencies, complexity.
@@ -214,6 +230,7 @@ The orchestrator MUST verify ALL of the following before transitioning from Phas
 - [ ] `specs/prd.md` exists (or FRDs were provided directly)
 - [ ] At least one `specs/frd-*.md` exists and is human-approved
 - [ ] All 6 UI/UX artifacts exist in `specs/ui/` (screen-map, design-system, prototypes, component-inventory, flow-walkthrough, walkthrough.html)
+- [ ] If DDD modeling was invoked, all `specs/domain/` artifacts exist and are human-approved
 - [ ] `specs/increment-plan.md` exists with at least one increment defined
 - [ ] `specs/tech-stack.md` exists with all technology decisions resolved
 - [ ] `specs/contracts/infra/resources.yaml` exists (if Azure resources are needed)
@@ -280,6 +297,7 @@ Phase B2: Spec-Enable                     (generate specs — always runs)
   B2a: PRD generation                     (human gate)
   B2b: FRD generation per feature         (human gate)
   B2c: Spec refinement                    (human gate)
+  Optional: DDD modeling                  (human gate)
 ─── TESTABILITY GATE (human decision) ───
   Track A: Green Baseline (testable)
     Per feature: Gherkin capture → test scaffold → green verification → human gate
@@ -342,9 +360,20 @@ One FRD per feature, with **Current Implementation** section documenting actual 
 Review FRDs through product + technical lenses (max 5 passes).
 **Exit:** Human approves refined FRDs. **Human gate:** Yes.
 
+#### Optional: DDD Modeling → `ddd-modeling` skill
+When brownfield planning needs explicit target boundaries, run DDD modeling
+after refined FRDs are approved. The skill uses extracted architecture and data
+models plus the FRDs to separate:
+
+- **Observed boundaries** in the current implementation
+- **Proposed target bounded contexts** for future planning
+- **Persistence ownership** and integration seams
+
+**Exit:** Human approves proposed boundaries and glossary if the skill is invoked. **Human gate:** Yes.
+
 **Commit:** `[brownfield] B2 spec-enable complete — PRD + N FRDs`
 
-At this point the project ALWAYS has: PRD, FRDs, tech stack, architecture docs, data models, API contracts, dependency inventory, and test inventory.
+At this point the project ALWAYS has: PRD, FRDs, tech stack, architecture docs, data models, API contracts, dependency inventory, and test inventory. If DDD modeling runs, it also has target domain proposals in `specs/domain/`.
 
 ### Testability Gate (Human Decision)
 
