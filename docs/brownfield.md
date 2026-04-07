@@ -41,7 +41,7 @@ Six extraction skills scan the codebase without making any judgments:
 
 Two generators create formal specifications from the extraction output:
 
-- **PRD Generator** — Product Requirements Document reverse-engineered from the codebase (**Human Gate**)
+- **PRD Generator** — Product Requirements Document reverse-engineered from the codebase, including a top Mermaid product/process diagram when relevant and an as-built implementation diagram when useful (**Human Gate**)
 - **FRD Generator** — Feature Requirement Documents with "Current Implementation" sections (**Human Gate**)
 - **Spec Refinement** — Review through product + technical lenses (**Human Gate**)
 

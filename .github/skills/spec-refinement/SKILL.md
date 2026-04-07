@@ -58,6 +58,7 @@ You have a maximum of 5 passes per document. Use them wisely.
 - Run the full product lens checklist.
 - Focus on completeness, missing requirements, and user story quality.
 - Identify the biggest gaps first — don't nitpick on pass 1.
+- Check whether a leading Mermaid product/process diagram is needed to make the PRD understandable at a glance.
 
 ### Pass 2 — Technical Lens Deep Dive
 
@@ -90,6 +91,28 @@ You have a maximum of 5 passes per document. Use them wisely.
 - If no critical or major issues remain after a pass, recommend approval.
 - State clearly: "This document is ready to proceed to the next phase."
 - Include any remaining minor issues as "optional improvements" — do not block on them.
+
+## PRD Diagram Standards
+
+When a PRD describes a workflow, actor handoff, lifecycle, state transition, or
+multi-step process, it should begin with a Mermaid diagram immediately after the
+title and before `## Product Vision`.
+
+Prefer diagrams that clarify the product behavior:
+
+- `flowchart` for business processes and decision paths
+- `sequenceDiagram` for actor/system interactions
+- `stateDiagram-v2` for lifecycle or status transitions
+- `journey` for end-to-end user journeys
+
+Treat a missing leading diagram as a **major** issue when the product would
+otherwise be hard to understand from prose alone. If the workflow is genuinely
+trivial, omission is acceptable, but say so explicitly in the review.
+
+After implementation exists, PRDs may also include an `## Implementation
+Diagram` section near the end of the document. Use it for as-built request
+flows, orchestration, async pipelines, or other runtime interactions. Do **not**
+require this section before code exists.
 
 ## PRD → FRD Breakdown Strategy
 

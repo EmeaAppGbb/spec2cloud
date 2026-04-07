@@ -45,7 +45,7 @@ See `references/api-slice.md`, `references/web-slice.md`, and
 Before writing any code, determine the correct implementation order:
 
 1. Read all Gherkin features, step definitions, and e2e specs. Cross-reference
-   FRDs for dependency declarations.
+   FRDs and `specs/prd.md` for dependency declarations and overall product flow.
 2. Order features so dependencies are satisfied first.
 3. Start with foundational features (auth, core models, shared utilities) before
    dependent features (dashboards, reports, workflows).
@@ -168,6 +168,33 @@ After ALL features pass their integration slices, run the complete suite:
 
 After regression passes, generate documentation: `npm run docs:generate`
 
+## PRD Implementation Diagram Update
+
+After regression passes and before the final implementation handoff, review
+`specs/prd.md`.
+
+Add or update an `## Implementation Diagram` section when the implemented flow
+is non-trivial — for example:
+
+- request/response chains spanning multiple components
+- async workflows, queues, or webhooks
+- cross-layer orchestration that is easier to understand visually
+- critical user flows whose runtime behavior is clearer as a diagram
+
+Use Mermaid text. Prefer:
+
+- `sequenceDiagram` for request, command, and event interactions
+- `flowchart` for branching pipelines
+- `stateDiagram-v2` for lifecycle-driven behavior
+
+Rules:
+
+- Diagram actual as-built behavior, not intended architecture.
+- Keep it consistent with contracts, tests, and the running code.
+- Update only the implementation diagram section; do not rewrite approved
+  product requirements unless the human separately changed scope.
+- If the runtime flow is trivial, the section may remain absent.
+
 ## Fast Feedback Practices
 
 - **Watch mode**: `cd src/api && npm run test:watch` for rapid API iteration.
@@ -240,5 +267,6 @@ The orchestrator MUST verify ALL of the following before marking implementation 
 - [ ] Full regression suite passes (not just tests for the current increment)
 - [ ] No `test.skip()`, `xit()`, `@pending`, or commented-out tests exist in the codebase
 - [ ] State JSON and audit log are updated with per-slice completion
+- [ ] If the implemented flow is non-trivial, `specs/prd.md` includes an up-to-date Mermaid implementation diagram that matches the actual code path
 
 **BLOCKING**: If any item is unchecked, the skill has NOT completed successfully. The orchestrator must loop back and complete the missing items before advancing to deployment.

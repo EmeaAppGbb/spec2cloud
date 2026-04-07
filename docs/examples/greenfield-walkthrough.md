@@ -31,7 +31,11 @@ You get: Next.js + Express + Playwright + Cucumber + Vitest + Bicep — all pre-
 
 ## Step 1: Write Your PRD (~20 min)
 
-This is the only step where you write anything substantial. Open `specs/prd.md` and describe your Task Board — what it does, who uses it, what the key user stories are, and any constraints (in-memory, no auth).
+This is the only step where you write anything substantial. Open `specs/prd.md`
+and describe your Task Board — what it does, who uses it, what the key user
+stories are, and any constraints (in-memory, no auth). If the workflow is
+non-trivial, start the PRD with a Mermaid process or journey diagram before the
+written sections.
 
 > **Why this matters:** Your PRD is the ground truth everything traces back to. The more deliberately you write it, the more meaningful the verification is at every downstream gate. Vague requirements lead to passing tests that don't actually prove anything.
 
@@ -109,6 +113,10 @@ Three slices run:
 | **Integration** | API + Web running together, full regression green |
 
 > **💡 Try it live:** Aspire is already running in the background. Ask the agent for the Aspire dashboard URL and open your app in the browser. Click around, test the flows, and see if anything feels off. If you spot bugs or issues, ask the agent to fix them — it can use the Aspire and Playwright MCP tools to diagnose and resolve problems interactively. It's much cheaper to catch issues here than after deployment.
+
+If the runtime flow is easier to understand visually, ask the agent to update
+`specs/prd.md` with an as-built Mermaid implementation diagram before you do the
+implementation review.
 
 🚦 **Human Gate — implementation verification:** Review the diff. Does this match what you approved in the Gherkin? Tests passing is necessary — but not sufficient. You're verifying the *right* implementation, not just a green one.
 
