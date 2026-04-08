@@ -125,6 +125,7 @@ After extraction and spec generation, a **testability gate** determines which tr
 | Skill | Purpose |
 |-------|---------|
 | adr | Create Architecture Decision Records |
+| ddd-modeling | Propose bounded contexts, aggregates, context maps, and Mermaid domain/database diagrams |
 | bug-fix | Diagnose and fix bugs |
 
 ## Find Skills

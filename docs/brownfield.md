@@ -45,7 +45,20 @@ Two generators create formal specifications from the extraction output:
 - **FRD Generator** — Feature Requirement Documents with "Current Implementation" sections (**Human Gate**)
 - **Spec Refinement** — Review through product + technical lenses (**Human Gate**)
 
-**Result:** Your existing codebase now has the same specification foundation as a greenfield project — PRD, FRDs, tech stack, architecture docs, API contracts, and dependency inventory.
+### Optional — DDD Modeling
+
+For modular monoliths, service decomposition, or business-heavy domains, run
+`ddd-modeling` after FRDs are approved. It combines the extracted architecture
+and ERD outputs with the refined specs to produce:
+
+- `specs/domain/proposals.md`
+- `specs/domain/domain-model.md`
+- `specs/domain/database-model.md`
+
+Brownfield DDD outputs should distinguish observed current constraints from the
+proposed target model.
+
+**Result:** Your existing codebase now has the same specification foundation as a greenfield project — PRD, FRDs, tech stack, architecture docs, API contracts, dependency inventory, and optionally target domain boundaries.
 
 ---
 

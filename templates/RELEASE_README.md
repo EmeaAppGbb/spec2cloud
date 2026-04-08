@@ -6,10 +6,10 @@ Transform any project into a spec2cloud-enabled development environment with spe
 
 This package contains:
 
-✅ **43 Specialized Skills** ([agentskills.io](https://agentskills.io/specification) standard)
-- 22 greenfield skills (spec refinement, UI/UX, testing, contracts, implementation, deployment)
-- 20 brownfield skills (extraction, assessment, planning, modernization)
-- find-skills (discover and install community skills)
+✅ **46 Specialized Skills** ([agentskills.io](https://agentskills.io/specification) standard)
+- Greenfield discovery and delivery workflows
+- Brownfield extraction, assessment, and planning workflows
+- Cross-cutting skills including DDD modeling and community skill discovery
 
 ✅ **Orchestrator** (AGENTS.md)
 - Ralph Loop pattern: read state → decide → execute → verify → commit
@@ -44,7 +44,7 @@ After installation:
 
 ```bash
 # Verify installation
-find .github/skills -name "SKILL.md" | wc -l    # Should be 43
+find .github/skills -name "SKILL.md" | wc -l    # Should be 46
 test -f AGENTS.md && echo "Orchestrator installed"
 ```
 
@@ -58,7 +58,7 @@ Start a conversation with Copilot:
 ```
 
 The orchestrator walks you through:
-1. **Phase 1: Discovery** — PRD → FRD → UI/UX → Increment Plan → Tech Stack
+1. **Phase 1: Discovery** — PRD → FRD → UI/UX → optional DDD → Increment Plan → Tech Stack
 2. **Phase 2: Delivery** — Tests → Contracts → Implementation → Deploy (per increment)
 
 ### Brownfield (Existing Code)
@@ -82,10 +82,11 @@ After installation:
 ```
 your-project/
 ├── .github/
-│   └── skills/             # 43 agentskills.io skills
+│   └── skills/             # 46 agentskills.io skills
 ├── .spec2cloud/            # State management
 ├── .devcontainer/          # Dev container (full install)
 ├── specs/                  # Generated specifications
+│   └── domain/             # Optional DDD outputs
 ├── AGENTS.md               # Orchestrator instructions
 └── skills-lock.json        # Skills version lock
 ```

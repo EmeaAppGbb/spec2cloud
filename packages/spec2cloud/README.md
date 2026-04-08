@@ -41,11 +41,11 @@ npx spec2cloud init --force
 ## What Gets Installed
 
 **Full mode** (default):
-- 43 agentskills.io skills (22 greenfield + 20 brownfield + find-skills)
+- 46 agentskills.io skills covering greenfield, brownfield, and utility workflows
 - VS Code MCP configuration
 - Dev container setup
 - AGENTS.md orchestrator
-- Directory structure (`specs/`, `.spec2cloud/`)
+- Directory structure (`specs/`, `specs/domain/`, `.spec2cloud/`)
 
 **Minimal mode** (`--minimal`):
 - Skills and AGENTS.md only
