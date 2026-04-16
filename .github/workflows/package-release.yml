@@ -175,7 +175,7 @@ jobs:
           
           ## What's Included
           
-          - `.github/skills/` — 46 agentskills.io skills (core framework)
+          - `.github/skills/` — agentskills.io skills (core framework)
           - `AGENTS.md` — Orchestrator instructions
           - `skills-lock.json` — Skills version lock
           - `.spec2cloud/` — State management
@@ -254,7 +254,7 @@ jobs:
             ### 📋 What's Included
             
             **Full Package**:
-            - ✅ 46 agentskills.io skills (core framework)
+            - ✅ agentskills.io skills (core framework)
             - ✅ Orchestrator (AGENTS.md)
             - ✅ MCP server configuration
             - ✅ Dev container setup
@@ -262,7 +262,7 @@ jobs:
             - ✅ Specs directory structure
             
             **Minimal Package**:
-            - ✅ 46 agentskills.io skills
+            - ✅ agentskills.io skills
             - ✅ Orchestrator (AGENTS.md)
             - ✅ State management (.spec2cloud/)
             

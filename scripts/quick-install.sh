@@ -156,7 +156,7 @@ download_and_install() {
   # Always install: skills, AGENTS.md, skills-lock.json, .spec2cloud
   if [ -d "$extracted_dir/.github/skills" ]; then
     mkdir -p "$TARGET_DIR/.github/skills"
-    cp -r "$extracted_dir/.github/skills/"* "$TARGET_DIR/.github/skills/"
+    cp -r "$extracted_dir/.github/skills/." "$TARGET_DIR/.github/skills/"
   else
     log_error "Archive is missing .github/skills — not a valid spec2cloud archive"
     rm -rf "$temp_dir"
@@ -173,7 +173,7 @@ download_and_install() {
   
   if [ -d "$extracted_dir/.spec2cloud" ]; then
     mkdir -p "$TARGET_DIR/.spec2cloud"
-    cp -r "$extracted_dir/.spec2cloud/"* "$TARGET_DIR/.spec2cloud/"
+    cp -r "$extracted_dir/.spec2cloud/." "$TARGET_DIR/.spec2cloud/"
   fi
   
   # Full mode: also install devcontainer, MCP config, copilot instructions
