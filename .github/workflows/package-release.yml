@@ -36,7 +36,7 @@ jobs:
           echo "Validating spec2cloud structure..."
           
           # Check required directories
-          required_dirs=(".github/agents" ".github/prompts" ".github/skills")
+          required_dirs=(".github/skills")
           for dir in "${required_dirs[@]}"; do
             if [ ! -d "$dir" ]; then
               echo "Error: Required directory $dir not found"
@@ -44,42 +44,39 @@ jobs:
             fi
           done
           
-          # Count agents, prompts, and skills
-          agent_count=$(find .github/agents -name "*.agent.md" | wc -l)
-          prompt_count=$(find .github/prompts -name "*.prompt.md" | wc -l)
+          # Count skills
           skill_count=$(find .github/skills -name "SKILL.md" | wc -l)
           
-          echo "Found $agent_count agents"
-          echo "Found $prompt_count prompts"
           echo "Found $skill_count skills"
           
-          if [ $agent_count -eq 0 ] || [ $prompt_count -eq 0 ] || [ $skill_count -eq 0 ]; then
-            echo "Error: No agents, prompts, or skills found"
+          if [ $skill_count -eq 0 ]; then
+            echo "Error: No skills found"
             exit 1
           fi
+          
+          # Check required files
+          required_files=("AGENTS.md" "skills-lock.json")
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Error: Required file $file not found"
+              exit 1
+            fi
+          done
           
           echo "✅ Structure validation passed"
       
       - name: Create package directories
         run: |
-          mkdir -p release-full
-          mkdir -p release-minimal
+          mkdir -p release-full/.github
+          mkdir -p release-minimal/.github
           mkdir -p checksums
       
       - name: Build full package
         run: |
           echo "Building full spec2cloud package..."
           
-          # Copy agents and prompts
-          mkdir -p release-full/.github/agents
-          mkdir -p release-full/.github/prompts
-          cp -r .github/agents/*.agent.md release-full/.github/agents/
-          cp -r .github/prompts/*.prompt.md release-full/.github/prompts/
-          
-          # Copy skills (vNext core framework)
-          if [ -d ".github/skills" ]; then
-            cp -r .github/skills release-full/.github/skills
-          fi
+          # Copy skills (core framework)
+          cp -r .github/skills release-full/.github/skills
           
           # Copy copilot instructions
           if [ -f ".github/copilot-instructions.md" ]; then
@@ -97,9 +94,7 @@ jobs:
           fi
           
           # Copy AGENTS.md orchestrator
-          if [ -f "AGENTS.md" ]; then
-            cp AGENTS.md release-full/
-          fi
+          cp AGENTS.md release-full/
           
           # Copy MCP config
           if [ -f ".mcp.json" ]; then
@@ -107,9 +102,7 @@ jobs:
           fi
           
           # Copy skills-lock.json
-          if [ -f "skills-lock.json" ]; then
-            cp skills-lock.json release-full/
-          fi
+          cp skills-lock.json release-full/
           
           # Copy VS Code configuration
           if [ -f ".vscode/mcp.json" ]; then
@@ -117,28 +110,22 @@ jobs:
             cp .vscode/mcp.json release-full/.vscode/
           fi
           
-          # Copy devcontainer (optional)
-          if [ -d ".devcontainer" ]; then
-            cp -r .devcontainer release-full/.devcontainer
+          # Copy devcontainer config
+          if [ -f ".devcontainer/devcontainer.json" ]; then
+            mkdir -p release-full/.devcontainer
+            cp .devcontainer/devcontainer.json release-full/.devcontainer/
           fi
           
-          # Copy templates
-          mkdir -p release-full/templates/specs/{features,tasks,docs}
-          cp -r templates/ release-full/templates/
-          touch release-full/templates/specs/.gitkeep
-          touch release-full/templates/specs/features/.gitkeep
-          touch release-full/templates/specs/tasks/.gitkeep
-          touch release-full/templates/specs/docs/.gitkeep
-          
-          # Copy installation scripts
-          mkdir -p release-full/scripts
-          cp scripts/install.sh release-full/scripts/
-          cp scripts/install.ps1 release-full/scripts/
-          chmod +x release-full/scripts/install.sh
+          # Create specs directory structure
+          mkdir -p release-full/specs/{features,tasks,docs,domain}
+          touch release-full/specs/.gitkeep
+          touch release-full/specs/features/.gitkeep
+          touch release-full/specs/tasks/.gitkeep
+          touch release-full/specs/docs/.gitkeep
+          touch release-full/specs/domain/.gitkeep
           
           # Copy documentation
           cp templates/RELEASE_README.md release-full/README.md
-          cp INTEGRATION.md release-full/
           cp LICENSE.md release-full/
           
           echo "✅ Full package built"
@@ -147,18 +134,10 @@ jobs:
         run: |
           echo "Building minimal spec2cloud package..."
           
-          # Copy agents, prompts, and skills
-          mkdir -p release-minimal/.github/agents
-          mkdir -p release-minimal/.github/prompts
-          cp -r .github/agents/*.agent.md release-minimal/.github/agents/
-          cp -r .github/prompts/*.prompt.md release-minimal/.github/prompts/
+          # Copy skills (core framework)
+          cp -r .github/skills release-minimal/.github/skills
           
-          # Include skills (core vNext framework)
-          if [ -d ".github/skills" ]; then
-            cp -r .github/skills release-minimal/.github/skills
-          fi
-          
-          # Include copilot instructions
+          # Copy copilot instructions
           if [ -f ".github/copilot-instructions.md" ]; then
             cp .github/copilot-instructions.md release-minimal/.github/
           fi
@@ -169,38 +148,45 @@ jobs:
           fi
           
           # Include AGENTS.md
-          if [ -f "AGENTS.md" ]; then
-            cp AGENTS.md release-minimal/
-          fi
+          cp AGENTS.md release-minimal/
+          
+          # Include skills-lock.json
+          cp skills-lock.json release-minimal/
+          
+          # Create specs directory structure
+          mkdir -p release-minimal/specs/{features,tasks,docs,domain}
+          touch release-minimal/specs/.gitkeep
           
           # Create minimal README
           cat > release-minimal/README.md << 'EOF'
           # Spec2Cloud - Minimal Installation
           
-          This package contains only the GitHub Copilot agents and prompts.
+          This package contains the spec2cloud skills framework and orchestrator.
           
           ## Quick Install
           
-          Copy the `.github` folder to your project root:
+          Copy the contents to your project root:
           
           ```bash
           cp -r .github /path/to/your/project/
+          cp AGENTS.md /path/to/your/project/
+          cp skills-lock.json /path/to/your/project/
           ```
+          
+          ## What's Included
+          
+          - `.github/skills/` — 46 agentskills.io skills (core framework)
+          - `AGENTS.md` — Orchestrator instructions
+          - `skills-lock.json` — Skills version lock
+          - `.spec2cloud/` — State management
+          - `specs/` — Specifications directory structure
           
           ## Usage
           
-          Open your project in VS Code with GitHub Copilot Chat and use the workflows:
+          Open your project in VS Code with GitHub Copilot Chat and start a conversation.
+          The orchestrator (AGENTS.md) will guide you through the spec2cloud workflow.
           
-          - `/prd` - Create Product Requirements Document
-          - `/frd` - Create Feature Requirements Documents
-          - `/plan` - Create Technical Task Breakdown
-          - `/implement` - Implement features locally
-          - `/delegate` - Delegate to GitHub Copilot Coding Agent
-          - `/deploy` - Deploy to Azure
-          - `/rev-eng` - Reverse engineer existing codebase
-          - `/modernize` - Create modernization plan
-          
-          For full installation with dev container, MCP servers, and APM, download the full package.
+          For full installation with dev container and MCP servers, use `npx spec2cloud init`.
           
           ## Learn More
           
@@ -246,42 +232,39 @@ jobs:
             
             ### 📦 Installation Options
             
-            **Full Installation** (Recommended)
-            Includes agents, prompts, devcontainer, MCP servers, and installation scripts:
+            **npx (Recommended)**
+            ```bash
+            npx spec2cloud init
+            ```
+            
+            **Full Package** (ZIP)
+            Includes skills, devcontainer, MCP config, and state management:
             ```bash
             curl -L https://github.com/EmeaAppGbb/spec2cloud/releases/download/${{ steps.version.outputs.VERSION }}/spec2cloud-full-${{ steps.version.outputs.VERSION }}.zip -o spec2cloud.zip
-            unzip spec2cloud.zip -d spec2cloud
-            cd spec2cloud
-            ./scripts/install.sh --full
+            unzip spec2cloud.zip -d my-project
             ```
             
-            **Minimal Installation**
-            Includes only agents and prompts:
+            **Minimal Package** (ZIP)
+            Includes only skills, AGENTS.md, and state management:
             ```bash
             curl -L https://github.com/EmeaAppGbb/spec2cloud/releases/download/${{ steps.version.outputs.VERSION }}/spec2cloud-minimal-${{ steps.version.outputs.VERSION }}.zip -o spec2cloud-minimal.zip
-            unzip spec2cloud-minimal.zip -d spec2cloud-minimal
-            cp -r spec2cloud-minimal/.github /path/to/your/project/
-            ```
-            
-            **Quick Install** (One-liner)
-            ```bash
-            curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/main/scripts/quick-install.sh | bash
+            unzip spec2cloud-minimal.zip -d my-project
             ```
             
             ### 📋 What's Included
             
             **Full Package**:
-            - ✅ 10 specialized AI agents (Spec2Cloud, PM, Dev Lead, Dev, Azure, Tech Analyst, Modernizer, Extender, Planner, Architect)
-            - ✅ 12 workflow prompts
+            - ✅ 46 agentskills.io skills (core framework)
+            - ✅ Orchestrator (AGENTS.md)
             - ✅ MCP server configuration
             - ✅ Dev container setup
-            - ✅ Installation scripts (Linux/Mac/Windows)
-            - ✅ APM template
-            - ✅ Documentation
+            - ✅ State management (.spec2cloud/)
+            - ✅ Specs directory structure
             
             **Minimal Package**:
-            - ✅ 10 specialized AI agents
-            - ✅ 12 workflow prompts
+            - ✅ 46 agentskills.io skills
+            - ✅ Orchestrator (AGENTS.md)
+            - ✅ State management (.spec2cloud/)
             
             ### 🔐 Verification
             
@@ -292,13 +275,8 @@ jobs:
             
             ### 📖 Documentation
             
-            - [Integration Guide](https://github.com/EmeaAppGbb/spec2cloud/blob/main/INTEGRATION.md)
+            - [Integration Guide](https://github.com/EmeaAppGbb/spec2cloud/blob/vNext/INTEGRATION.md)
             - [Full Documentation](https://github.com/EmeaAppGbb/spec2cloud)
-            - [Workflow Guide](https://github.com/EmeaAppGbb/spec2cloud/blob/main/SPEC2CLOUD.md)
-            
-            ### 🆕 What's New
-            
-            See the [CHANGELOG](https://github.com/EmeaAppGbb/spec2cloud/blob/main/CHANGELOG.md) for details.
           files: |
             spec2cloud-full-${{ steps.version.outputs.VERSION }}.zip
             spec2cloud-minimal-${{ steps.version.outputs.VERSION }}.zip
