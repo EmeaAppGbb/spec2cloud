@@ -150,28 +150,66 @@ download_and_install() {
   
   log_info "Installing to: $TARGET_DIR"
   
-  if [ -f "$extracted_dir/scripts/install.sh" ]; then
-    chmod +x "$extracted_dir/scripts/install.sh"
-    
-    if [ "$MODE" = "minimal" ]; then
-      "$extracted_dir/scripts/install.sh" --agents-only "$TARGET_DIR"
-    else
-      "$extracted_dir/scripts/install.sh" --full "$TARGET_DIR"
-    fi
+  # Copy only relevant spec2cloud files (not repo workflows, docs, etc.)
+  log_info "Copying files..."
+  
+  # Always install: skills, AGENTS.md, skills-lock.json, .spec2cloud
+  if [ -d "$extracted_dir/.github/skills" ]; then
+    mkdir -p "$TARGET_DIR/.github/skills"
+    cp -r "$extracted_dir/.github/skills/." "$TARGET_DIR/.github/skills/"
   else
-    # Fallback: manual copy
-    log_info "Copying files..."
-    
-    if [ -d "$extracted_dir/.github" ]; then
+    log_error "Archive is missing .github/skills — not a valid spec2cloud archive"
+    rm -rf "$temp_dir"
+    exit 1
+  fi
+  
+  if [ -f "$extracted_dir/AGENTS.md" ]; then
+    cp "$extracted_dir/AGENTS.md" "$TARGET_DIR/"
+  fi
+  
+  if [ -f "$extracted_dir/skills-lock.json" ]; then
+    cp "$extracted_dir/skills-lock.json" "$TARGET_DIR/"
+  fi
+  
+  if [ -d "$extracted_dir/.spec2cloud" ]; then
+    mkdir -p "$TARGET_DIR/.spec2cloud"
+    cp -r "$extracted_dir/.spec2cloud/." "$TARGET_DIR/.spec2cloud/"
+  fi
+  
+  # Full mode: also install devcontainer, MCP config, copilot instructions
+  if [ "$MODE" = "full" ]; then
+    if [ -f "$extracted_dir/.github/copilot-instructions.md" ]; then
       mkdir -p "$TARGET_DIR/.github"
-      cp -r "$extracted_dir/.github/"* "$TARGET_DIR/.github/"
-      log_success "Installation complete"
-    else
-      log_error "Archive structure is invalid"
-      rm -rf "$temp_dir"
-      exit 1
+      cp "$extracted_dir/.github/copilot-instructions.md" "$TARGET_DIR/.github/"
+    fi
+    
+    if [ -f "$extracted_dir/.github/lsp.json" ]; then
+      mkdir -p "$TARGET_DIR/.github"
+      cp "$extracted_dir/.github/lsp.json" "$TARGET_DIR/.github/"
+    fi
+    
+    if [ -f "$extracted_dir/.mcp.json" ]; then
+      cp "$extracted_dir/.mcp.json" "$TARGET_DIR/"
+    fi
+    
+    if [ -f "$extracted_dir/.vscode/mcp.json" ]; then
+      mkdir -p "$TARGET_DIR/.vscode"
+      cp "$extracted_dir/.vscode/mcp.json" "$TARGET_DIR/.vscode/"
+    fi
+    
+    if [ -f "$extracted_dir/.devcontainer/devcontainer.json" ]; then
+      mkdir -p "$TARGET_DIR/.devcontainer"
+      cp "$extracted_dir/.devcontainer/devcontainer.json" "$TARGET_DIR/.devcontainer/"
     fi
   fi
+  
+  # Create specs directory structure
+  mkdir -p "$TARGET_DIR/specs/features"
+  mkdir -p "$TARGET_DIR/specs/tasks"
+  mkdir -p "$TARGET_DIR/specs/docs"
+  mkdir -p "$TARGET_DIR/specs/domain"
+  
+  log_success "Installation complete"
   
   # Cleanup
   rm -rf "$temp_dir"
