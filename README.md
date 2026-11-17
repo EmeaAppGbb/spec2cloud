@@ -44,6 +44,12 @@ npx spec2cloud init --list-shells          # See available shells
 npx spec2cloud init --shell typescript     # Start with a shell
 ```
 
+For **PowerShell 5.1+** (Windows PowerShell or PowerShell 7), use the quick installer:
+
+```powershell
+& ([scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.ps1').Content))
+```
+
 See **[INTEGRATION.md](INTEGRATION.md)** for detailed installation options and configuration.
 
 ## Learn More

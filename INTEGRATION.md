@@ -29,6 +29,8 @@ npx spec2cloud init --target /path/to/project
 
 ### Method 2: Quick Install Script
 
+**Bash (Linux/macOS)**
+
 ```bash
 # Full installation
 curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash
@@ -42,6 +44,34 @@ curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts
 # Install from a specific branch or tag
 curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.sh | bash -s -- --ref main
 ```
+
+**PowerShell 5.1+ (Windows PowerShell or PowerShell 7)**
+
+Uses built-in PowerShell commands; no `curl`, `tar`, or Node.js required.
+
+```powershell
+# Download the installer as a script block
+$installer = [scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.ps1').Content)
+
+# Full installation
+& $installer
+
+# Minimal installation
+& $installer -Minimal
+
+# Install to a specific directory
+& $installer -Target 'C:\path to\project'
+
+# Install from a specific branch or tag (-Branch, -Tag, and -Version are aliases)
+& $installer -Ref 'feature/new-skills'
+
+# Show usage
+& $installer -Help
+```
+
+Both quick-install scripts default to the `vNext` ref and the current directory.
+They overwrite matching installed files; review or back up existing configuration
+before running. Unlike the npx installer, they do not save conflicting files for merging.
 
 ### Method 3: Clone and Copy
 

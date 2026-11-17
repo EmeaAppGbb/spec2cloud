@@ -1,0 +1,4 @@
+[2026-11-17T09:18:49Z] phase=setup action=inspect-quick-installer result=done reason="Framework tooling parity; Bash installer is the behavioral reference, no application specs or test suite present."
+[2026-11-17T09:18:49Z] phase=setup action=skill-discovery result=done query=powershell matches=0
+[2026-11-17T09:18:49Z] phase=setup action=research-best-practices-skill-skipped result=done reason="Application tech-stack and contracts are absent; verify built-in PowerShell commands directly against Microsoft documentation."
+[2026-11-17T09:18:49Z] phase=setup action=document-powershell-installer result=done files=README.md,INTEGRATION.md
