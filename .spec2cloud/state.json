@@ -46,12 +46,21 @@
     "plan-approved": false
   },
   "testsStatus": {},
-  "lastUpdated": "2026-11-17T09:18:49Z",
+  "lastUpdated": "2026-11-17T09:21:48Z",
   "tooling": {
     "powershellQuickInstall": {
-      "status": "in-progress",
+      "status": "complete",
       "script": "scripts/quick-install.ps1",
-      "documentation": ["README.md", "INTEGRATION.md"]
+      "documentation": ["README.md", "INTEGRATION.md"],
+      "verification": {
+        "powershell": "7.6.10",
+        "syntax": "passed",
+        "offlineFixtures": "passed",
+        "review": "no findings",
+        "secretScan": "no findings",
+        "codeql": "PowerShell unsupported",
+        "limitations": ["Windows PowerShell 5.1 not exercised", "Live downloads not exercised"]
+      }
     }
   },
   "infrastructureContract": {
