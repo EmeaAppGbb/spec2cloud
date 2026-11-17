@@ -50,23 +50,21 @@ curl -fsSL https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts
 Uses built-in PowerShell commands; no `curl`, `tar`, or Node.js required.
 
 ```powershell
-# Download the installer as a script block
-$installer = [scriptblock]::Create((Invoke-WebRequest -UseBasicParsing 'https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.ps1').Content)
-
 # Full installation
-& $installer
+irm https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.ps1 | iex
 
-# Minimal installation
-& $installer -Minimal
+# To use options, download the script and run it with parameters
+iwr https://raw.githubusercontent.com/EmeaAppGbb/spec2cloud/vNext/scripts/quick-install.ps1 -OutFile quick-install.ps1
+.\quick-install.ps1 -Minimal
 
 # Install to a specific directory
-& $installer -Target 'C:\path to\project'
+.\quick-install.ps1 -Target 'C:\path to\project'
 
 # Install from a specific branch or tag (-Branch, -Tag, and -Version are aliases)
-& $installer -Ref 'feature/new-skills'
+.\quick-install.ps1 -Ref 'feature/new-skills'
 
 # Show usage
-& $installer -Help
+.\quick-install.ps1 -Help
 ```
 
 Both quick-install scripts default to the `vNext` ref and the current directory.
