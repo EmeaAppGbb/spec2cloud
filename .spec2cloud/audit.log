@@ -8,3 +8,5 @@
 [2026-11-17T09:21:48Z] phase=setup action=verify-powershell-installer result=passed runtime=PowerShell-7.6.10 checks="Syntax, full/minimal allowlists, ref aliases/encoding, spaced/default targets, hidden files, skill merging, optional files, help/success returning, download/extraction/copy failures, invalid archives, temp cleanup"
 [2026-11-17T09:21:48Z] phase=setup action=record-validation-limitations result=done reason="No existing test suite; Windows PowerShell 5.1 and live downloads not exercised. Microsoft Learn fetch failed DNS; command metadata and official documentation search used instead."
 [2026-11-17T09:21:48Z] phase=setup action=review-installer result=passed findings=0
+[2026-11-17T09:52:47Z] phase=setup action=simplify-powershell-install-instructions result=done files=README.md,INTEGRATION.md
+[2026-11-17T09:52:47Z] phase=setup action=verify-documentation-diff result=passed check=git-diff-check
