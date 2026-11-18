@@ -46,13 +46,12 @@
     "plan-approved": false
   },
   "testsStatus": {},
-  "lastUpdated": "2026-11-17T09:52:47Z",
+  "lastUpdated": "2026-11-17T09:21:48Z",
   "tooling": {
     "powershellQuickInstall": {
       "status": "complete",
       "script": "scripts/quick-install.ps1",
       "documentation": ["README.md", "INTEGRATION.md"],
-      "instructionsSimplified": true,
       "verification": {
         "powershell": "7.6.10",
         "syntax": "passed",
